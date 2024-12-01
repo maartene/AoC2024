@@ -48,4 +48,15 @@ import Testing
         
         #expect(totalSimilarityScore(input) == 0)
     }
+    
+    
+    @Test("For a single line input the total similarity score is the two numbers multiplied if when are the same") func   testSingleLineInputWithSimilarNumber() {
+        let input =
+        """
+        4 4
+        """
+        
+        #expect(totalSimilarityScore(input) == 16)
+    }
+
 }
