@@ -103,12 +103,27 @@ EOT
 
 echo "✅ Successfully created template NOTES.md"
 
+# Setup gitignore to not exclude Input.swift
+cat <<EOT > .gitignore
+.DS_Store
+/.build
+/Packages
+xcuserdata/
+DerivedData/
+.swiftpm/configuration/registries.json
+.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+.netrc
+Input.swift
+EOT
+
+echo "✅ Successfully created gitignore"
+
 echo ""
 
 # go back to top directory to commit changes
 cd ..
-#git add .
-#git commit -m "Day$1 scaffold setup"
+git add .
+git commit -m "Day$1 scaffold setup"
 cd Day$1
 
 echo ""
