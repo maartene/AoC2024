@@ -19,3 +19,4 @@
 ## 🍅 Pomodoro 2: unto the second star
 - ✅ Clean-up test file
 - ⚠️ Read description for the second part
+- ⚠️ Extract function to create two lists of numbers out of the input

@@ -1,20 +1,28 @@
 func totalDistanceBetweenLists(_ input: String) -> Int {
-    var leftList = [Int]()
-    var rightList = [Int]()
+    let columns = inputToLists(input)
+    var leftColumn = columns.leftColumn
+    var rightColumn = columns.rightColumn
+    
+    leftColumn.sort()
+    rightColumn.sort()
+    
+    return zip(leftColumn, rightColumn).reduce(0) { partialResult, zipSequence in
+        partialResult + abs(zipSequence.0 - zipSequence.1)
+    }
+}
+
+private func inputToLists(_ input: String) -> (leftColumn: [Int], rightColumn: [Int]) {
+    var leftColumn = [Int]()
+    var rightColumn = [Int]()
     
     let lines = input.split(separator: "\n")
     for line in lines {
         let lists = line.split(separator: " ")
             .compactMap { Int($0) }
         
-        leftList.append(lists[0])
-        rightList.append(lists[1])
+        leftColumn.append(lists[0])
+        rightColumn.append(lists[1])
     }
     
-    leftList.sort()
-    rightList.sort()
-    
-    return zip(leftList, rightList).reduce(0) { partialResult, zipSequence in
-        partialResult + abs(zipSequence.0 - zipSequence.1)
-    }
+    return (leftColumn, rightColumn)
 }
