@@ -14,3 +14,4 @@
 - ✅ Find the correct distance value for a list of one entry
 - ✅ Work towards two line lists
 - ✅ Pass the Star 1 example
+- ✅ Let's try and get that first ⭐️
