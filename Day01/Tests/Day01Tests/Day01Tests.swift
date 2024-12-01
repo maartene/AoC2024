@@ -43,4 +43,18 @@ func totalDistanceBetweenLists(_ input: String) -> Int {
         """
         #expect(totalDistanceBetweenLists(input) == 2)
     }
+    
+    @Test("the total difference for the example input should be 11") func starOneExample() {
+        let input =
+        """
+        3   4
+        4   3
+        2   5
+        1   3
+        3   9
+        3   3
+        """
+        
+        #expect(totalDistanceBetweenLists(input) == 11)
+    }
 }
