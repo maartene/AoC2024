@@ -89,4 +89,18 @@ import Testing
         #expect(totalSimilarityScore(input) == 8)
     }
     
+    @Test("For the example input, the total similarity score should be 31") func   exampleInput() {
+        let input =
+        """
+        3   4
+        4   3
+        2   5
+        1   3
+        3   9
+        3   3
+        """
+        
+        #expect(totalSimilarityScore(input) == 31)
+    }
+    
 }
