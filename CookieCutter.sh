@@ -86,7 +86,7 @@ echo ""
 
 # Creeer een NOTES.md
 cat <<EOT > NOTES.md
-# Pomodoro Technique - 📝 Notes from the journey 🍅 by 🍅
+# AoC Day $1 - 📝 Notes from the journey 🍅 by 🍅
 
 ## 🏷️ Labels
 
@@ -107,8 +107,8 @@ echo ""
 
 # go back to top directory to commit changes
 cd ..
-git add .
-git commit -m "Day$1 scaffold setup"
+#git add .
+#git commit -m "Day$1 scaffold setup"
 cd Day$1
 
 echo ""
