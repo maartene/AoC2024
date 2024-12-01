@@ -34,7 +34,7 @@ func totalSimilarityScore(_ input: String) -> Int {
     var matchingNumber = 0
     for number in columns.leftColumn {
         if columns.rightColumn.contains(number) {
-            occuranceCount = 1
+            occuranceCount = columns.rightColumn.filter { $0 == number }.count
             matchingNumber = number
         }
     }

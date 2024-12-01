@@ -79,4 +79,14 @@ import Testing
         #expect(totalSimilarityScore(input) == 4)
     }
     
+    @Test("For a two line input where one number is in the right column twice, the similarity score is twice this number") func   testTwoLineInputWhereOneNumberIsInTheRightColumnTwice() {
+        let input =
+        """
+        1 4
+        4 4
+        """
+        
+        #expect(totalSimilarityScore(input) == 8)
+    }
+    
 }
