@@ -36,3 +36,16 @@ import Testing
         #expect(totalDistanceBetweenLists(input) == 2580760)
     }
 }
+
+@Suite("To find the second star on Day 01") struct Day01SecondStarTests {
+    @Test("the total similarity score should be 0 when none of the numbers in the left and right columns are similar") func testNoSimilarNumbers() {
+        let input =
+        """
+        1 2
+        3 4
+        5 6
+        """
+        
+        #expect(totalSimilarityScore(input) == 0)
+    }
+}

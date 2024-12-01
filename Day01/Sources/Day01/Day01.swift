@@ -26,3 +26,7 @@ private func inputToLists(_ input: String) -> (leftColumn: [Int], rightColumn: [
     
     return (leftColumn, rightColumn)
 }
+
+func totalSimilarityScore(_ input: String) -> Int {
+    0
+}

@@ -18,5 +18,6 @@
 
 ## 🍅 Pomodoro 2: unto the second star
 - ✅ Clean-up test file
-- ⚠️ Read description for the second part
-- ⚠️ Extract function to create two lists of numbers out of the input
+- ✅ Read description for the second part
+- ✅ Extract function to create two lists of numbers out of the input
+- ⚠️ For a list where none of the numbers on the left and right columns are shared, the total similarity score is 0 
