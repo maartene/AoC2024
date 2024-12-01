@@ -69,4 +69,14 @@ import Testing
         #expect(totalSimilarityScore(input) == 4)
     }
     
+    @Test("For a two line input where one number is in both lists and one number not and the matching number is on the second line, the total similarity score is this number") func   testTwoLineInputWhereOnlyOneNumberIsSimilar_andItsNotTheFirstOne() {
+        let input =
+        """
+        1 4
+        4 3
+        """
+        
+        #expect(totalSimilarityScore(input) == 4)
+    }
+    
 }

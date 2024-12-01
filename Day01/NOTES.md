@@ -23,3 +23,7 @@
 - ✅ For a list where none of the numbers on the left and right columns are shared, the total similarity score is 0
 - ✅ Fixed logic error ❌: we should not multiply numbers with themselves. But instead multiply them with the amount of times they are in the right column. For single line lists, that is either 0 or 1
 - ✅ Calculate the similarity score for two line input
+
+## 🍅 Pomodoro 3: let's get that star!
+- ✅ Calculate the similarity score for two line input, but this time the matching number is the second one
+
