@@ -30,5 +30,9 @@ private func inputToLists(_ input: String) -> (leftColumn: [Int], rightColumn: [
 func totalSimilarityScore(_ input: String) -> Int {
     let columns = inputToLists(input)
     
-    return columns.leftColumn[0] == columns.rightColumn[0] ? 16 : 0
+    if columns.leftColumn[0] == columns.rightColumn[0] {
+        return columns.leftColumn[0] * columns.rightColumn[0]
+    } else {
+        return 0
+    }
 }
