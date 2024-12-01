@@ -11,4 +11,6 @@
 
 - ✅ Read description
 - ✅ Import input data
-- 🚧 Find the correct distance value for a list of one entry
+- ✅ Find the correct distance value for a list of one entry
+- ✅ Work towards two line lists
+- ⚠️ Pass the Star 1 example
