@@ -30,14 +30,13 @@ private func inputToLists(_ input: String) -> (leftColumn: [Int], rightColumn: [
 func totalSimilarityScore(_ input: String) -> Int {
     let columns = inputToLists(input)
     
-    var occuranceCount = 0
-    var matchingNumber = 0
+    var result = 0
     for number in columns.leftColumn {
         if columns.rightColumn.contains(number) {
-            occuranceCount = columns.rightColumn.filter { $0 == number }.count
-            matchingNumber = number
+            let occuranceCount = columns.rightColumn.filter { $0 == number }.count
+            result += occuranceCount * number
         }
     }
 
-    return matchingNumber * occuranceCount
+    return result
 }
