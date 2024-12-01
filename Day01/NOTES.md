@@ -15,3 +15,7 @@
 - ✅ Work towards two line lists
 - ✅ Pass the Star 1 example
 - ✅ Let's try and get that first ⭐️
+
+## 🍅 Pomodoro 2: unto the second star
+- ⚠️ Clean-up test file
+- ⚠️ Read description for the second part
