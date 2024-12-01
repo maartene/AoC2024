@@ -1,7 +1,7 @@
 import Testing
 @testable import Day01
 
-@Suite("To find the first star on Day01") struct Day01Tests {
+@Suite("To find the first star on Day01") struct Day01FirstStarTests {
     @Test("the total difference between on a one line number list should be the difference between those two numbers", arguments: [
         ("1 3", 2),
         ("4 4", 0),
