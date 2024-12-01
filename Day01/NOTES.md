@@ -28,4 +28,5 @@
 - ✅ Calculate the similarity score for two line input, but this time the matching number is the second one
 - ✅ Calculate the similarity score when an occurance is more than once
 - ✅ Use the example input to see this working for multiple lines
+- ✅ Lets get that second ⭐️
 

@@ -103,4 +103,8 @@ import Testing
         #expect(totalSimilarityScore(input) == 31)
     }
     
+    @Test("the total difference for the actual input should be 25358365") func starTwoActual() {
+        #expect(totalSimilarityScore(input) == 25358365)
+    }
+    
 }
