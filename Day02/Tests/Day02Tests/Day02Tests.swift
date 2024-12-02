@@ -101,7 +101,7 @@ func reportIsSafeWithDampener(_ report: [Int]) -> Bool {
         #expect(numberOfSafeReportsWithDampener(exampleInput) == 4)
     }
 
-//    @Test("the number of safe reports in the input should be 631") func safeReportsInInput() {
-//        #expect(numberOfSafeReports(input) == 631)
-//    }
+    @Test("the number of safe reports in the input should be 665 with the dampener applied") func safeReportsInInput_withDampenerApplied() {
+        #expect(numberOfSafeReportsWithDampener(input) == 665)
+    }
 }

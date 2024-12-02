@@ -17,4 +17,5 @@
 - ✅ Get that first star ⭐️
 - ✅ Make the function to convert input files into a [[Int]]
 - ✅ Move function to correct file
-- 🚧 Setup the dampener
+- ✅ Setup the dampener
+- ⚠️ Get that second star ⭐️
