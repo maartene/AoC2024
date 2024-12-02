@@ -18,4 +18,4 @@
 - ✅ Make the function to convert input files into a [[Int]]
 - ✅ Move function to correct file
 - ✅ Setup the dampener
-- ⚠️ Get that second star ⭐️
+- ✅ Get that second star ⭐️

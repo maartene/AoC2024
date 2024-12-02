@@ -1,39 +1,6 @@
 import Testing
-import Shared
 
 @testable import Day02
-
-func numberOfSafeReportsWithDampener(_ input: String) -> Int {
-    let reports = convertStringToIntMatrix(input)
-    
-    return
-        reports
-        .filter {
-            reportIsSafeWithDampener($0)
-        }
-        .count
-}
-
-func reportIsSafeWithDampener(_ report: [Int]) -> Bool {
-    guard reportIsSafe(report) == false else {
-        return true
-    }
-    
-    for i in 0 ..< report.count {
-        var dampenedReport = [Int]()
-        for j in 0 ..< report.count {
-            if j != i {
-                dampenedReport.append(report[j])
-            }
-        }
-        
-        if reportIsSafe(dampenedReport) {
-            return true
-        }
-    }
-    
-    return false
-}
 
 @Suite("To find the first star on day 2") struct Day02Star1Tests {
     let exampleInput =

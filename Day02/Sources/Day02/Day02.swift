@@ -33,3 +33,35 @@ func reportIsSafe(_ report: [Int]) -> Bool {
 
     return true
 }
+
+func numberOfSafeReportsWithDampener(_ input: String) -> Int {
+    let reports = convertStringToIntMatrix(input)
+    
+    return
+        reports
+        .filter {
+            reportIsSafeWithDampener($0)
+        }
+        .count
+}
+
+func reportIsSafeWithDampener(_ report: [Int]) -> Bool {
+    guard reportIsSafe(report) == false else {
+        return true
+    }
+    
+    for i in 0 ..< report.count {
+        var dampenedReport = [Int]()
+        for j in 0 ..< report.count {
+            if j != i {
+                dampenedReport.append(report[j])
+            }
+        }
+        
+        if reportIsSafe(dampenedReport) {
+            return true
+        }
+    }
+    
+    return false
+}
