@@ -1,4 +1,4 @@
-# Pomodoro Technique - 📝 Notes from the journey 🍅 by 🍅
+# AoC2024 Day 02 - 📝 Notes from the journey 🍅 by 🍅
 
 ## 🏷️ Labels
 
@@ -8,6 +8,6 @@
 - ⚠️ TODO
 
 ## 🍅 Pomodoro 1
-- ⚠️ Read the description
-- ⚠️ Import the input data
+- ✅ Read the description
+- ✅ Import the input data
 - ⚠️ Make the example input pass
