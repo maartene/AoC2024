@@ -10,5 +10,5 @@
 ## 🍅 Pomodoro 1
 - ✅ Read the description
 - ✅ Import the input data
-- 🚧 Determine the safety of an individual report
+- ✅ Determine the safety of an individual report
 - ⚠️ Make the example input pass

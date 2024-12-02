@@ -16,7 +16,7 @@ func reportIsSafe(_ report: [Int]) -> Bool {
     for i in 1 ..< report.count {
         if increasing && report[i] < report[i - 1] {
             return false
-        } else if decreasing == false && report[i] > report[i - 1] {
+        } else if decreasing && report[i] > report[i - 1] {
             return false
         }
     }
@@ -40,8 +40,10 @@ func reportIsSafe(_ report: [Int]) -> Bool {
         ([1, 2, 7, 8, 9], false),
         ([9, 7, 6, 2, 1], false),
         ([1, 3, 2, 4, 5], false),
-        
+        ([8, 6, 4, 4, 1], false),
+        ([1, 3, 6, 7, 9], true)
     ]) func testIfReportIsSafe(testcase: (report: [Int], isSafe: Bool)) {
+        print("Testing: \(testcase.report), expecting \(testcase.isSafe)")
         #expect(reportIsSafe(testcase.report) == testcase.isSafe)
     }
 }
