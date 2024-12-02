@@ -73,6 +73,10 @@ EOT
 echo "✅ Successfully added sample test"
 
 echo ""
+touch Sources/Day$1/Input.swift
+echo "✅ Successfully created empty Input.swift file"
+
+echo ""
 
 echo "🚧 Perform clean build and initial test run"
 # Voer schoon opzetten van het project uit voor eventuele fouten
