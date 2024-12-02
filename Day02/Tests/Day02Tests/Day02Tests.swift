@@ -1,6 +1,18 @@
 import Testing
+import Shared
 
 @testable import Day02
+
+func numberOfSafeReportsWithDampener(_ input: String) -> Int {
+    let reports = convertStringToIntMatrix(input)
+    
+    return
+        reports
+        .filter {
+            reportIsSafeWithDampener($0)
+        }
+        .count
+}
 
 func reportIsSafeWithDampener(_ report: [Int]) -> Bool {
     guard reportIsSafe(report) == false else {
@@ -71,7 +83,7 @@ func reportIsSafeWithDampener(_ report: [Int]) -> Bool {
         """
     
     @Test(
-        "we should be able to determine whether a report is safe or not",
+        "we should be able to determine whether a report is safe or not with the dampener applied",
         arguments: [
             ([7, 6, 4, 2, 1], true),
             ([1, 2, 7, 8, 9], false),
@@ -79,8 +91,17 @@ func reportIsSafeWithDampener(_ report: [Int]) -> Bool {
             ([1, 3, 2, 4, 5], true),
             ([8, 6, 4, 4, 1], true),
             ([1, 3, 6, 7, 9], true),
-        ]) func testIfReportIsSafe(testcase: (report: [Int], isSafe: Bool))
+        ]) func testIfReportIsSafe_withDampenerApplied(testcase: (report: [Int], isSafe: Bool))
     {
         #expect(reportIsSafeWithDampener(testcase.report) == testcase.isSafe)
     }
+    
+    @Test("the number of safe reports in the example input should be 4 with the dampener applied")
+    func safeReportsInExampleInput_withDampenerApplied() {
+        #expect(numberOfSafeReportsWithDampener(exampleInput) == 4)
+    }
+
+//    @Test("the number of safe reports in the input should be 631") func safeReportsInInput() {
+//        #expect(numberOfSafeReports(input) == 631)
+//    }
 }
