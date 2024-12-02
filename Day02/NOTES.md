@@ -14,5 +14,6 @@
 - ✅ Make the example input pass
 
 ## 🍅 Pomodoro 2
-- ⚠️ Get that first star
-- ⚠️ Make the function to convert input files into a [[Int]]
+- ✅ Get that first star ⭐️
+- ✅ Make the function to convert input files into a [[Int]]
+- 🚧 Move function to correct file
