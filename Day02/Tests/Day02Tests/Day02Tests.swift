@@ -1,6 +1,22 @@
 import Testing
 @testable import Day02
 
+func numberOfSafeReports(_ input: String) -> Int {
+    let lines = input.split(separator: "\n").map(String.init)
+    
+    let reports = lines.map { line in
+        line.split(separator: " ")
+            .map(String.init)
+            .compactMap(Int.init)
+    }
+    
+    return reports
+        .filter {
+            reportIsSafe($0)
+        }
+        .count
+}
+
 func reportIsSafe(_ report: [Int]) -> Bool {
     // Are the differences in order?
     for i in 0 ..< report.count - 1 {
@@ -46,8 +62,8 @@ func reportIsSafe(_ report: [Int]) -> Bool {
         print("Testing: \(testcase.report), expecting \(testcase.isSafe)")
         #expect(reportIsSafe(testcase.report) == testcase.isSafe)
     }
-}
-
-@Test func example() async throws {
-    // Write your test here and use APIs like `#expect(...)` to check expected conditions.
+    
+    @Test("the number of safe reports in the example input should be 2") func safeReportsInExampleInput() {
+        #expect(numberOfSafeReports(exampleInput) == 2)
+    }
 }
