@@ -11,4 +11,8 @@
 - ✅ Read the description
 - ✅ Import the input data
 - ✅ Determine the safety of an individual report
-- ⚠️ Make the example input pass
+- ✅ Make the example input pass
+
+## 🍅 Pomodoro 2
+- ⚠️ Get that first star
+- ⚠️ Make the function to convert input files into a [[Int]]

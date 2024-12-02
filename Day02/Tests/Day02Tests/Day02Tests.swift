@@ -66,4 +66,8 @@ func reportIsSafe(_ report: [Int]) -> Bool {
     @Test("the number of safe reports in the example input should be 2") func safeReportsInExampleInput() {
         #expect(numberOfSafeReports(exampleInput) == 2)
     }
+    
+    @Test("the number of safe reports in the input should be 631") func safeReportsInInput() {
+        #expect(numberOfSafeReports(input) == 631)
+    }
 }
