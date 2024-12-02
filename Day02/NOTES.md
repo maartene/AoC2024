@@ -16,4 +16,5 @@
 ## 🍅 Pomodoro 2
 - ✅ Get that first star ⭐️
 - ✅ Make the function to convert input files into a [[Int]]
-- 🚧 Move function to correct file
+- ✅ Move function to correct file
+- 🚧 Setup the dampener
