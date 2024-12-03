@@ -1,35 +1,6 @@
 import Testing
 @testable import Day03
 
-func extractMultiplicationsIncludingDosAndDonts(_ input: String) -> [String] {
-    let regex: Regex = /(mul\([0-9]+,[0-9]+\))|don't\(\)|(do\(\))/
-    // let regex = /do/
-    let result = input.matches(of: regex)
-        .map { String($0.0) }
-    return result
-}
-
-func calculateSumOfMultiplicationsIncludingDosAndDonts(_ input: String) -> Int {
-    let instructions = extractMultiplicationsIncludingDosAndDonts(input)
-    
-    var result = 0
-    var multiplicationEnabled = true
-    for instruction in instructions {
-        switch instruction {
-            case "do()":
-            multiplicationEnabled = true
-            case "don't()": 
-            multiplicationEnabled = false
-            default:
-            if multiplicationEnabled {
-                result += performMultiplication(instruction)
-            }
-        }   
-    }
-
-    return result
-}
-
 @Suite("To get the first star on day 03") struct Day03Star1Tests {
     let exampleInput = "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))"
 
