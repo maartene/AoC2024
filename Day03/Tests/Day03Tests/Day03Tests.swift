@@ -10,8 +10,11 @@ func extractMultiplications(_ input: String) -> [String] {
     return result
 }
 
-@Test func example() async throws {
-    // Write your test here and use APIs like `#expect(...)` to check expected conditions.
+func performMultiplication(_ input: String) -> Int {
+    let regex = /[0-9]+/
+    let result = input.matches(of: regex).map { String($0.0) }
+        .compactMap(Int.init)
+    return result[0] * result[1]
 }
 
 @Suite("To get the first star on day 03") struct Day03Star1Tests {
@@ -25,5 +28,15 @@ func extractMultiplications(_ input: String) -> [String] {
         ]
 
         #expect(extractMultiplications(exampleInput) == expected)
+    }
+
+    @Test("we should be able to perform a multiplication statement", arguments: 
+        [
+            ("mul(2,4)", 8),
+            ("mul(5,5)", 25),
+            ("mul(11,8)", 88),
+            ("mul(8,5)", 40)
+        ]) func performingMultiplication(testcase: (input: String, expected: Int)) {
+        #expect(performMultiplication(testcase.input) == testcase.expected)
     }
 }

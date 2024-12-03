@@ -10,5 +10,6 @@
 ## 🍅 Pomodoro 1
 - ✅ Read the description
 - ✅ Import the input data
-- 🚧 Extract multiplication statements from example input
+- ✅ Extract multiplication statements from example input
+- 🚧 We should be able to perform a multiplication
 - ⚠️ Make the example input pass
