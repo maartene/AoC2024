@@ -1,26 +1,5 @@
-import Foundation
 import Testing
 @testable import Day03
-
-func calculateSumOfMultiplications(_ input: String) -> Int {
-    let multiplications = extractMultiplications(input)
-    let multiplicationResults = multiplications.map(performMultiplication)
-    return multiplicationResults.reduce(0, +)
-}
-
-func extractMultiplications(_ input: String) -> [String] {
-    let regex: Regex = /(mul\([0-9]+,[0-9]+\))/
-    let result = input.matches(of: regex)
-        .map { String($0.0) }
-    return result
-}
-
-func performMultiplication(_ input: String) -> Int {
-    let regex = /[0-9]+/
-    let result = input.matches(of: regex).map { String($0.0) }
-        .compactMap(Int.init)
-    return result[0] * result[1]
-}
 
 let exampleInput = "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))"
 

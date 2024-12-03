@@ -13,4 +13,8 @@
 - ✅ Extract multiplication statements from example input
 - ✅ We should be able to perform a multiplication
 - ✅ Make the example input pass
-- 🚧 Let's get that star ⭐️
+- ✅ Let's get that star ⭐️
+
+## 🍅 Pomodoro 2 - on to the second star!
+- ⚠️ Move code outside of test file
+- ⚠️ Understand the "twist"
