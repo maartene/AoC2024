@@ -64,8 +64,9 @@ func calculateSumOfMultiplicationsIncludingDosAndDonts(_ input: String) -> Int {
 }
 
 @Suite("To get the second star on day 03") struct Day03Star2Tests {
+    let exampleInput = "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))"
+    
     @Test("we should be able to extract do's and don'ts from the input as well") func extractMultiplicationsDosAndDontsFromInput() {
-        let exampleInput = "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))"
         let expected = [
             "mul(2,4)",
             "don't()",
@@ -88,11 +89,11 @@ func calculateSumOfMultiplicationsIncludingDosAndDonts(_ input: String) -> Int {
         #expect(calculateSumOfMultiplicationsIncludingDosAndDonts(exampleInput) == 8)
     }
 
-    // @Test("while taking dos and donts into account, calculating the sum of all multiplications should return 48 for the example input") func calculatingTheSumOfMultiplications_forExampleInput() {
-    //     #expect(calculateSumOfMultiplications(exampleInput) == 161)
-    // }
+    @Test("while taking dos and donts into account, calculating the sum of all multiplications should return 48 for the example input") func calculatingTheSumOfMultiplications_forExampleInput() {
+        #expect(calculateSumOfMultiplicationsIncludingDosAndDonts(exampleInput) == 48)
+    }
 
-    // @Test("while taking dos and donts into account, the sum of all multiplications in the actual input should be ???") func sumOfMultiplications_forActualInput() {
-    //     #expect(calculateSumOfMultiplications(input) == ???)
-    // }
+    @Test("while taking dos and donts into account, the sum of all multiplications in the actual input should be 70478672") func sumOfMultiplications_forActualInput() {
+        #expect(calculateSumOfMultiplicationsIncludingDosAndDonts(input) == 70478672)
+    }
 }
