@@ -23,9 +23,10 @@ func performMultiplication(_ input: String) -> Int {
     return result[0] * result[1]
 }
 
+let exampleInput = "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))"
+
 @Suite("To get the first star on day 03") struct Day03Star1Tests {
     @Test("we should be able to extract correct multiplication statements from input") func acceptanceTest_extractCorrectMultiplicationsFromInput() {
-        let exampleInput = "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))"
         let expected = [
             "mul(2,4)",
             "mul(5,5)",
@@ -47,7 +48,6 @@ func performMultiplication(_ input: String) -> Int {
     }
 
     @Test("calculating the sum of all multiplications should return 161 for the example input") func calculatingTheSumOfMultiplications_forExampleInput() {
-        let exampleInput = "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))"
         #expect(calculateSumOfMultiplications(exampleInput) == 161)
     }
 }
