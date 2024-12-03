@@ -16,5 +16,7 @@
 - ✅ Let's get that star ⭐️
 
 ## 🍅 Pomodoro 2 - on to the second star!
-- ⚠️ Move code outside of test file
-- ⚠️ Understand the "twist"
+- ✅ Move code outside of test file
+- ✅ Understand the "twist"
+- 🚧 Detect do's and don'ts
+- ⚠️ Make the example input pass
