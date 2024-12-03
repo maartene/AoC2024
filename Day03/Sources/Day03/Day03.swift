@@ -4,6 +4,11 @@ func calculateSumOfMultiplicationsWithoutDosAndDonts(_ input: String) -> Int {
     return multiplicationResults.reduce(0, +)
 }
 
+func calculateSumOfMultiplicationsIncludingDosAndDonts(_ input: String) -> Int {
+    let instructions = extractMultiplicationsIncludingDosAndDonts(input)
+    return calculateSumOfMultiplications(instructions: instructions)
+}
+
 func extractMultiplicationsWithoutDosAndDonts(_ input: String) -> [String] {
     let regex: Regex = /(mul\([0-9]+,[0-9]+\))/
     let result = input.matches(of: regex)
@@ -18,16 +23,7 @@ func extractMultiplicationsIncludingDosAndDonts(_ input: String) -> [String] {
     return result
 }
 
-func performMultiplication(_ input: String) -> Int {
-    let regex = /[0-9]+/
-    let result = input.matches(of: regex).map { String($0.0) }
-        .compactMap(Int.init)
-    return result[0] * result[1]
-}
-
-func calculateSumOfMultiplicationsIncludingDosAndDonts(_ input: String) -> Int {
-    let instructions = extractMultiplicationsIncludingDosAndDonts(input)
-    
+func calculateSumOfMultiplications(instructions: [String]) -> Int {
     var result = 0
     var multiplicationEnabled = true
     for instruction in instructions {
@@ -44,4 +40,11 @@ func calculateSumOfMultiplicationsIncludingDosAndDonts(_ input: String) -> Int {
     }
 
     return result
+}
+
+func performMultiplication(_ input: String) -> Int {
+    let regex = /[0-9]+/
+    let result = input.matches(of: regex).map { String($0.0) }
+        .compactMap(Int.init)
+    return result[0] * result[1]
 }
