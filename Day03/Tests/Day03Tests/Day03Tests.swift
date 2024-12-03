@@ -6,13 +6,33 @@ func extractMultiplicationsIncludingDosAndDonts(_ input: String) -> [String] {
     // let regex = /do/
     let result = input.matches(of: regex)
         .map { String($0.0) }
-        print(result)
+    return result
+}
+
+func calculateSumOfMultiplicationsIncludingDosAndDonts(_ input: String) -> Int {
+    let instructions = extractMultiplicationsIncludingDosAndDonts(input)
+    
+    var result = 0
+    var multiplicationEnabled = true
+    for instruction in instructions {
+        switch instruction {
+            case "do()":
+            multiplicationEnabled = true
+            case "don't()": 
+            multiplicationEnabled = false
+            default:
+            if multiplicationEnabled {
+                result += performMultiplication(instruction)
+            }
+        }   
+    }
+
     return result
 }
 
 @Suite("To get the first star on day 03") struct Day03Star1Tests {
     let exampleInput = "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))"
-    
+
     @Test("we should be able to extract correct multiplication statements from input") func acceptanceTest_extractCorrectMultiplicationsFromInput() {
         let expected = [
             "mul(2,4)",
@@ -56,6 +76,16 @@ func extractMultiplicationsIncludingDosAndDonts(_ input: String) -> [String] {
         ]
 
         #expect(extractMultiplicationsIncludingDosAndDonts(exampleInput) == expected)
+    }
+
+    @Test("this will not multiply") func dontMultiply() {
+        let exampleInput = "don't()mul(2,4)"
+        #expect(calculateSumOfMultiplicationsIncludingDosAndDonts(exampleInput) == 0)
+    }
+
+    @Test("But this will") func thisWillMultiply() {
+        let exampleInput = "don't()do()mul(2,4)"
+        #expect(calculateSumOfMultiplicationsIncludingDosAndDonts(exampleInput) == 8)
     }
 
     // @Test("while taking dos and donts into account, calculating the sum of all multiplications should return 48 for the example input") func calculatingTheSumOfMultiplications_forExampleInput() {

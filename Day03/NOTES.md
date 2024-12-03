@@ -18,5 +18,6 @@
 ## 🍅 Pomodoro 2 - on to the second star!
 - ✅ Move code outside of test file
 - ✅ Understand the "twist"
-- 🚧 Detect do's and don'ts
+- ✅ Detect do's and don'ts
+- ✅ Take do's and don'ts into account
 - ⚠️ Make the example input pass
