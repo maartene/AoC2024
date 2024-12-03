@@ -1,4 +1,4 @@
-func calculateSumOfMultiplications(_ input: String) -> Int {
+func calculateSumOfMultiplicationsWithoutDosAndDonts(_ input: String) -> Int {
     let multiplications = extractMultiplicationsWithoutDosAndDonts(input)
     let multiplicationResults = multiplications.map(performMultiplication)
     return multiplicationResults.reduce(0, +)

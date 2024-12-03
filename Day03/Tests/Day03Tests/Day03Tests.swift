@@ -26,11 +26,11 @@ import Testing
     }
 
     @Test("calculating the sum of all multiplications should return 161 for the example input") func calculatingTheSumOfMultiplications_forExampleInput() {
-        #expect(calculateSumOfMultiplications(exampleInput) == 161)
+        #expect(calculateSumOfMultiplicationsWithoutDosAndDonts(exampleInput) == 161)
     }
 
     @Test("the sum of all multiplications in the actual input should be 164730528") func sumOfMultiplications_forActualInput() {
-        #expect(calculateSumOfMultiplications(input) == 164730528)
+        #expect(calculateSumOfMultiplicationsWithoutDosAndDonts(input) == 164730528)
     }
 }
 
