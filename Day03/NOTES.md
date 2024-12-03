@@ -22,4 +22,4 @@
 - ✅ Take do's and don'ts into account
 - ✅ Make the example input pass
 - ✅ Let's get that second star ⭐️
-- ⚠️ Cleanup
+- ✅ Cleanup

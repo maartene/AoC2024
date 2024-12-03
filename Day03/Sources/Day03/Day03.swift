@@ -1,7 +1,6 @@
 func calculateSumOfMultiplicationsWithoutDosAndDonts(_ input: String) -> Int {
     let multiplications = extractMultiplicationsWithoutDosAndDonts(input)
-    let multiplicationResults = multiplications.map(performMultiplication)
-    return multiplicationResults.reduce(0, +)
+    return calculateSumOfMultiplications(instructions: multiplications)
 }
 
 func calculateSumOfMultiplicationsIncludingDosAndDonts(_ input: String) -> Int {
@@ -28,11 +27,11 @@ func calculateSumOfMultiplications(instructions: [String]) -> Int {
     var multiplicationEnabled = true
     for instruction in instructions {
         switch instruction {
-            case "do()":
+        case "do()":
             multiplicationEnabled = true
-            case "don't()": 
+        case "don't()": 
             multiplicationEnabled = false
-            default:
+        default:
             if multiplicationEnabled {
                 result += performMultiplication(instruction)
             }
