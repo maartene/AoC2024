@@ -12,7 +12,7 @@ import Testing
             "mul(8,5)"
         ]
 
-        #expect(extractMultiplications(exampleInput) == expected)
+        #expect(extractMultiplicationsWithoutDosAndDonts(exampleInput) == expected)
     }
 
     @Test("we should be able to perform a multiplication statement", arguments: 

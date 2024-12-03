@@ -1,10 +1,10 @@
 func calculateSumOfMultiplications(_ input: String) -> Int {
-    let multiplications = extractMultiplications(input)
+    let multiplications = extractMultiplicationsWithoutDosAndDonts(input)
     let multiplicationResults = multiplications.map(performMultiplication)
     return multiplicationResults.reduce(0, +)
 }
 
-func extractMultiplications(_ input: String) -> [String] {
+func extractMultiplicationsWithoutDosAndDonts(_ input: String) -> [String] {
     let regex: Regex = /(mul\([0-9]+,[0-9]+\))/
     let result = input.matches(of: regex)
         .map { String($0.0) }
@@ -20,7 +20,6 @@ func performMultiplication(_ input: String) -> Int {
 
 func extractMultiplicationsIncludingDosAndDonts(_ input: String) -> [String] {
     let regex: Regex = /(mul\([0-9]+,[0-9]+\))|don't\(\)|(do\(\))/
-    // let regex = /do/
     let result = input.matches(of: regex)
         .map { String($0.0) }
     return result
