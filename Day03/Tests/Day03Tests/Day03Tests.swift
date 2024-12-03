@@ -2,6 +2,12 @@ import Foundation
 import Testing
 @testable import Day03
 
+func calculateSumOfMultiplications(_ input: String) -> Int {
+    let multiplications = extractMultiplications(input)
+    let multiplicationResults = multiplications.map(performMultiplication)
+    return multiplicationResults.reduce(0, +)
+}
+
 func extractMultiplications(_ input: String) -> [String] {
     let regex: Regex = /(mul\([0-9]+,[0-9]+\))/
     let result = input.matches(of: regex)
@@ -38,5 +44,10 @@ func performMultiplication(_ input: String) -> Int {
             ("mul(8,5)", 40)
         ]) func performingMultiplication(testcase: (input: String, expected: Int)) {
         #expect(performMultiplication(testcase.input) == testcase.expected)
+    }
+
+    @Test("calculating the sum of all multiplications should return 161 for the example input") func calculatingTheSumOfMultiplications_forExampleInput() {
+        let exampleInput = "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))"
+        #expect(calculateSumOfMultiplications(exampleInput) == 161)
     }
 }
