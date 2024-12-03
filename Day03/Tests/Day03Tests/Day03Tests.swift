@@ -12,7 +12,6 @@ func extractMultiplications(_ input: String) -> [String] {
     let regex: Regex = /(mul\([0-9]+,[0-9]+\))/
     let result = input.matches(of: regex)
         .map { String($0.0) }
-    print(result)
     return result
 }
 
@@ -49,5 +48,9 @@ let exampleInput = "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,
 
     @Test("calculating the sum of all multiplications should return 161 for the example input") func calculatingTheSumOfMultiplications_forExampleInput() {
         #expect(calculateSumOfMultiplications(exampleInput) == 161)
+    }
+
+    @Test("the sum of all multiplications in the actual input should be 164730528") func sumOfMultiplications_forActualInput() {
+        #expect(calculateSumOfMultiplications(input) == 164730528)
     }
 }
