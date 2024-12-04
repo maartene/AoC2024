@@ -42,7 +42,7 @@ func countX_MASses(in input: String) -> Int {
                     (ul == "M" && ur == "S" && bl == "M" && br == "S") ||
                     (ul == "S" && ur == "M" && bl == "S" && br == "M") ||
                     (ul == "S" && ur == "S" && bl == "M" && br == "M")
-                 {
+                {
                     count += 1
                 }
             }
