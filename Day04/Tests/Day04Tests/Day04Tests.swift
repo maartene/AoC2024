@@ -8,16 +8,17 @@ func countXMAS(in input: String) -> Int {
         return 0
     }
 
+    var count = 0
     for i in 0 ..< characters.count - 3 {
         if characters[i] == "X" &&
             characters[i + 1] == "M" && 
             characters[i + 2] == "A" &&
             characters[i + 3] == "S" {
-            return 1
+            count += 1
          }
     }
 
-    return 0
+    return count
 }
 
 @Suite("To find the first star on day 04") struct Day04StarOneTests {
@@ -30,7 +31,15 @@ func countXMAS(in input: String) -> Int {
         "FOOBXMASAR",
         "XMASBAZ",
         "HELOOXMAS"
-    ]) func inTheMiddleOfStringCase(testcase: String) {
+    ]) func xmasAppearsOnlyOnce(testcase: String) {
         #expect(countXMAS(in: testcase) == 1)
+    }
+
+    @Test("The word XMAS appears in these strings more than once", arguments: [
+        ("XMASXMAS", 2),
+        ("FOOXMASBARXMASBAZ", 2),
+        ("FOOXMASBARXMASBAZFOOXMASBARXMASBAZ", 4)
+    ]) func xmasAppearsMultipleTimes(testcase: (input: String, expected: Int)) {
+        #expect(countXMAS(in: testcase.input) == testcase.expected)
     }
 }
