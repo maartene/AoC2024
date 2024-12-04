@@ -20,7 +20,7 @@ func countXMAS(in input: String) -> Int {
     for y in 0 ..< characters.count {
         for x in 0 ..< characters[y].count {
             let directions = 
-            [(1, 0)]
+            [(1, 0), (0, 1)]
             for direction: (dx: Int, dy: Int) in directions {
                 var word = ""
                 for i in 0 ..< 4 {
@@ -32,16 +32,6 @@ func countXMAS(in input: String) -> Int {
                     count += 1
                 }
             }
-            
-
-                // search N -> S
-            if  let l1 = getCharacter(in: characters, at: (x, y)),
-                let l2 = getCharacter(in: characters, at: (x, y + 1)),
-                let l3 = getCharacter(in: characters, at: (x, y + 2)),
-                let l4 = getCharacter(in: characters, at: (x, y + 3)),
-                l1 == "X", l2 == "M", l3 == "A", l4 == "S" {
-                    count += 1
-                } 
         }
     }
 
