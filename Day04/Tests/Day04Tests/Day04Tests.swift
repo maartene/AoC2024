@@ -29,11 +29,12 @@ func countXMAS(in input: String) -> Int {
         #expect(countXMAS(in: "") == 0)
     }
 
-    @Test("The word XMAS should appear once times in the string 'XMAS'") func actualSearchStringCase() {
-        #expect(countXMAS(in: "XMAS") == 1)
-    }
-
-    @Test("The word XMAS should appear once times in the string 'XMAS'") func inTheMiddleOfStringCase() {
-        #expect(countXMAS(in: "FOOBXMASAR") == 1)
+    @Test("The word XMAS appears in these strings only once", arguments: [
+        "XMAS",
+        "FOOBXMASAR",
+        "XMASBAZ",
+        "HELOOXMAS"
+    ]) func inTheMiddleOfStringCase(testcase: String) {
+        #expect(countXMAS(in: testcase) == 1)
     }
 }
