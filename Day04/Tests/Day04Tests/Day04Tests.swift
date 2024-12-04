@@ -1,6 +1,14 @@
 import Testing
 @testable import Day04
 
+func convertInputToMatrixOfCharacters(_ input: String) -> [[Character]] {
+    let lines = input.split(separator: "\n").map(String.init)
+    let characters: [[Character]] = lines.map { line in
+        line.map { $0 } 
+    }
+    return characters
+}
+
 func countXMAS(in input: String) -> Int {
     func getCharacter(in array: [[Character]], at coord: (x: Int, y: Int)) -> Character? {
         guard coord.x >= 0 && coord.x < array[0].count && coord.y >= 0 && coord.y < array.count else {
@@ -10,10 +18,7 @@ func countXMAS(in input: String) -> Int {
         return array[coord.y][coord.x]
     }
 
-    let lines = input.split(separator: "\n").map(String.init)
-    let characters: [[Character]] = lines.map { line in
-        line.map { $0 } 
-    }
+    let characters = convertInputToMatrixOfCharacters(input)
 
     var count = 0
 
