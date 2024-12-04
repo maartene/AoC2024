@@ -16,7 +16,9 @@ func countX_MAS(in input: String) -> Int {
                 let br = getCharacter(in: characters, at: (x+1, y+1))  
             {
                 if  (ul == "M" && ur == "M" && m == "A" && bl == "S" && br == "S") ||
-                    (ul == "M" && ur == "S" && m == "A" && bl == "M" && br == "S")
+                    (ul == "M" && ur == "S" && m == "A" && bl == "M" && br == "S") ||
+                    (ul == "S" && ur == "M" && m == "A" && bl == "S" && br == "M") ||
+                    (ul == "S" && ur == "S" && m == "A" && bl == "M" && br == "M")
                  {
                     count += 1
                 }
@@ -117,7 +119,7 @@ func countX_MAS(in input: String) -> Int {
         #expect(countX_MAS(in: input) == 1)
     }
 
-    @Test("We should find one X-MAS in the minimal case") func two_MinimalX_Mas() {
+    @Test("We should find two X-MAS in the minimal case") func two_MinimalX_Mas() {
         let input = 
         """
         M.S.M.S
@@ -128,23 +130,23 @@ func countX_MAS(in input: String) -> Int {
         #expect(countX_MAS(in: input) == 2)
     }
 
-    // @Test("We should find the word XMAS in the example input 18 times") func countInExampleInput() {
-    //     let exampleInput = 
-    //     """
-    //     MMMSXXMASM
-    //     MSAMXMSMSA
-    //     AMXSXMAAMM
-    //     MSAMASMSMX
-    //     XMASAMXAMM
-    //     XXAMMXXAMA
-    //     SMSMSASXSS
-    //     SAXAMASAAA
-    //     MAMMMXMMMM
-    //     MXMXAXMASX
-    //     """
+    @Test("We should find two X-MASses in the example input 9 times") func countInExampleInput() {
+        let exampleInput = 
+        """
+        MMMSXXMASM
+        MSAMXMSMSA
+        AMXSXMAAMM
+        MSAMASMSMX
+        XMASAMXAMM
+        XXAMMXXAMA
+        SMSMSASXSS
+        SAXAMASAAA
+        MAMMMXMMMM
+        MXMXAXMASX
+        """
 
-    //     #expect(countX_MAS(in: exampleInput) == 9)
-    // }
+        #expect(countX_MAS(in: exampleInput) == 9)
+    }
 
     // @Test("The count of XMAS in the actual input should be 2507") func countInActualInput() {
     //     #expect(countX_MAS(in: input) == 2507)

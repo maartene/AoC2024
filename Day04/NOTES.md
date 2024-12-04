@@ -26,5 +26,7 @@
 - ✅ Lets get that first star ⭐️
 
 ## 🍅 Pomodoro 4
-- ⚠️ Understand the 'twist'
-- ⚠️ Implement the simple case 
+- ✅ Understand the 'twist'
+- ✅ Implement the simple case 
+- ✅ Make the example input pass
+- ⚠️ Lets get that second ⭐️
