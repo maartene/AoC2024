@@ -3,7 +3,28 @@ import Shared
 @testable import Day04
 
 func countX_MAS(in input: String) -> Int {
-    1
+    let characters = convertInputToMatrixOfCharacters(input)
+    
+    var count = 0
+
+    for y in 0 ..< characters.count {
+        for x in 0 ..< characters[y].count {
+            if  let m = getCharacter(in: characters, at: (x, y)),
+                let ul = getCharacter(in: characters, at: (x-1, y-1)),  
+                let ur = getCharacter(in: characters, at: (x+1, y-1)), 
+                let bl = getCharacter(in: characters, at: (x-1, y+1)),
+                let br = getCharacter(in: characters, at: (x+1, y+1))  
+            {
+                if  (ul == "M" && ur == "M" && m == "A" && bl == "S" && br == "S") ||
+                    (ul == "M" && ur == "S" && m == "A" && bl == "M" && br == "S")
+                 {
+                    count += 1
+                }
+            }
+        }
+    }
+
+    return count
 }
 
 @Suite("To find the first star on day 04") struct Day04StarOneTests {
@@ -94,6 +115,17 @@ func countX_MAS(in input: String) -> Int {
         """
 
         #expect(countX_MAS(in: input) == 1)
+    }
+
+    @Test("We should find one X-MAS in the minimal case") func two_MinimalX_Mas() {
+        let input = 
+        """
+        M.S.M.S
+        .A...A.
+        M.S.M.S
+        """
+
+        #expect(countX_MAS(in: input) == 2)
     }
 
     // @Test("We should find the word XMAS in the example input 18 times") func countInExampleInput() {

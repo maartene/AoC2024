@@ -26,14 +26,6 @@ func countXMAS(in input: String) -> Int {
 }
 
 func checkForWordInCharacterMatrix(searchWord: String, characterMatrix: [[Character]], position: (x: Int, y: Int), direction: (dx: Int, dy: Int)) -> Bool {
-    func getCharacter(in array: [[Character]], at coord: (x: Int, y: Int)) -> Character? {
-        guard coord.x >= 0 && coord.x < array[0].count && coord.y >= 0 && coord.y < array.count else {
-            return nil
-        }
-
-        return array[coord.y][coord.x]
-    }
-
     var word = ""
     for i in 0 ..< searchWord.count {
         if let character = getCharacter(in: characterMatrix, at: (position.x + direction.dx * i, position.y + direction.dy * i)) {
@@ -42,4 +34,12 @@ func checkForWordInCharacterMatrix(searchWord: String, characterMatrix: [[Charac
     }
 
     return word == searchWord
+}
+
+func getCharacter(in array: [[Character]], at coord: (x: Int, y: Int)) -> Character? {
+    guard coord.x >= 0 && coord.x < array[0].count && coord.y >= 0 && coord.y < array.count else {
+        return nil
+    }
+
+    return array[coord.y][coord.x]
 }
