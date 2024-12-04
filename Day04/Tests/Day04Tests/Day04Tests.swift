@@ -2,18 +2,19 @@ import Testing
 @testable import Day04
 
 func countXMAS(in input: String) -> Int {
-    let characters = convertInputToMatrixOfCharacters(input)
+    let directions = 
+    [
+        (1, 0), (-1, 0),                    // Horizontal 
+        (0, 1), (0, -1),                    // Vertical
+        (-1, -1), (1, -1), (-1, 1), (1, 1)  // Diagonal
+    ]
 
+    let characters = convertInputToMatrixOfCharacters(input)
+    
     var count = 0
 
     for y in 0 ..< characters.count {
         for x in 0 ..< characters[y].count {
-            let directions = 
-            [
-                (1, 0), (-1, 0),                    // Horizontal 
-                (0, 1), (0, -1),                    // Vertical
-                (-1, -1), (1, -1), (-1, 1), (1, 1)  // Diagonal
-            ]
             for direction: (dx: Int, dy: Int) in directions {
                 if checkForWordInCharacterMatrix(searchWord: "XMAS", characterMatrix: characters, position: (x, y), direction: direction) {
                     count += 1
