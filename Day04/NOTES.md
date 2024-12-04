@@ -27,3 +27,4 @@
 
 ## 🍅 Pomodoro 4
 - ⚠️ Understand the 'twist'
+- ⚠️ Implement the simple case 

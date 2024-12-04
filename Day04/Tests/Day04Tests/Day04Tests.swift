@@ -46,6 +46,10 @@ func checkForWordInCharacterMatrix(searchWord: String, characterMatrix: [[Charac
     return word == searchWord
 }
 
+func countX_MAS(in input: String) -> Int {
+    1
+}
+
 @Suite("To find the first star on day 04") struct Day04StarOneTests {
     @Test("The word XMAS should appear 0 times in an empty input") func emptyArrayCase() {
         #expect(countXMAS(in: "") == 0)
@@ -121,5 +125,41 @@ func checkForWordInCharacterMatrix(searchWord: String, characterMatrix: [[Charac
     @Test("The count of XMAS in the actual input should be 2507") func countInActualInput() {
         #expect(countXMAS(in: input) == 2507)
     }
+
+}
+
+@Suite("To find the second star on day 04") struct Day04StarTwoTests {
+    @Test("We should find one X-MAS in the minimal case") func minimalX_Mas() {
+        let input = 
+        """
+        M.S
+        .A.
+        M.S
+        """
+
+        #expect(countX_MAS(in: input) == 1)
+    }
+
+    // @Test("We should find the word XMAS in the example input 18 times") func countInExampleInput() {
+    //     let exampleInput = 
+    //     """
+    //     MMMSXXMASM
+    //     MSAMXMSMSA
+    //     AMXSXMAAMM
+    //     MSAMASMSMX
+    //     XMASAMXAMM
+    //     XXAMMXXAMA
+    //     SMSMSASXSS
+    //     SAXAMASAAA
+    //     MAMMMXMMMM
+    //     MXMXAXMASX
+    //     """
+
+    //     #expect(countX_MAS(in: exampleInput) == 9)
+    // }
+
+    // @Test("The count of XMAS in the actual input should be 2507") func countInActualInput() {
+    //     #expect(countX_MAS(in: input) == 2507)
+    // }
 
 }
