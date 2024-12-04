@@ -26,7 +26,7 @@ func countXMAS(in input: String) -> Int {
         #expect(countXMAS(in: "") == 0)
     }
 
-    @Test("The word XMAS appears in these strings only once", arguments: [
+    @Test("The word XMAS appears in these single line strings L->R only once", arguments: [
         "XMAS",
         "FOOBXMASAR",
         "XMASBAZ",
@@ -35,7 +35,7 @@ func countXMAS(in input: String) -> Int {
         #expect(countXMAS(in: testcase) == 1)
     }
 
-    @Test("The word XMAS appears in these strings more than once", arguments: [
+    @Test("The word XMAS appears in these single line strings L->R more than once", arguments: [
         ("XMASXMAS", 2),
         ("FOOXMASBARXMASBAZ", 2),
         ("FOOXMASBARXMASBAZFOOXMASBARXMASBAZ", 4)
