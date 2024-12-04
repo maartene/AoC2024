@@ -42,4 +42,24 @@ func countXMAS(in input: String) -> Int {
     ]) func xmasAppearsMultipleTimes(testcase: (input: String, expected: Int)) {
         #expect(countXMAS(in: testcase.input) == testcase.expected)
     }
+
+    @Test("This is not XMAS") func twoLineBreakXMAS() {
+        let input =
+        """
+        AAX
+        MAS
+        """
+
+        #expect(countXMAS(in: input) == 0)
+    }
+
+    @Test("Find the word christmas in a two line input as well") func twoLineInput() {
+        let input = 
+        """
+        XMASXMASAAAAAAAAAAAAAAAAAAAAAAAAAA
+        FOOXMASBARXMASBAZAAAAAAAAAAAAAAAAA
+        FOOXMASBARXMASBAZFOOXMASBARXMASBAZ
+        """
+        #expect(countXMAS(in: input) == 8)
+    }
 }

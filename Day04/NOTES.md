@@ -13,7 +13,8 @@
 - ✅ Lets find XMAS when the input is XMAS
 - ✅ Lets find XMAS when the word is somewhere in a string
 - ✅ Start of string, end of string
-- 🚧 Detect the word XMAS in a string more than once
+- ✅ Detect the word XMAS in a string more than once
+- ✅ Multiline input, L -> R
 - ⚠️ Make the example input pass
 - ⚠️ Import the input data
 
