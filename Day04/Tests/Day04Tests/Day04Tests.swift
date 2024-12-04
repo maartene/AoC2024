@@ -2,7 +2,11 @@ import Testing
 @testable import Day04
 
 func countXMAS(in input: String) -> Int {
-    0
+    if input == "XMAS" {
+        return 1
+    } else {
+        return 0
+    }
 }
 
 @Test func example() async throws {
@@ -12,5 +16,9 @@ func countXMAS(in input: String) -> Int {
 @Suite("To find the first star on day 04") struct Day04StarOneTests {
     @Test("The word XMAS should appear 0 times in an empty input") func emptyArrayCase() {
         #expect(countXMAS(in: "") == 0)
+    }
+
+    @Test("The word XMAS should appear 1 times in the string 'XMAS'") func actualSearchStringCase() {
+        #expect(countXMAS(in: "XMAS") == 1)
     }
 }
