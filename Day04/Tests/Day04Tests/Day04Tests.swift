@@ -2,7 +2,7 @@ import Testing
 import Shared
 @testable import Day04
 
-func countX_MAS(in input: String) -> Int {
+func countX_MASses(in input: String) -> Int {
     let characters = convertInputToMatrixOfCharacters(input)
     
     var count = 0
@@ -116,7 +116,7 @@ func countX_MAS(in input: String) -> Int {
         M.S
         """
 
-        #expect(countX_MAS(in: input) == 1)
+        #expect(countX_MASses(in: input) == 1)
     }
 
     @Test("We should find two X-MAS in the minimal case") func two_MinimalX_Mas() {
@@ -127,7 +127,7 @@ func countX_MAS(in input: String) -> Int {
         M.S.M.S
         """
 
-        #expect(countX_MAS(in: input) == 2)
+        #expect(countX_MASses(in: input) == 2)
     }
 
     @Test("We should find two X-MASses in the example input 9 times") func countInExampleInput() {
@@ -145,10 +145,10 @@ func countX_MAS(in input: String) -> Int {
         MXMXAXMASX
         """
 
-        #expect(countX_MAS(in: exampleInput) == 9)
+        #expect(countX_MASses(in: exampleInput) == 9)
     }
 
     @Test("The count of X-MASses in the actual input should be 1969") func countInActualInput() {
-        #expect(countX_MAS(in: input) == 1969)
+        #expect(countX_MASses(in: input) == 1969)
     }
 }

@@ -29,4 +29,4 @@
 - ✅ Understand the 'twist'
 - ✅ Implement the simple case 
 - ✅ Make the example input pass
-- ⚠️ Lets get that second ⭐️
+- ✅ Lets get that second ⭐️
