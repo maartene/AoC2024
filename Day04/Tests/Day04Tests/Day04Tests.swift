@@ -1,4 +1,5 @@
 import Testing
+import Shared
 @testable import Day04
 
 func countXMAS(in input: String) -> Int {
@@ -24,14 +25,6 @@ func countXMAS(in input: String) -> Int {
     }
 
     return count
-}
-
-func convertInputToMatrixOfCharacters(_ input: String) -> [[Character]] {
-    let lines = input.split(separator: "\n").map(String.init)
-    let characters: [[Character]] = lines.map { line in
-        line.map { $0 } 
-    }
-    return characters
 }
 
 func checkForWordInCharacterMatrix(searchWord: String, characterMatrix: [[Character]], position: (x: Int, y: Int), direction: (dx: Int, dy: Int)) -> Bool {

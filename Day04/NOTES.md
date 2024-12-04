@@ -17,6 +17,6 @@
 - ✅ Multiline input, L -> R
 - ✅ Find XMAS vertically
 - ✅ Generalize search code
-- 🚧 Make the example input pass
+- ✅ Make the example input pass
 - ⚠️ Import the input data
-
+- ⚠️ Lets get that first star!
