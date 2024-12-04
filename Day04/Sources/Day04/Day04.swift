@@ -32,16 +32,16 @@ func countX_MASses(in input: String) -> Int {
 
     for y in 0 ..< characters.count {
         for x in 0 ..< characters[y].count {
-            if  let m = getCharacter(in: characters, at: (x, y)),
+            if  getCharacter(in: characters, at: (x, y)) == "A",
                 let ul = getCharacter(in: characters, at: (x-1, y-1)),  
                 let ur = getCharacter(in: characters, at: (x+1, y-1)), 
                 let bl = getCharacter(in: characters, at: (x-1, y+1)),
-                let br = getCharacter(in: characters, at: (x+1, y+1))  
+                let br = getCharacter(in: characters, at: (x+1, y+1))
             {
-                if  (ul == "M" && ur == "M" && m == "A" && bl == "S" && br == "S") ||
-                    (ul == "M" && ur == "S" && m == "A" && bl == "M" && br == "S") ||
-                    (ul == "S" && ur == "M" && m == "A" && bl == "S" && br == "M") ||
-                    (ul == "S" && ur == "S" && m == "A" && bl == "M" && br == "M")
+                if  (ul == "M" && ur == "M" && bl == "S" && br == "S") ||
+                    (ul == "M" && ur == "S" && bl == "M" && br == "S") ||
+                    (ul == "S" && ur == "M" && bl == "S" && br == "M") ||
+                    (ul == "S" && ur == "S" && bl == "M" && br == "M")
                  {
                     count += 1
                 }
