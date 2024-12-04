@@ -148,8 +148,7 @@ func countX_MAS(in input: String) -> Int {
         #expect(countX_MAS(in: exampleInput) == 9)
     }
 
-    // @Test("The count of XMAS in the actual input should be 2507") func countInActualInput() {
-    //     #expect(countX_MAS(in: input) == 2507)
-    // }
-
+    @Test("The count of X-MASses in the actual input should be 1969") func countInActualInput() {
+        #expect(countX_MAS(in: input) == 1969)
+    }
 }
