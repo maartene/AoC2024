@@ -10,7 +10,9 @@
 ## 🍅 Pomodoro 1
 - ✅ Read the description
 - ✅ Lets find XMAS in an empty input
-- 🚧 Lets find XMAS when the input is XMAS
+- ✅ Lets find XMAS when the input is XMAS
+- ✅ Lets find XMAS when the word is somewhere in a string
+- 🚧 Start of string, end of string
 - ⚠️ Make the example input pass
 - ⚠️ Import the input data
 
