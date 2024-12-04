@@ -8,6 +8,9 @@
 - ⚠️ TODO
 
 ## 🍅 Pomodoro 1
-- ⚠️ Read the description
-- ⚠️ Import the input data
+- ✅ Read the description
+- ✅ Lets find XMAS in an empty input
+- 🚧 Lets find XMAS when the input is XMAS
 - ⚠️ Make the example input pass
+- ⚠️ Import the input data
+
