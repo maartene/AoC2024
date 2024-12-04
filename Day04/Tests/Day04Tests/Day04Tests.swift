@@ -18,7 +18,7 @@ func countXMAS(in input: String) -> Int {
         #expect(countXMAS(in: "") == 0)
     }
 
-    @Test("The word XMAS should appear 1 times in the string 'XMAS'") func actualSearchStringCase() {
+    @Test("The word XMAS should appear once times in the string 'XMAS'") func actualSearchStringCase() {
         #expect(countXMAS(in: "XMAS") == 1)
     }
 }
