@@ -1,23 +1,7 @@
 import Testing
 @testable import Day04
 
-func convertInputToMatrixOfCharacters(_ input: String) -> [[Character]] {
-    let lines = input.split(separator: "\n").map(String.init)
-    let characters: [[Character]] = lines.map { line in
-        line.map { $0 } 
-    }
-    return characters
-}
-
 func countXMAS(in input: String) -> Int {
-    func getCharacter(in array: [[Character]], at coord: (x: Int, y: Int)) -> Character? {
-        guard coord.x >= 0 && coord.x < array[0].count && coord.y >= 0 && coord.y < array.count else {
-            return nil
-        }
-
-        return array[coord.y][coord.x]
-    }
-
     let characters = convertInputToMatrixOfCharacters(input)
 
     var count = 0
@@ -31,13 +15,7 @@ func countXMAS(in input: String) -> Int {
                 (-1, -1), (1, -1), (-1, 1), (1, 1)  // Diagonal
             ]
             for direction: (dx: Int, dy: Int) in directions {
-                var word = ""
-                for i in 0 ..< 4 {
-                    if let character = getCharacter(in: characters, at: (x + direction.dx * i, y + direction.dy * i)) {
-                        word += String(character)
-                    }
-                }
-                if word == "XMAS" {
+                if checkForWordInCharacterMatrix(searchWord: "XMAS", characterMatrix: characters, position: (x, y), direction: direction) {
                     count += 1
                 }
             }
@@ -45,6 +23,33 @@ func countXMAS(in input: String) -> Int {
     }
 
     return count
+}
+
+func convertInputToMatrixOfCharacters(_ input: String) -> [[Character]] {
+    let lines = input.split(separator: "\n").map(String.init)
+    let characters: [[Character]] = lines.map { line in
+        line.map { $0 } 
+    }
+    return characters
+}
+
+func checkForWordInCharacterMatrix(searchWord: String, characterMatrix: [[Character]], position: (x: Int, y: Int), direction: (dx: Int, dy: Int)) -> Bool {
+    func getCharacter(in array: [[Character]], at coord: (x: Int, y: Int)) -> Character? {
+        guard coord.x >= 0 && coord.x < array[0].count && coord.y >= 0 && coord.y < array.count else {
+            return nil
+        }
+
+        return array[coord.y][coord.x]
+    }
+
+    var word = ""
+    for i in 0 ..< searchWord.count {
+        if let character = getCharacter(in: characterMatrix, at: (position.x + direction.dx * i, position.y + direction.dy * i)) {
+            word += String(character)
+        }
+    }
+
+    return word == searchWord
 }
 
 @Suite("To find the first star on day 04") struct Day04StarOneTests {
