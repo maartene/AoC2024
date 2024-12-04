@@ -117,4 +117,9 @@ func checkForWordInCharacterMatrix(searchWord: String, characterMatrix: [[Charac
 
         #expect(countXMAS(in: exampleInput) == 18)
     }
+
+    @Test("The count of XMAS in the actual input should be 2507") func countInActualInput() {
+        #expect(countXMAS(in: input) == 2507)
+    }
+
 }

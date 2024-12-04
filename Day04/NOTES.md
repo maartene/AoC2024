@@ -14,9 +14,16 @@
 - ✅ Lets find XMAS when the word is somewhere in a string
 - ✅ Start of string, end of string
 - ✅ Detect the word XMAS in a string more than once
+
+## 🍅 Pomodoro 2
 - ✅ Multiline input, L -> R
 - ✅ Find XMAS vertically
+
+## 🍅 Pomodoro 3
 - ✅ Generalize search code
 - ✅ Make the example input pass
-- ⚠️ Import the input data
-- ⚠️ Lets get that first star!
+- ✅ Import the input data
+- ✅ Lets get that first star ⭐️
+
+## 🍅 Pomodoro 4
+- ⚠️ Understand the 'twist'
