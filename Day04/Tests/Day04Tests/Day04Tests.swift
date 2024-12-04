@@ -2,33 +2,6 @@ import Testing
 import Shared
 @testable import Day04
 
-func countX_MASses(in input: String) -> Int {
-    let characters = convertInputToMatrixOfCharacters(input)
-    
-    var count = 0
-
-    for y in 0 ..< characters.count {
-        for x in 0 ..< characters[y].count {
-            if  let m = getCharacter(in: characters, at: (x, y)),
-                let ul = getCharacter(in: characters, at: (x-1, y-1)),  
-                let ur = getCharacter(in: characters, at: (x+1, y-1)), 
-                let bl = getCharacter(in: characters, at: (x-1, y+1)),
-                let br = getCharacter(in: characters, at: (x+1, y+1))  
-            {
-                if  (ul == "M" && ur == "M" && m == "A" && bl == "S" && br == "S") ||
-                    (ul == "M" && ur == "S" && m == "A" && bl == "M" && br == "S") ||
-                    (ul == "S" && ur == "M" && m == "A" && bl == "S" && br == "M") ||
-                    (ul == "S" && ur == "S" && m == "A" && bl == "M" && br == "M")
-                 {
-                    count += 1
-                }
-            }
-        }
-    }
-
-    return count
-}
-
 @Suite("To find the first star on day 04") struct Day04StarOneTests {
     @Test("The word XMAS should appear 0 times in an empty input") func emptyArrayCase() {
         #expect(countXMAS(in: "") == 0)

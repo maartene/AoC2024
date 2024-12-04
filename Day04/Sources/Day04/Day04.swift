@@ -25,6 +25,33 @@ func countXMAS(in input: String) -> Int {
     return count
 }
 
+func countX_MASses(in input: String) -> Int {
+    let characters = convertInputToMatrixOfCharacters(input)
+    
+    var count = 0
+
+    for y in 0 ..< characters.count {
+        for x in 0 ..< characters[y].count {
+            if  let m = getCharacter(in: characters, at: (x, y)),
+                let ul = getCharacter(in: characters, at: (x-1, y-1)),  
+                let ur = getCharacter(in: characters, at: (x+1, y-1)), 
+                let bl = getCharacter(in: characters, at: (x-1, y+1)),
+                let br = getCharacter(in: characters, at: (x+1, y+1))  
+            {
+                if  (ul == "M" && ur == "M" && m == "A" && bl == "S" && br == "S") ||
+                    (ul == "M" && ur == "S" && m == "A" && bl == "M" && br == "S") ||
+                    (ul == "S" && ur == "M" && m == "A" && bl == "S" && br == "M") ||
+                    (ul == "S" && ur == "S" && m == "A" && bl == "M" && br == "M")
+                 {
+                    count += 1
+                }
+            }
+        }
+    }
+
+    return count
+}
+
 func checkForWordInCharacterMatrix(searchWord: String, characterMatrix: [[Character]], position: (x: Int, y: Int), direction: (dx: Int, dy: Int)) -> Bool {
     var word = ""
     for i in 0 ..< searchWord.count {
