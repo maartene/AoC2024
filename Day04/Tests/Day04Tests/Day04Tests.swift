@@ -2,20 +2,41 @@ import Testing
 @testable import Day04
 
 func countXMAS(in input: String) -> Int {
-    let characters: [Character] = input.map { $0 }
+    func getCharacter(in array: [[Character]], at coord: (x: Int, y: Int)) -> Character? {
+        guard coord.x >= 0 && coord.x < array[0].count && coord.y >= 0 && coord.y < array.count else {
+            return nil
+        }
 
-    guard characters.count >= 4 else {
-        return 0
+        return array[coord.y][coord.x]
+    }
+
+    let lines = input.split(separator: "\n").map(String.init)
+    let characters: [[Character]] = lines.map { line in
+        line.map { $0 } 
     }
 
     var count = 0
-    for i in 0 ..< characters.count - 3 {
-        if characters[i] == "X" &&
-            characters[i + 1] == "M" && 
-            characters[i + 2] == "A" &&
-            characters[i + 3] == "S" {
-            count += 1
-         }
+
+    for y in 0 ..< characters.count {
+        for x in 0 ..< characters[y].count {
+            // search L -> R
+            if  let l1 = getCharacter(in: characters, at: (x, y)),
+                let l2 = getCharacter(in: characters, at: (x + 1, y)),
+                let l3 = getCharacter(in: characters, at: (x + 2, y)),
+                let l4 = getCharacter(in: characters, at: (x + 3, y)),
+                l1 == "X", l2 == "M", l3 == "A", l4 == "S" {
+                    count += 1
+                } 
+
+                // search N -> S
+            if  let l1 = getCharacter(in: characters, at: (x, y)),
+                let l2 = getCharacter(in: characters, at: (x, y + 1)),
+                let l3 = getCharacter(in: characters, at: (x, y + 2)),
+                let l4 = getCharacter(in: characters, at: (x, y + 3)),
+                l1 == "X", l2 == "M", l3 == "A", l4 == "S" {
+                    count += 1
+                } 
+        }
     }
 
     return count
@@ -61,5 +82,17 @@ func countXMAS(in input: String) -> Int {
         FOOXMASBARXMASBAZFOOXMASBARXMASBAZ
         """
         #expect(countXMAS(in: input) == 8)
+    }
+
+    @Test("Find the word christmas vertically as well") func verticalXMAS() {
+        let input = 
+        """
+        AXE
+        BMF
+        CAG
+        DSH
+        """
+        
+        #expect(countXMAS(in: input) == 1)
     }
 }
