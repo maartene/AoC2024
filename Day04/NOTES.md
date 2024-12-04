@@ -15,7 +15,8 @@
 - ✅ Start of string, end of string
 - ✅ Detect the word XMAS in a string more than once
 - ✅ Multiline input, L -> R
-- 🚧 Find XMAS vertically
-- ⚠️ Make the example input pass
+- ✅ Find XMAS vertically
+- ✅ Generalize search code
+- 🚧 Make the example input pass
 - ⚠️ Import the input data
 

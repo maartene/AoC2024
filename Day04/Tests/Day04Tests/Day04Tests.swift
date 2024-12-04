@@ -20,7 +20,11 @@ func countXMAS(in input: String) -> Int {
     for y in 0 ..< characters.count {
         for x in 0 ..< characters[y].count {
             let directions = 
-            [(1, 0), (0, 1)]
+            [
+                (1, 0), (-1, 0),                    // Horizontal 
+                (0, 1), (0, -1),                    // Vertical
+                (-1, -1), (1, -1), (-1, 1), (1, 1)  // Diagonal
+            ]
             for direction: (dx: Int, dy: Int) in directions {
                 var word = ""
                 for i in 0 ..< 4 {
@@ -90,5 +94,23 @@ func countXMAS(in input: String) -> Int {
         """
         
         #expect(countXMAS(in: input) == 1)
+    }
+
+    @Test("We should find the word XMAS in the example input 18 times") func countInExampleInput() {
+        let exampleInput = 
+        """
+        MMMSXXMASM
+        MSAMXMSMSA
+        AMXSXMAAMM
+        MSAMASMSMX
+        XMASAMXAMM
+        XXAMMXXAMA
+        SMSMSASXSS
+        SAXAMASAAA
+        MAMMMXMMMM
+        MXMXAXMASX
+        """
+
+        #expect(countXMAS(in: exampleInput) == 18)
     }
 }
