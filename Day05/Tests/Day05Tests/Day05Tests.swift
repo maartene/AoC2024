@@ -72,11 +72,11 @@ func convertInvalidSequenceToValidSequence(_ sequence: [Int], rules: [Rule]) -> 
 @Suite("To get the second star on day 05") struct Day05StarTwoTests {
     let rules = convertInputToRulesAndSequences(exampleInput).rules
     
-    @Test("We should be able to convert an invalid sequence into a valid sequence") func canConvertInvalidSequenceToValidSequence() {
-        let invalidSequence = [75,97,47,61,53]
-        let validSequence = [97,75,47,61,53]
+    @Test("We should be able to convert an invalid sequence into a valid sequence", arguments: [
+        ([75,97,47,61,53], [97,75,47,61,53])
+    ]) func canConvertInvalidSequenceToValidSequence(testcase: (invalidSequence: [Int], expectedValidSequence: [Int])) {
         
-        #expect(convertInvalidSequenceToValidSequence(invalidSequence, rules: rules) == validSequence)
+        #expect(convertInvalidSequenceToValidSequence(testcase.invalidSequence, rules: rules) == testcase.expectedValidSequence)
         
     }
 }
