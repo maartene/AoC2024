@@ -9,10 +9,6 @@ func isValidSequence(_ sequence: [Int]) -> Bool {
     return true
 }
 
-@Test func example() async throws {
-    // Write your test here and use APIs like `#expect(...)` to check expected conditions.
-}
-
 @Suite("To get the first star on day 05") struct Day05StarOneTests {
     @Test("The following sequences should be considered valid", arguments: [
         [75,47,61,53,29],
