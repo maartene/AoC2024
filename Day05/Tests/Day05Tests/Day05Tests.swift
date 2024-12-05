@@ -63,6 +63,9 @@ func convertInputToRulesAndSequences(_ input: String) -> (rules: [Rule], sequenc
         """
         47|53
         97|13
+        
+        75,47,61,53,29
+        97,61,53,29,13
         """
         
         let expectedRules = [
@@ -73,7 +76,7 @@ func convertInputToRulesAndSequences(_ input: String) -> (rules: [Rule], sequenc
         #expect(convertInputToRulesAndSequences(input).rules == expectedRules)
     }
     
-    static let rulesInput =
+    static let exampleInput =
     """
     47|53
     97|13
@@ -96,7 +99,14 @@ func convertInputToRulesAndSequences(_ input: String) -> (rules: [Rule], sequenc
     47|29
     75|13
     53|13
+    
+    75,47,61,53,29
+    97,61,53,29,13
+    75,29,13
+    75,97,47,61,53
+    61,13,29
+    97,13,75,29,47
     """
     
-    let rules = convertInputToRulesAndSequences(rulesInput).rules
+    let rules = convertInputToRulesAndSequences(exampleInput).rules
 }
