@@ -7,8 +7,16 @@ struct Rule: Equatable {
 }
 
 func isValidSequence(_ sequence: [Int], rules: [Rule]) -> Bool {
-    if sequence == [75,97,47,61,53] {
-        return false
+    for numberToCheck in sequence {
+        let indexOfNumberToCheck = sequence.firstIndex(of: numberToCheck)!
+        
+        let applicableRules = rules.filter { $0.numberToPrint == numberToCheck }
+        let pagesThatNeedToGoAfterIt = applicableRules.map { $0.before }
+        for pageThatShouldBeAfterIt in pagesThatNeedToGoAfterIt {
+            if sequence.contains(pageThatShouldBeAfterIt) && sequence.firstIndex(of: pageThatShouldBeAfterIt)! < indexOfNumberToCheck {
+                return false
+            }
+        }
     }
     
     return true
@@ -44,13 +52,13 @@ func convertInputToRulesAndSequences(_ input: String) -> (rules: [Rule], sequenc
     
     @Test("The following sequences should not be considered valid", arguments: [
         [75,97,47,61,53],
-//        [61,13,29],
-//        [97,13,75,29,47]
+        [61,13,29],
+        [97,13,75,29,47]
     ]) func invalidSequences(sequence: [Int]) {
         #expect(isValidSequence(sequence, rules: rules) == false)
     }
     
-    @Test("Convert rules input to into rules") func convertInputToRules() {
+    @Test("Convert exampleInput into rules") func convertInputToRules() {
         let input =
         """
         47|53
