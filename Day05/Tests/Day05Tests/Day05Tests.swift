@@ -17,6 +17,21 @@ func isValidSequence(_ sequence: [Int], rules: [Rule]) -> Bool {
     return true
 }
 
+func sumOfMiddleNumbersInValidSequences(_ input: String) -> Int {
+    let rulesAndSequences = convertInputToRulesAndSequences(input)
+    let validSequences = rulesAndSequences.sequences.filter { isValidSequence($0, rules: rulesAndSequences.rules) }
+    
+    var sumOfMiddleNumbers = 0
+    
+    for validSequence in validSequences {
+        let middleNumberIndex = validSequence.count / 2
+        sumOfMiddleNumbers += validSequence[middleNumberIndex]
+    }
+    
+    return sumOfMiddleNumbers
+    
+}
+
 @Suite("To get the first star on day 05") struct Day05StarOneTests {
     @Test("The following sequences should be considered valid", arguments: [
         [75,47,61,53,29],
@@ -68,6 +83,10 @@ func isValidSequence(_ sequence: [Int], rules: [Rule]) -> Bool {
         ]
         
         #expect(convertInputToRulesAndSequences(input).sequences == expectedSequences)
+    }
+    
+    @Test("The sum of the middlenumbers of the valid sequences in the example input should be 143") func sumOfMiddleNumbers_exampleInput() {
+        #expect(sumOfMiddleNumbersInValidSequences(Self.exampleInput) == 143)
     }
     
     static let exampleInput =
