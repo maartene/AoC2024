@@ -1,32 +1,6 @@
 import Testing
 @testable import Day05
 
-func isValidSequence(_ sequence: [Int], rules: [Rule]) -> Bool {
-    for numberToCheck in sequence {
-        let indexOfNumberToCheck = sequence.firstIndex(of: numberToCheck)!
-        
-        let applicableRules = rules.filter { $0.numberToPrint == numberToCheck }
-        let pagesThatNeedToGoAfterIt = applicableRules.map { $0.before }
-        for pageThatShouldBeAfterIt in pagesThatNeedToGoAfterIt {
-            if sequence.contains(pageThatShouldBeAfterIt) && sequence.firstIndex(of: pageThatShouldBeAfterIt)! < indexOfNumberToCheck {
-                return false
-            }
-        }
-    }
-    
-    return true
-}
-
-func sumOfMiddleNumbersInValidSequences(_ input: String) -> Int {
-    let rulesAndSequences = convertInputToRulesAndSequences(input)
-    let validSequences = rulesAndSequences.sequences.filter { isValidSequence($0, rules: rulesAndSequences.rules) }
-    
-    return validSequences.reduce(0) { partialResult, validSequence in
-        let middleNumberIndex = validSequence.count / 2
-        return partialResult + validSequence[middleNumberIndex]
-    }
-}
-
 @Suite("To get the first star on day 05") struct Day05StarOneTests {
     @Test("The following sequences should be considered valid", arguments: [
         [75,47,61,53,29],
