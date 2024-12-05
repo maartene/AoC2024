@@ -1,12 +1,16 @@
 // MARK: Part 1
 func sumOfMiddleNumbersInValidSequences(_ input: String) -> Int {
     let rulesAndSequences = convertInputToRulesAndSequences(input)
-    let validSequences = rulesAndSequences.sequences.filter { isValidSequence($0, rules: rulesAndSequences.rules).isValid }
+    let validSequences = rulesAndSequences.sequences.filter { isValidSequence($0, rules: rulesAndSequences.rules) }
     
     return sumOfMiddleNumbers(sequences: validSequences)
 }
 
-func isValidSequence(_ sequence: [Int], rules: [NumberCombo]) -> (isValid: Bool, violatedRule: NumberCombo?) {
+func isValidSequence(_ sequence: [Int], rules: [NumberCombo]) -> Bool {
+    indicesOfNumbersThatViolateRule(sequence, rules: rules) == nil
+}
+
+func indicesOfNumbersThatViolateRule(_ sequence: [Int], rules: [NumberCombo]) -> NumberCombo? {
     for numberToCheck in sequence {
         let indexOfNumberToCheck = sequence.firstIndex(of: numberToCheck)!
         
@@ -14,18 +18,18 @@ func isValidSequence(_ sequence: [Int], rules: [NumberCombo]) -> (isValid: Bool,
         let pagesThatNeedToGoAfterIt = applicableRules.map { $0.numberTwo }
         for pageThatShouldBeAfterIt in pagesThatNeedToGoAfterIt {
             if let pageThatShouldBeAfterItIndex = sequence.firstIndex(of: pageThatShouldBeAfterIt), pageThatShouldBeAfterItIndex < indexOfNumberToCheck {
-                return (false, NumberCombo(numberOne: indexOfNumberToCheck, numberTwo: pageThatShouldBeAfterItIndex))
+                return NumberCombo(numberOne: indexOfNumberToCheck, numberTwo: pageThatShouldBeAfterItIndex)
             }
         }
     }
     
-    return (true, nil)
+    return nil
 }
 
 // MARK: Part 2
 func sumOfMiddleNumbersInValidMadeInvalidSequences(_ input: String) -> Int {
     let rulesAndSequences = convertInputToRulesAndSequences(input)
-    let invalidSequences = rulesAndSequences.sequences.filter { isValidSequence($0, rules: rulesAndSequences.rules).isValid == false }
+    let invalidSequences = rulesAndSequences.sequences.filter { isValidSequence($0, rules: rulesAndSequences.rules) == false }
     
     let validMadeInvalidSequences = invalidSequences.map { convertInvalidSequenceToValidSequence($0, rules: rulesAndSequences.rules) }
     
@@ -34,7 +38,7 @@ func sumOfMiddleNumbersInValidMadeInvalidSequences(_ input: String) -> Int {
 
 func convertInvalidSequenceToValidSequence(_ sequence: [Int], rules: [NumberCombo]) -> [Int] {
     var correctedSequence = sequence
-    while let toSwap = isValidSequence(correctedSequence, rules: rules).violatedRule {
+    while let toSwap = indicesOfNumbersThatViolateRule(correctedSequence, rules: rules) {
         correctedSequence.swapAt(toSwap.numberOne, toSwap.numberTwo)
     }
     

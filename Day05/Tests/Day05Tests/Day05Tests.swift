@@ -9,7 +9,7 @@ import Testing
         [97,61,53,29,13],
         [75,29,13]
     ]) func validSequences(sequence: [Int]) {
-        #expect(isValidSequence(sequence, rules: rules).isValid)
+        #expect(isValidSequence(sequence, rules: rules))
     }
     
     @Test("The following sequences should not be considered valid", arguments: [
@@ -17,7 +17,7 @@ import Testing
         [61,13,29],
         [97,13,75,29,47]
     ]) func invalidSequences(sequence: [Int]) {
-        #expect(isValidSequence(sequence, rules: rules).isValid == false)
+        #expect(isValidSequence(sequence, rules: rules) == false)
     }
     
     @Test("Convert exampleInput into rules") func convertInputToRules() {
