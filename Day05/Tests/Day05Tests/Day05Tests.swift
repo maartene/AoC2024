@@ -1,7 +1,12 @@
 import Testing
 @testable import Day05
 
-func isValidSequence(_ sequence: [Int], rules: [Int: Int]) -> Bool {
+struct Rule: Equatable {
+    let numberToPrint: Int
+    let before: Int
+}
+
+func isValidSequence(_ sequence: [Int], rules: [Rule]) -> Bool {
     if sequence == [75,97,47,61,53] {
         return false
     }
@@ -9,23 +14,26 @@ func isValidSequence(_ sequence: [Int], rules: [Int: Int]) -> Bool {
     return true
 }
 
-func convertInputToRulesAndSequences(_ input: String) -> (rules: [Int: Int], sequences: [Int]) {
+func convertInputToRulesAndSequences(_ input: String) -> (rules: [Rule], sequences: [Int]) {
     let lines = input.split(separator: "\n").map(String.init)
     
-    let rules: [Int: Int] = lines.reduce(into: [:]) { result, line in
-        let tokens = line.split(separator: "|")
-        let key = Int(tokens[0])!
-        let value = Int(tokens[1])!
-        
-        result[key] = value
+    let numbersAsStrings = lines.map{ line in
+        line.split(separator: "|")
+            .map(String.init)
+    }
+    
+    let rules = numbersAsStrings
+        .compactMap { numbers in
+            if let print = Int(numbers[0]), let before = Int(numbers[1]) {
+                return Rule(numberToPrint: print, before: before)
+            }
+            return nil
     }
     
     return (rules, [])
 }
 
 @Suite("To get the first star on day 05") struct Day05StarOneTests {
-
-    
     @Test("The following sequences should be considered valid", arguments: [
         [75,47,61,53,29],
         [97,61,53,29,13],
@@ -50,8 +58,8 @@ func convertInputToRulesAndSequences(_ input: String) -> (rules: [Int: Int], seq
         """
         
         let expectedRules = [
-            47: 53,
-            97: 13
+            Rule(numberToPrint: 47, before: 53),
+            Rule(numberToPrint: 97, before: 13),
         ]
         
         #expect(convertInputToRulesAndSequences(input).rules == expectedRules)
