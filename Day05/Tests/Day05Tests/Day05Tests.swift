@@ -1,4 +1,5 @@
 import Testing
+import Shared
 @testable import Day05
 
 struct Rule: Equatable {
@@ -22,10 +23,12 @@ func isValidSequence(_ sequence: [Int], rules: [Rule]) -> Bool {
     return true
 }
 
-func convertInputToRulesAndSequences(_ input: String) -> (rules: [Rule], sequences: [Int]) {
+func convertInputToRulesAndSequences(_ input: String) -> (rules: [Rule], sequences: [[Int]]) {
     let lines = input.split(separator: "\n").map(String.init)
     
-    let numbersAsStrings = lines.map{ line in
+    let ruleLines = lines.filter { $0.contains("|") }
+    
+    let numbersAsStrings = ruleLines.map{ line in
         line.split(separator: "|")
             .map(String.init)
     }
@@ -38,7 +41,14 @@ func convertInputToRulesAndSequences(_ input: String) -> (rules: [Rule], sequenc
             return nil
     }
     
-    return (rules, [])
+    let sequenceLines = lines.filter { $0.contains(",") }
+    let sequences = sequenceLines.map { line in
+        line.split(separator: ",")
+            .map(String.init)
+            .compactMap(Int.init)
+    }
+    
+    return (rules, sequences)
 }
 
 @Suite("To get the first star on day 05") struct Day05StarOneTests {
@@ -74,6 +84,24 @@ func convertInputToRulesAndSequences(_ input: String) -> (rules: [Rule], sequenc
         ]
         
         #expect(convertInputToRulesAndSequences(input).rules == expectedRules)
+    }
+    
+    @Test("Convert exampleInput into rules") func convertInputToSequences() {
+        let input =
+        """
+        47|53
+        97|13
+        
+        75,47,61,53,29
+        97,61,53,29,13
+        """
+        
+        let expectedSequences = [
+            [75,47,61,53,29],
+            [97,61,53,29,13],
+        ]
+        
+        #expect(convertInputToRulesAndSequences(input).sequences == expectedSequences)
     }
     
     static let exampleInput =
