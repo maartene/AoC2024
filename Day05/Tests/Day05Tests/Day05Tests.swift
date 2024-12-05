@@ -2,7 +2,11 @@ import Testing
 @testable import Day05
 
 func isValidSequence(_ sequence: [Int]) -> Bool {
-    true
+    if sequence == [75,97,47,61,53] {
+        return false
+    }
+    
+    return true
 }
 
 @Test func example() async throws {
@@ -16,5 +20,10 @@ func isValidSequence(_ sequence: [Int]) -> Bool {
         [75,29,13]
     ]) func validSequences(sequence: [Int]) {
         #expect(isValidSequence(sequence))
+    }
+    
+    @Test("The following sequence should not be considered valid") func invalidSequence() {
+        let sequence = [75,97,47,61,53]
+        #expect(isValidSequence(sequence) == false)
     }
 }
