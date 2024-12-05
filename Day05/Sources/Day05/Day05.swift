@@ -3,10 +3,7 @@ func sumOfMiddleNumbersInValidSequences(_ input: String) -> Int {
     let rulesAndSequences = convertInputToRulesAndSequences(input)
     let validSequences = rulesAndSequences.sequences.filter { isValidSequence($0, rules: rulesAndSequences.rules).isValid }
     
-    return validSequences.reduce(0) { partialResult, validSequence in
-        let middleNumberIndex = validSequence.count / 2
-        return partialResult + validSequence[middleNumberIndex]
-    }
+    return sumOfMiddleNumbers(sequences: validSequences)
 }
 
 func isValidSequence(_ sequence: [Int], rules: [Rule]) -> (isValid: Bool, violatedRule: Rule?) {
@@ -30,12 +27,10 @@ func isValidSequence(_ sequence: [Int], rules: [Rule]) -> (isValid: Bool, violat
 func sumOfMiddleNumbersInValidMadeInvalidSequences(_ input: String) -> Int {
     let rulesAndSequences = convertInputToRulesAndSequences(input)
     let invalidSequences = rulesAndSequences.sequences.filter { isValidSequence($0, rules: rulesAndSequences.rules).isValid == false }
+    
     let validMadeInvalidSequences = invalidSequences.map { convertInvalidSequenceToValidSequence($0, rules: rulesAndSequences.rules) }
     
-    return validMadeInvalidSequences.reduce(0) { partialResult, validSequence in
-        let middleNumberIndex = validSequence.count / 2
-        return partialResult + validSequence[middleNumberIndex]
-    }
+    return sumOfMiddleNumbers(sequences: validMadeInvalidSequences)
 }
 
 func convertInvalidSequenceToValidSequence(_ sequence: [Int], rules: [Rule]) -> [Int] {
@@ -51,6 +46,13 @@ func convertInvalidSequenceToValidSequence(_ sequence: [Int], rules: [Rule]) -> 
 struct Rule: Equatable {
     let numberToPrint: Int
     let before: Int
+}
+
+func sumOfMiddleNumbers(sequences: [[Int]]) -> Int {
+    return sequences.reduce(0) { partialResult, sequence in
+        let middleNumberIndex = sequence.count / 2
+        return partialResult + sequence[middleNumberIndex]
+    }
 }
 
 func convertInputToRulesAndSequences(_ input: String) -> (rules: [Rule], sequences: [[Int]]) {
