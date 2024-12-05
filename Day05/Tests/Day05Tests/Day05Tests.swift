@@ -2,7 +2,12 @@ import Testing
 @testable import Day05
 
 func convertInvalidSequenceToValidSequence(_ sequence: [Int], rules: [Rule]) -> [Int] {
-    [97,75,47,61,53]
+    var correctedSequence = sequence
+    while let toSwap = isValidSequence(correctedSequence, rules: rules).violatedRule {
+        correctedSequence.swapAt(toSwap.numberToPrint, toSwap.before)
+    }
+    
+    return correctedSequence
 }
 
 @Suite("To get the first star on day 05") struct Day05StarOneTests {
@@ -72,12 +77,13 @@ func convertInvalidSequenceToValidSequence(_ sequence: [Int], rules: [Rule]) -> 
 @Suite("To get the second star on day 05") struct Day05StarTwoTests {
     let rules = convertInputToRulesAndSequences(exampleInput).rules
     
-    @Test("We should be able to convert an invalid sequence into a valid sequence", arguments: [
-        ([75,97,47,61,53], [97,75,47,61,53])
-    ]) func canConvertInvalidSequenceToValidSequence(testcase: (invalidSequence: [Int], expectedValidSequence: [Int])) {
+    @Test("We should be able to convert an invalid sequences into a valid sequences", arguments: [
+        ([75,97,47,61,53], [97,75,47,61,53]),
+        ([61,13,29], [61,29,13]),
+        ([97,13,75,29,47], [97,75,47,29,13])
+    ]) func canConvertInvalidSequencesToValidSequences(testcase: (invalidSequence: [Int], expectedValidSequence: [Int])) {
         
         #expect(convertInvalidSequenceToValidSequence(testcase.invalidSequence, rules: rules) == testcase.expectedValidSequence)
-        
     }
 }
 

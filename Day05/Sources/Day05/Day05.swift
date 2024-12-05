@@ -8,7 +8,7 @@ func sumOfMiddleNumbersInValidSequences(_ input: String) -> Int {
     }
 }
 
-func isValidSequence(_ sequence: [Int], rules: [Rule]) -> (isValid: Bool, invalidNumber: Int?) {
+func isValidSequence(_ sequence: [Int], rules: [Rule]) -> (isValid: Bool, violatedRule: Rule?) {
     for numberToCheck in sequence {
         let indexOfNumberToCheck = sequence.firstIndex(of: numberToCheck)!
         
@@ -16,7 +16,8 @@ func isValidSequence(_ sequence: [Int], rules: [Rule]) -> (isValid: Bool, invali
         let pagesThatNeedToGoAfterIt = applicableRules.map { $0.before }
         for pageThatShouldBeAfterIt in pagesThatNeedToGoAfterIt {
             if sequence.contains(pageThatShouldBeAfterIt) && sequence.firstIndex(of: pageThatShouldBeAfterIt)! < indexOfNumberToCheck {
-                return (false, numberToCheck)
+                let pageThatShouldBeAfterItIndex = sequence.firstIndex(of: pageThatShouldBeAfterIt)!
+                return (false, Rule(numberToPrint: indexOfNumberToCheck, before: pageThatShouldBeAfterItIndex))
             }
         }
     }
