@@ -1,6 +1,6 @@
 func sumOfMiddleNumbersInValidSequences(_ input: String) -> Int {
     let rulesAndSequences = convertInputToRulesAndSequences(input)
-    let validSequences = rulesAndSequences.sequences.filter { isValidSequence($0, rules: rulesAndSequences.rules) }
+    let validSequences = rulesAndSequences.sequences.filter { isValidSequence($0, rules: rulesAndSequences.rules).isValid }
     
     return validSequences.reduce(0) { partialResult, validSequence in
         let middleNumberIndex = validSequence.count / 2
@@ -8,7 +8,7 @@ func sumOfMiddleNumbersInValidSequences(_ input: String) -> Int {
     }
 }
 
-func isValidSequence(_ sequence: [Int], rules: [Rule]) -> Bool {
+func isValidSequence(_ sequence: [Int], rules: [Rule]) -> (isValid: Bool, invalidNumber: Int?) {
     for numberToCheck in sequence {
         let indexOfNumberToCheck = sequence.firstIndex(of: numberToCheck)!
         
@@ -16,12 +16,12 @@ func isValidSequence(_ sequence: [Int], rules: [Rule]) -> Bool {
         let pagesThatNeedToGoAfterIt = applicableRules.map { $0.before }
         for pageThatShouldBeAfterIt in pagesThatNeedToGoAfterIt {
             if sequence.contains(pageThatShouldBeAfterIt) && sequence.firstIndex(of: pageThatShouldBeAfterIt)! < indexOfNumberToCheck {
-                return false
+                return (false, numberToCheck)
             }
         }
     }
     
-    return true
+    return (true, nil)
 }
 
 struct Rule: Equatable {
