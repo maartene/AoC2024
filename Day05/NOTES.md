@@ -15,3 +15,4 @@
 - ✅ Extract sequences from input
 - ✅ Find and sum middle numbers of valid sequences
 - ✅ Make the example input pass
+- ✅ Lets get that first ⭐️
