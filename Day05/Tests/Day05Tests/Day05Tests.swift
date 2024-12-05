@@ -1,6 +1,17 @@
 import Testing
 @testable import Day05
 
+func sumOfMiddleNumbersInValidMadeInvalidSequences(_ input: String) -> Int {
+    let rulesAndSequences = convertInputToRulesAndSequences(input)
+    let invalidSequences = rulesAndSequences.sequences.filter { isValidSequence($0, rules: rulesAndSequences.rules).isValid == false }
+    let validMadeInvalidSequences = invalidSequences.map { convertInvalidSequenceToValidSequence($0, rules: rulesAndSequences.rules) }
+    
+    return validMadeInvalidSequences.reduce(0) { partialResult, validSequence in
+        let middleNumberIndex = validSequence.count / 2
+        return partialResult + validSequence[middleNumberIndex]
+    }
+}
+
 func convertInvalidSequenceToValidSequence(_ sequence: [Int], rules: [Rule]) -> [Int] {
     var correctedSequence = sequence
     while let toSwap = isValidSequence(correctedSequence, rules: rules).violatedRule {
@@ -84,6 +95,10 @@ func convertInvalidSequenceToValidSequence(_ sequence: [Int], rules: [Rule]) -> 
     ]) func canConvertInvalidSequencesToValidSequences(testcase: (invalidSequence: [Int], expectedValidSequence: [Int])) {
         
         #expect(convertInvalidSequenceToValidSequence(testcase.invalidSequence, rules: rules) == testcase.expectedValidSequence)
+    }
+    
+    @Test("The sum of the middlenumbers of the valid made invalid sequences in the example input should be 123") func sumOfMiddleNumbers_exampleInput() {
+        #expect(sumOfMiddleNumbersInValidMadeInvalidSequences(exampleInput) == 123)
     }
 }
 
