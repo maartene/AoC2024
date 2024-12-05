@@ -13,8 +13,7 @@ func isValidSequence(_ sequence: [Int], rules: [Rule]) -> (isValid: Bool, violat
         let applicableRules = rules.filter { $0.numberToPrint == numberToCheck }
         let pagesThatNeedToGoAfterIt = applicableRules.map { $0.before }
         for pageThatShouldBeAfterIt in pagesThatNeedToGoAfterIt {
-            if sequence.contains(pageThatShouldBeAfterIt) && sequence.firstIndex(of: pageThatShouldBeAfterIt)! < indexOfNumberToCheck {
-                let pageThatShouldBeAfterItIndex = sequence.firstIndex(of: pageThatShouldBeAfterIt)!
+            if let pageThatShouldBeAfterItIndex = sequence.firstIndex(of: pageThatShouldBeAfterIt), pageThatShouldBeAfterItIndex < indexOfNumberToCheck {
                 return (false, Rule(numberToPrint: indexOfNumberToCheck, before: pageThatShouldBeAfterItIndex))
             }
         }
