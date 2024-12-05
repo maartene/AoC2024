@@ -1,3 +1,4 @@
+// MARK: Part 1
 func sumOfMiddleNumbersInValidSequences(_ input: String) -> Int {
     let rulesAndSequences = convertInputToRulesAndSequences(input)
     let validSequences = rulesAndSequences.sequences.filter { isValidSequence($0, rules: rulesAndSequences.rules).isValid }
@@ -25,12 +26,33 @@ func isValidSequence(_ sequence: [Int], rules: [Rule]) -> (isValid: Bool, violat
     return (true, nil)
 }
 
+// MARK: Part 2
+func sumOfMiddleNumbersInValidMadeInvalidSequences(_ input: String) -> Int {
+    let rulesAndSequences = convertInputToRulesAndSequences(input)
+    let invalidSequences = rulesAndSequences.sequences.filter { isValidSequence($0, rules: rulesAndSequences.rules).isValid == false }
+    let validMadeInvalidSequences = invalidSequences.map { convertInvalidSequenceToValidSequence($0, rules: rulesAndSequences.rules) }
+    
+    return validMadeInvalidSequences.reduce(0) { partialResult, validSequence in
+        let middleNumberIndex = validSequence.count / 2
+        return partialResult + validSequence[middleNumberIndex]
+    }
+}
+
+func convertInvalidSequenceToValidSequence(_ sequence: [Int], rules: [Rule]) -> [Int] {
+    var correctedSequence = sequence
+    while let toSwap = isValidSequence(correctedSequence, rules: rules).violatedRule {
+        correctedSequence.swapAt(toSwap.numberToPrint, toSwap.before)
+    }
+    
+    return correctedSequence
+}
+
+// MARK: Input parsing
 struct Rule: Equatable {
     let numberToPrint: Int
     let before: Int
 }
 
-// MARK: Input parsing
 func convertInputToRulesAndSequences(_ input: String) -> (rules: [Rule], sequences: [[Int]]) {
     let lines = input.split(separator: "\n").map(String.init)
     

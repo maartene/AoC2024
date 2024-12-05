@@ -1,26 +1,6 @@
 import Testing
 @testable import Day05
 
-func sumOfMiddleNumbersInValidMadeInvalidSequences(_ input: String) -> Int {
-    let rulesAndSequences = convertInputToRulesAndSequences(input)
-    let invalidSequences = rulesAndSequences.sequences.filter { isValidSequence($0, rules: rulesAndSequences.rules).isValid == false }
-    let validMadeInvalidSequences = invalidSequences.map { convertInvalidSequenceToValidSequence($0, rules: rulesAndSequences.rules) }
-    
-    return validMadeInvalidSequences.reduce(0) { partialResult, validSequence in
-        let middleNumberIndex = validSequence.count / 2
-        return partialResult + validSequence[middleNumberIndex]
-    }
-}
-
-func convertInvalidSequenceToValidSequence(_ sequence: [Int], rules: [Rule]) -> [Int] {
-    var correctedSequence = sequence
-    while let toSwap = isValidSequence(correctedSequence, rules: rules).violatedRule {
-        correctedSequence.swapAt(toSwap.numberToPrint, toSwap.before)
-    }
-    
-    return correctedSequence
-}
-
 @Suite("To get the first star on day 05") struct Day05StarOneTests {
     let rules = convertInputToRulesAndSequences(exampleInput).rules
     
