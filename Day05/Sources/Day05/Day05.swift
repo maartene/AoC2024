@@ -6,15 +6,15 @@ func sumOfMiddleNumbersInValidSequences(_ input: String) -> Int {
     return sumOfMiddleNumbers(sequences: validSequences)
 }
 
-func isValidSequence(_ sequence: [Int], rules: [Rule]) -> (isValid: Bool, violatedRule: Rule?) {
+func isValidSequence(_ sequence: [Int], rules: [NumberCombo]) -> (isValid: Bool, violatedRule: NumberCombo?) {
     for numberToCheck in sequence {
         let indexOfNumberToCheck = sequence.firstIndex(of: numberToCheck)!
         
-        let applicableRules = rules.filter { $0.numberToPrint == numberToCheck }
-        let pagesThatNeedToGoAfterIt = applicableRules.map { $0.before }
+        let applicableRules = rules.filter { $0.numberOne == numberToCheck }
+        let pagesThatNeedToGoAfterIt = applicableRules.map { $0.numberTwo }
         for pageThatShouldBeAfterIt in pagesThatNeedToGoAfterIt {
             if let pageThatShouldBeAfterItIndex = sequence.firstIndex(of: pageThatShouldBeAfterIt), pageThatShouldBeAfterItIndex < indexOfNumberToCheck {
-                return (false, Rule(numberToPrint: indexOfNumberToCheck, before: pageThatShouldBeAfterItIndex))
+                return (false, NumberCombo(numberOne: indexOfNumberToCheck, numberTwo: pageThatShouldBeAfterItIndex))
             }
         }
     }
@@ -32,19 +32,19 @@ func sumOfMiddleNumbersInValidMadeInvalidSequences(_ input: String) -> Int {
     return sumOfMiddleNumbers(sequences: validMadeInvalidSequences)
 }
 
-func convertInvalidSequenceToValidSequence(_ sequence: [Int], rules: [Rule]) -> [Int] {
+func convertInvalidSequenceToValidSequence(_ sequence: [Int], rules: [NumberCombo]) -> [Int] {
     var correctedSequence = sequence
     while let toSwap = isValidSequence(correctedSequence, rules: rules).violatedRule {
-        correctedSequence.swapAt(toSwap.numberToPrint, toSwap.before)
+        correctedSequence.swapAt(toSwap.numberOne, toSwap.numberTwo)
     }
     
     return correctedSequence
 }
 
 // MARK: Input parsing
-struct Rule: Equatable {
-    let numberToPrint: Int
-    let before: Int
+struct NumberCombo: Equatable {
+    let numberOne: Int
+    let numberTwo: Int
 }
 
 func sumOfMiddleNumbers(sequences: [[Int]]) -> Int {
@@ -54,7 +54,7 @@ func sumOfMiddleNumbers(sequences: [[Int]]) -> Int {
     }
 }
 
-func convertInputToRulesAndSequences(_ input: String) -> (rules: [Rule], sequences: [[Int]]) {
+func convertInputToRulesAndSequences(_ input: String) -> (rules: [NumberCombo], sequences: [[Int]]) {
     let lines = input.split(separator: "\n").map(String.init)
     
     let ruleLines = lines.filter { $0.contains("|") }
@@ -67,7 +67,7 @@ func convertInputToRulesAndSequences(_ input: String) -> (rules: [Rule], sequenc
     let rules = numbersAsStrings
         .compactMap { numbers in
             if let print = Int(numbers[0]), let before = Int(numbers[1]) {
-                return Rule(numberToPrint: print, before: before)
+                return NumberCombo(numberOne: print, numberTwo: before)
             }
             return nil
     }

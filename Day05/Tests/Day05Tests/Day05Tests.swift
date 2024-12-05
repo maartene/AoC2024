@@ -31,8 +31,8 @@ import Testing
         """
         
         let expectedRules = [
-            Rule(numberToPrint: 47, before: 53),
-            Rule(numberToPrint: 97, before: 13),
+            NumberCombo(numberOne: 47, numberTwo: 53),
+            NumberCombo(numberOne: 97, numberTwo: 13),
         ]
         
         #expect(convertInputToRulesAndSequences(input).rules == expectedRules)
