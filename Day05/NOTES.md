@@ -20,6 +20,6 @@
 
 ## 🍅 Pomodoro 2
 - ✅ Can we make an invalid sequence valid?
-- ⚠️ Find and sum middle numbers of valid made invalid sequences
-- ⚠️ Make the example input pass
-- ⚠️ Lets get that second ⭐️⭐️
+- ✅ Find and sum middle numbers of valid made invalid sequences
+- ✅ Make the example input pass
+- ✅ Lets get that second ⭐️⭐️

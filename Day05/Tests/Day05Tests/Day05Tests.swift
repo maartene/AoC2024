@@ -100,6 +100,10 @@ func convertInvalidSequenceToValidSequence(_ sequence: [Int], rules: [Rule]) -> 
     @Test("The sum of the middlenumbers of the valid made invalid sequences in the example input should be 123") func sumOfMiddleNumbers_exampleInput() {
         #expect(sumOfMiddleNumbersInValidMadeInvalidSequences(exampleInput) == 123)
     }
+    
+    @Test("The sum of the middlenumbers of the valid made invalid sequences in the actual input should be 5273") func sumOfMiddleNumbers_actualInput() {
+        #expect(sumOfMiddleNumbersInValidMadeInvalidSequences(input) == 5273)
+    }
 }
 
 let exampleInput =
