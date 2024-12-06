@@ -21,5 +21,8 @@
 - ✅ Change direction
 
 ## 🍅 Pomodoro 3
-- ⚠️ Introduce "crossing"
-- ⚠️ On the example map, the guard visits 41 distinct positions before leaving the map 
+- ✅ Introduce "crossing"
+- ✅ On the example map, the guard visits 41 distinct positions before leaving the map
+
+## 🍅 Pomodoro 4
+- ⚠️ Lets get that first star!

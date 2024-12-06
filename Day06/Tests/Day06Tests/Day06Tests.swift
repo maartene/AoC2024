@@ -89,7 +89,7 @@ import Testing
         #expect(numberOfDistinctVisitedPositions(in: map) == 5)
     }
 
-    @Test("The number of distinct number of visited positions should be 41") func distinctNumberOfVisitedPositions_exampleInput() {
+    @Test("The number of distinct visited positions in the example input should be 41") func distinctNumberOfVisitedPositions_exampleInput() {
         let exampleInput =
         """
         ....#.....
@@ -104,5 +104,9 @@ import Testing
         ......#...
         """
         #expect(numberOfDistinctVisitedPositions(in: exampleInput) == 41)
+    }
+
+    @Test("The number of distinct visited positions in the actual input should be ???") func distinctNumberOfVisitedPositions_actualInput() {
+        #expect(numberOfDistinctVisitedPositions(in: input) == 41)
     }
 }
