@@ -12,7 +12,11 @@ import Testing
         ...
         ...
         ..^
-        """, 3)
+        """, 3),
+        ("""
+        ...
+        ..^
+        """, 2),
     ]) func MbyNMapWithoutObstaclesWhileGuardStartAtTheBottom(testcase: (map: String, expected: Int)) {
         #expect(numberOfDistinctVisitedPositions(in: testcase.map) == testcase.expected)
     }
