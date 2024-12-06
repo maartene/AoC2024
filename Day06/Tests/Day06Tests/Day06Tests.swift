@@ -6,18 +6,14 @@ import Testing
 }
 
 @Suite("To get the first star on day 06") struct Day06StarOneTests {
-    @Test("On a one by one map without obstacles the guard visits exactly one position") func oneByOneMapWithoutObstacles() {
-        let map = "^"
-        #expect(numberOfDistinctVisitedPositions(in: map) == 1) 
-    }
-
-    @Test("On a two by three map without obstacles the guard while starting at the bottom visits exactly three position") func twoByThreeMapWithoutObstacles() {
-        let map = 
-        """
+    @Test("On a map without obstacles, when the guard starts at the bottom, the number of visited distinct locations is the height of the map", arguments: [
+        ("^", 1),
+        ("""
         ...
         ...
         ..^
-        """
-        #expect(numberOfDistinctVisitedPositions(in: map) == 3) 
+        """, 3)
+    ]) func MbyNMapWithoutObstaclesWhileGuardStartAtTheBottom(testcase: (map: String, expected: Int)) {
+        #expect(numberOfDistinctVisitedPositions(in: testcase.map) == testcase.expected)
     }
 }
