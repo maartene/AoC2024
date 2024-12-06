@@ -23,10 +23,8 @@ func numberOfDistinctVisitedPositions(in mapString: String) -> Int {
     var guardPosition = map.guardPosition
     var guardDirection = Direction.north
 
-    var path = Set<Vector>()
-    var whilebreaker = 0
-    while map.isInsideMap(guardPosition) && whilebreaker < 1000 {
-        whilebreaker += 1
+    var path: Set = [guardPosition]
+    while map.isInsideMap(guardPosition) {
         var newPosition = guardPosition 
 
         switch guardDirection {
@@ -48,7 +46,7 @@ func numberOfDistinctVisitedPositions(in mapString: String) -> Int {
         }
     }
 
-    return path.count
+    return path.filter { map.isInsideMap($0) }.count
 }
 
 struct Map {
