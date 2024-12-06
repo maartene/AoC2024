@@ -18,6 +18,10 @@ enum Direction {
 }
 
 func numberOfDistinctVisitedPositions(in mapString: String) -> Int {
+    getEscapePath(in: mapString).count
+}
+
+func getEscapePath(in mapString: String) -> Set<Vector> {
     let map = Map(mapString)
     let obstacles = map.obstacles
     var guardPosition = map.guardPosition
@@ -46,27 +50,41 @@ func numberOfDistinctVisitedPositions(in mapString: String) -> Int {
         }
     }
 
-    return path.filter { map.isInsideMap($0) }.count
+    return path.filter { map.isInsideMap($0) }
 }
 
 func numberOfPositionsForObstructions(in mapString: String) -> Int {
     var map = Map(mapString)
-    var count = 0
-    for y in 0 ..< map.height {
-        print("Testing row \(y)")
-        for x in 0 ..< map.width {
-            let possibleObstacleCoord = Vector(x: x, y: y)
-            if map.obstacles.contains(possibleObstacleCoord) == false {
-                map.obstacles.insert(possibleObstacleCoord)
-                if guardIsTrappedInLoop(map: map) {
-                    count += 1
-                }
-                map.obstacles.remove(possibleObstacleCoord)
+    let path = getEscapePath(in: mapString)
+    print("Path length: \(path.count)")
+
+    var obstaclePlaces: Set<Vector> = []
+    
+    var placesToCheck: Set<Vector> = []
+    print("Build up places to check")
+    for pathCoord in path {
+        for y in -1 ... 1 {
+            for x in -1 ... 1 {
+                let possibleObstacleCoord = Vector(x: x, y: y) + pathCoord
+                placesToCheck.insert(possibleObstacleCoord)
             }
         }
     }
 
-    return count
+    print("Done building places to check")
+    print("Start putting obstacles in the path")
+    for possibleObstacleCoord in placesToCheck {
+        if map.isInsideMap(possibleObstacleCoord) && map.obstacles.contains(possibleObstacleCoord) == false {       
+            map.obstacles.insert(possibleObstacleCoord)
+            if guardIsTrappedInLoop(map: map) {
+                obstaclePlaces.insert(possibleObstacleCoord)
+            }
+            map.obstacles.remove(possibleObstacleCoord)
+        }
+    }
+    print("Done putting obstacles in the path")
+
+    return obstaclePlaces.filter { map.isInsideMap($0) }.count
 }
 
 func guardIsTrappedInLoop(map: Map) -> Bool {
@@ -125,7 +143,7 @@ struct Map {
         let rows = input.split(separator: "\n").map(String.init)
         height = rows.count
         width = rows.first?.count ?? 0
-
+        
         var guardPosition = Vector.zero
         var obstacles = Set<Vector>() 
         for y in 0 ..< rows.count {
