@@ -4,7 +4,7 @@ func numberOfDistinctVisitedPositions(in mapString: String) -> Int {
     let map = interpretMap(mapString)
     let obstacles = map.obstacles
     let guardPosition = map.guardPosition
-    
+
     if let obstaclePosition = obstacles.first?.y {
         return 1 + guardPosition - obstaclePosition - 1 
     } else {
@@ -12,7 +12,9 @@ func numberOfDistinctVisitedPositions(in mapString: String) -> Int {
     } 
 }
 
-func interpretMap(_ input: String) -> (obstacles: Set<Vector>, guardPosition: Int) {
+typealias Map = (obstacles: Set<Vector>, guardPosition: Int)
+
+func interpretMap(_ input: String) -> Map {
     let rows = input.split(separator: "\n").map(String.init)
     
     var obstacles = Set<Vector>() 
