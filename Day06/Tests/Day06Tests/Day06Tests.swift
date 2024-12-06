@@ -61,4 +61,14 @@ import Testing
         #expect(numberOfDistinctVisitedPositions(in: testcase.map) == testcase.expected)
     }
 
+    @Test("we will need to get the correct amount of distinct tiles also on maps where we need to change directions", arguments: [
+        ("""
+        .#.
+        ...
+        .^.
+        """, 3)
+    ]) func correctCountForMapWhereWeNeedToChangeDirections(testcase: (map: String, expected: Int)) {
+        #expect(numberOfDistinctVisitedPositions(in: testcase.map) == testcase.expected)
+    }
+
 }
