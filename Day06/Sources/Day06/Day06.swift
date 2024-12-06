@@ -5,18 +5,21 @@ func numberOfDistinctVisitedPositions(in mapString: String) -> Int {
     let obstacles = map.obstacles
     let guardPosition = map.guardPosition
 
-    if let obstaclePosition = obstacles.first?.y {
-        return 1 + guardPosition - obstaclePosition - 1 
+    let obstaclesInLine = obstacles.filter { $0.x == guardPosition.x }
+
+    if let obstaclePosition = obstaclesInLine.first?.y {
+        return 1 + guardPosition.y - obstaclePosition - 1 
     } else {
-        return guardPosition + 1
+        return guardPosition.y + 1
     } 
 }
 
-typealias Map = (obstacles: Set<Vector>, guardPosition: Int)
+typealias Map = (obstacles: Set<Vector>, guardPosition: Vector)
 
 func interpretMap(_ input: String) -> Map {
     let rows = input.split(separator: "\n").map(String.init)
     
+    var guardPosition = Vector.zero
     var obstacles = Set<Vector>() 
     for y in 0 ..< rows.count {
         let row = rows[y].map { $0 }
@@ -24,10 +27,11 @@ func interpretMap(_ input: String) -> Map {
             if row[x] == "#" {
                 obstacles.insert(Vector(x: x, y: y))
             }
+            if row[x] == "^" {
+                guardPosition = Vector(x: x, y: y)
+            }
         }
     }
-
-    let guardPosition = rows.firstIndex { $0.contains("^") }!
 
     return (obstacles, guardPosition)
 }
