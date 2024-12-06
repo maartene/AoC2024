@@ -25,4 +25,6 @@
 - ✅ On the example map, the guard visits 41 distinct positions before leaving the map
 
 ## 🍅 Pomodoro 4
-- ⚠️ Lets get that first star!
+- ✅ Lets get that first star ⭐️
+- ⚠️ Understand the twist
+- ⚠️ Lets get some data to see if we can brute force this

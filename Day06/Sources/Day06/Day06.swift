@@ -18,7 +18,7 @@ enum Direction {
 }
 
 func numberOfDistinctVisitedPositions(in mapString: String) -> Int {
-    let map = interpretMap(mapString)
+    let map = Map(mapString)
     let obstacles = map.obstacles
     var guardPosition = map.guardPosition
     var guardDirection = Direction.north
@@ -58,25 +58,27 @@ struct Map {
     func isInsideMap(_ coord: Vector) -> Bool {
         coord.x >= 0 && coord.x < width && coord.y >= 0 && coord.y < height
     }
-}
 
-func interpretMap(_ input: String) -> Map {
-    let rows = input.split(separator: "\n").map(String.init)
-    let width = rows.first?.count ?? 0
+    init(_ input: String) {
+        let rows = input.split(separator: "\n").map(String.init)
+        height = rows.count
+        width = rows.first?.count ?? 0
 
-    var guardPosition = Vector.zero
-    var obstacles = Set<Vector>() 
-    for y in 0 ..< rows.count {
-        let row = rows[y].map { $0 }
-        for x in 0 ..< row.count {
-            if row[x] == "#" {
-                obstacles.insert(Vector(x: x, y: y))
-            }
-            if row[x] == "^" {
-                guardPosition = Vector(x: x, y: y)
+        var guardPosition = Vector.zero
+        var obstacles = Set<Vector>() 
+        for y in 0 ..< rows.count {
+            let row = rows[y].map { $0 }
+            for x in 0 ..< row.count {
+                if row[x] == "#" {
+                    obstacles.insert(Vector(x: x, y: y))
+                }
+                if row[x] == "^" {
+                    guardPosition = Vector(x: x, y: y)
+                }
             }
         }
-    }
 
-    return Map(width: width, height: rows.count, obstacles: obstacles, guardPosition: guardPosition)
+        self.guardPosition = guardPosition
+        self.obstacles = obstacles
+    }
 }

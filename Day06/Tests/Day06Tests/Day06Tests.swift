@@ -106,7 +106,14 @@ import Testing
         #expect(numberOfDistinctVisitedPositions(in: exampleInput) == 41)
     }
 
-    @Test("The number of distinct visited positions in the actual input should be ???") func distinctNumberOfVisitedPositions_actualInput() {
-        #expect(numberOfDistinctVisitedPositions(in: input) == 41)
+    @Test("The number of distinct visited positions in the actual input should be 5318") func distinctNumberOfVisitedPositions_actualInput() {
+        #expect(numberOfDistinctVisitedPositions(in: input) == 5318)
+    }
+}
+
+@Suite("To get the second star on Day 06") struct Day06StarTwoTests {
+    @Test("Lets get some data") func data() {
+        let map = Map(input)
+        print(map.width, map.height)
     }
 }
