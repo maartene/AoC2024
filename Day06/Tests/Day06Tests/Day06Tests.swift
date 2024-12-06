@@ -78,4 +78,14 @@ import Testing
         #expect(numberOfDistinctVisitedPositions(in: testcase.map) == testcase.expected)
     }
 
+    @Test("we will need to get the correct amount of distinct tiles also on maps where we need to change directions and cross") func correctCountForMapWithCrossing() {
+        let map = 
+        """
+        #..
+        ..#
+        ...
+        ^#.
+        """
+        #expect(numberOfDistinctVisitedPositions(in: map) == 5)
+    }
 }
