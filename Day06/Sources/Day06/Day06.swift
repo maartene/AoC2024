@@ -1,7 +1,19 @@
 import Shared
 
 func numberOfDistinctVisitedPositions(in mapString: String) -> Int {
-    let rows = mapString.split(separator: "\n").map(String.init)
+    let map = interpretMap(mapString)
+    let obstacles = map.obstacles
+    let guardPosition = map.guardPosition
+    
+    if let obstaclePosition = obstacles.first?.y {
+        return 1 + guardPosition - obstaclePosition - 1 
+    } else {
+        return guardPosition + 1
+    } 
+}
+
+func interpretMap(_ input: String) -> (obstacles: Set<Vector>, guardPosition: Int) {
+    let rows = input.split(separator: "\n").map(String.init)
     
     var obstacles = Set<Vector>() 
     for y in 0 ..< rows.count {
@@ -14,9 +26,6 @@ func numberOfDistinctVisitedPositions(in mapString: String) -> Int {
     }
 
     let guardPosition = rows.firstIndex { $0.contains("^") }!
-    if let obstaclePosition = obstacles.first?.y {
-        return 1 + guardPosition - obstaclePosition - 1 
-    } else {
-        return guardPosition + 1
-    } 
+
+    return (obstacles, guardPosition)
 }
