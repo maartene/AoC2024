@@ -66,7 +66,14 @@ import Testing
         .#.
         ...
         .^.
-        """, 3)
+        """, 3),
+        ("""
+        .#..#
+        ....#
+        .^...
+        .....
+        ...##
+        """, 9)
     ]) func correctCountForMapWhereWeNeedToChangeDirections(testcase: (map: String, expected: Int)) {
         #expect(numberOfDistinctVisitedPositions(in: testcase.map) == testcase.expected)
     }

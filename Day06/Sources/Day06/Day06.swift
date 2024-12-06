@@ -7,8 +7,12 @@ enum Direction {
         switch self {
         case .north:
             .east
-        default:
-            self
+        case .east:
+            .south
+        case .south:
+            .west
+        case .west:
+            .north
         }
     }
 }
@@ -17,11 +21,12 @@ func numberOfDistinctVisitedPositions(in mapString: String) -> Int {
     let map = interpretMap(mapString)
     let obstacles = map.obstacles
     var guardPosition = map.guardPosition
-    let width = map.width
     var guardDirection = Direction.north
 
     var count = 0
-    while guardPosition.y >= 0  && guardPosition.x < map.width {
+    var whilebreaker = 0
+    while map.isInsideMap(guardPosition) && whilebreaker < 1000 {
+        whilebreaker += 1
         var newPosition = guardPosition 
 
         switch guardDirection {
@@ -29,8 +34,10 @@ func numberOfDistinctVisitedPositions(in mapString: String) -> Int {
                 newPosition.y -= 1
             case .east:
                 newPosition.x += 1
-            default:
-                fatalError("Case not implemented yet")
+            case .south:
+                newPosition.y += 1
+            case .west: 
+                newPosition.x -= 1
         }
 
         if obstacles.contains(newPosition) {
@@ -46,8 +53,13 @@ func numberOfDistinctVisitedPositions(in mapString: String) -> Int {
 
 struct Map {
     let width: Int 
+    let height: Int
     let obstacles: Set<Vector>
     let guardPosition: Vector
+
+    func isInsideMap(_ coord: Vector) -> Bool {
+        coord.x >= 0 && coord.x < width && coord.y >= 0 && coord.y < height
+    }
 }
 
 func interpretMap(_ input: String) -> Map {
@@ -68,5 +80,5 @@ func interpretMap(_ input: String) -> Map {
         }
     }
 
-    return Map(width: width, obstacles: obstacles, guardPosition: guardPosition)
+    return Map(width: width, height: rows.count, obstacles: obstacles, guardPosition: guardPosition)
 }
