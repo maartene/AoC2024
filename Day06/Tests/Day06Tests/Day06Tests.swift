@@ -136,8 +136,12 @@ let exampleInput =
         let map = Map(mapString)
         #expect(guardIsTrappedInLoop(map: map) == false)
     }
-    
+
     @Test("the number of places where an obstruction can be placed to trap a guard in a loop for the example input is 6") func numberOfObstacles_forExampleInput() {
         #expect(numberOfPositionsForObstructions(in: exampleInput) == 6)
+    }
+
+    @Test("the number of places where an obstruction can be placed to trap a guard in a loop for the actual input is 1831") func numberOfObstacles_forActualInput() {
+        #expect(numberOfPositionsForObstructions(in: input) == 1831)
     }
 }

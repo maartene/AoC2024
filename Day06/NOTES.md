@@ -26,5 +26,7 @@
 
 ## 🍅 Pomodoro 4
 - ✅ Lets get that first star ⭐️
-- ⚠️ Understand the twist
-- ⚠️ Lets get some data to see if we can brute force this
+- ✅ Understand the twist
+- ✅ Lets get some data to see if we can brute force this
+- ✅ Brute force works for the exampleInput
+- ⚠️ Lets try what happens to the actual input to get that second star ⭐️ 
