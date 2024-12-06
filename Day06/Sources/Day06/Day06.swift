@@ -2,6 +2,15 @@ import Shared
 
 enum Direction {
     case north, east, south, west
+    
+    var next: Direction {
+        switch self {
+        case .north:
+            .east
+        default:
+            self
+        }
+    }
 }
 
 func numberOfDistinctVisitedPositions(in mapString: String) -> Int {
@@ -25,7 +34,7 @@ func numberOfDistinctVisitedPositions(in mapString: String) -> Int {
         }
 
         if obstacles.contains(newPosition) {
-            guardDirection = .east
+            guardDirection = guardDirection.next
         } else {
             guardPosition = newPosition
             count += 1
