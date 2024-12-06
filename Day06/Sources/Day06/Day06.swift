@@ -49,6 +49,14 @@ func numberOfDistinctVisitedPositions(in mapString: String) -> Int {
     return path.filter { map.isInsideMap($0) }.count
 }
 
+func numberOfPositionsForObstructions(in mapString: String) -> Int {
+    0
+}
+
+func guardIsTrappedInLoop(map: Map) -> Bool {
+    true
+}
+
 struct Map {
     let width: Int 
     let height: Int

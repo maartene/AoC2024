@@ -1,6 +1,20 @@
 import Testing
 @testable import Day06
 
+let exampleInput =
+    """
+    ....#.....
+    .........#
+    ..........
+    ..#.......
+    .......#..
+    ..........
+    .#..^.....
+    ........#.
+    #.........
+    ......#...
+    """
+
 @Suite("To get the first star on day 06") struct Day06StarOneTests {
     @Test("On a map without obstacles, when the guard starts at the bottom, the number of visited distinct locations is the height of the map", arguments: [
         ("^", 1),
@@ -90,19 +104,6 @@ import Testing
     }
 
     @Test("The number of distinct visited positions in the example input should be 41") func distinctNumberOfVisitedPositions_exampleInput() {
-        let exampleInput =
-        """
-        ....#.....
-        .........#
-        ..........
-        ..#.......
-        .......#..
-        ..........
-        .#..^.....
-        ........#.
-        #.........
-        ......#...
-        """
         #expect(numberOfDistinctVisitedPositions(in: exampleInput) == 41)
     }
 
@@ -112,8 +113,18 @@ import Testing
 }
 
 @Suite("To get the second star on Day 06") struct Day06StarTwoTests {
-    @Test("Lets get some data") func data() {
-        let map = Map(input)
-        print(map.width, map.height)
+    @Test("the guard is trapped in this map") func guardIsTrapped() {
+        let mapString = 
+        """
+        .#..
+        ....#
+        #^...
+        ...#.
+        """
+        let map = Map(mapString)
+        #expect(guardIsTrappedInLoop(map: map))
     }
+    // @Test("the number of places where an obstruction can be placed to trap a guard in a loop for the example input is 6") func numberOfObstacles_forExampleInput() {
+    //     #expect(numberOfPositionsForObstructions(in: exampleInput) == 6)
+    // }
 }
