@@ -14,9 +14,8 @@ func numberOfDistinctVisitedPositions(in mapString: String) -> Int {
     }
 
     let guardPosition = rows.firstIndex { $0.contains("^") }!
-
-    if obstacles.count > 0 {
-        return guardPosition
+    if let obstaclePosition = obstacles.first?.y {
+        return 1 + guardPosition - obstaclePosition - 1 
     } else {
         return guardPosition + 1
     } 

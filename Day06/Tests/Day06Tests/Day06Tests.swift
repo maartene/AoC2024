@@ -42,6 +42,11 @@ import Testing
         ...
         ..^
         """, 2),
+        ("""
+        ...
+        ..#
+        ..^
+        """, 1),
     ]) func correctCountForMapWithObstacles(testcase: (map: String, expected: Int)) {
         #expect(numberOfDistinctVisitedPositions(in: testcase.map) == testcase.expected)
     }
