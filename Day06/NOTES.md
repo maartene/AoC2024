@@ -16,6 +16,7 @@
 
 ## 🍅 Pomodoro 2
 - ✅ Introduce an obstacle, while starting at the right side of the map
-- ⚠️ An obstacle, but we 'miss' it
+- ✅ An obstacle, but we 'miss' it because its in the wrong column
+- ⚠️ An obstacle, but we 'miss' it because its behind us
 - ⚠️ Introduce "crossing"
 - ⚠️ On the example map, the guard visits 41 distinct positions before leaving the map 

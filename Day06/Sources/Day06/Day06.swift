@@ -3,15 +3,15 @@ import Shared
 func numberOfDistinctVisitedPositions(in mapString: String) -> Int {
     let map = interpretMap(mapString)
     let obstacles = map.obstacles
-    let guardPosition = map.guardPosition
+    var guardPosition = map.guardPosition
 
-    let obstaclesInLine = obstacles.filter { $0.x == guardPosition.x }
-
-    if let obstaclePosition = obstaclesInLine.first?.y {
-        return 1 + guardPosition.y - obstaclePosition - 1 
-    } else {
-        return guardPosition.y + 1
+    var count = 0
+    while guardPosition.y >= 0 && obstacles.contains(guardPosition) == false {
+        guardPosition.y -= 1
+        count += 1
     } 
+
+    return count
 }
 
 typealias Map = (obstacles: Set<Vector>, guardPosition: Vector)
