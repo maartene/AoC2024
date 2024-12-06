@@ -20,4 +20,24 @@ import Testing
     ]) func MbyNMapWithoutObstaclesWhileGuardStartAtTheBottom(testcase: (map: String, expected: Int)) {
         #expect(numberOfDistinctVisitedPositions(in: testcase.map) == testcase.expected)
     }
+
+    @Test("On a map without obstacles, when the guard does not start at the bottom, the number of visited distinct locations is the position of the guard", arguments: [
+        ("""
+        ...
+        .^.
+        ...
+        """, 2),
+        ("""
+        .^.
+        ...
+        """, 1),
+        ("""
+        .^.
+        ...
+        ...
+        """, 1)
+    ]) func MbyNMapWithoutObstaclesWhileGuardDoesNotStartAtTheBottom(testcase: (map: String, expected: Int)) {
+        #expect(numberOfDistinctVisitedPositions(in: testcase.map) == testcase.expected)
+    }
+
 }
