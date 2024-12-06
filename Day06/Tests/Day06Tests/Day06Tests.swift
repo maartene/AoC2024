@@ -21,7 +21,7 @@ import Testing
         #expect(numberOfDistinctVisitedPositions(in: testcase.map) == testcase.expected)
     }
 
-    @Test("On a map without obstacles, when the guard does not start at the bottom, the number of visited distinct locations is the position of the guard", arguments: [
+    @Test("On a map without obstacles, when the guard does not start at the bottom, the number of visited distinct locations is the height of the map minus how far 'in' the guard is", arguments: [
         ("""
         ...
         .^.
@@ -37,6 +37,16 @@ import Testing
         ...
         """, 1)
     ]) func MbyNMapWithoutObstaclesWhileGuardDoesNotStartAtTheBottom(testcase: (map: String, expected: Int)) {
+        #expect(numberOfDistinctVisitedPositions(in: testcase.map) == testcase.expected)
+    }
+
+    @Test("we will need to get the correct amount of distinct tiles also on maps with obstacles", arguments: [
+        ("""
+        ..#
+        ...
+        ..^
+        """, 2),
+    ]) func correctCountForMapWithObstacles(testcase: (map: String, expected: Int)) {
         #expect(numberOfDistinctVisitedPositions(in: testcase.map) == testcase.expected)
     }
 

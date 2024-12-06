@@ -13,5 +13,8 @@
 - ✅ In a 1x1 map without obstacles, the guard only visits one position
 - ✅ In a mxn map without obstacles, while starting at the bottom, the guard visits the height of the map number of distinct positions
 - ✅ Lets not start at the bottom
+
+## 🍅 Pomodoro 2
 - ⚠️ Introduce an obstacle
+- ⚠️ Introduce "crossing"
 - ⚠️ On the example map, the guard visits 41 distinct positions before leaving the map 
