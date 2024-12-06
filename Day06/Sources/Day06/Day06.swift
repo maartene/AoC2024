@@ -54,7 +54,47 @@ func numberOfPositionsForObstructions(in mapString: String) -> Int {
 }
 
 func guardIsTrappedInLoop(map: Map) -> Bool {
-    true
+    struct PositionDirectionCombo: Hashable {
+        let position: Vector
+        let direction: Direction
+    }
+
+    let obstacles = map.obstacles
+    var guardPosition = map.guardPosition
+    var guardDirection: Direction = Direction.north
+
+    var positionDirections: Set = [PositionDirectionCombo(position: guardPosition, direction: guardDirection)]
+    while map.isInsideMap(guardPosition) {
+        var newPosition = guardPosition 
+
+        switch guardDirection {
+            case .north:
+                newPosition.y -= 1
+            case .east:
+                newPosition.x += 1
+            case .south:
+                newPosition.y += 1
+            case .west: 
+                newPosition.x -= 1
+        }
+
+        if obstacles.contains(newPosition) {
+            guardDirection = guardDirection.next
+        } else {
+            guardPosition = newPosition
+        }
+
+
+        let newPositionDirectionCombo = PositionDirectionCombo(position: guardPosition, direction: guardDirection)
+        print(newPositionDirectionCombo)
+        if positionDirections.contains(newPositionDirectionCombo) {
+            return true
+        } else {
+            positionDirections.insert(PositionDirectionCombo(position: guardPosition, direction: guardDirection))
+        }
+    }
+
+    return false
 }
 
 struct Map {
