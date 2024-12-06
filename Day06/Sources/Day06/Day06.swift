@@ -50,7 +50,23 @@ func numberOfDistinctVisitedPositions(in mapString: String) -> Int {
 }
 
 func numberOfPositionsForObstructions(in mapString: String) -> Int {
-    0
+    var map = Map(mapString)
+    var count = 0
+    for y in 0 ..< map.height {
+        print("Testing row \(y)")
+        for x in 0 ..< map.width {
+            let possibleObstacleCoord = Vector(x: x, y: y)
+            if map.obstacles.contains(possibleObstacleCoord) == false {
+                map.obstacles.insert(possibleObstacleCoord)
+                if guardIsTrappedInLoop(map: map) {
+                    count += 1
+                }
+                map.obstacles.remove(possibleObstacleCoord)
+            }
+        }
+    }
+
+    return count
 }
 
 func guardIsTrappedInLoop(map: Map) -> Bool {
@@ -84,9 +100,7 @@ func guardIsTrappedInLoop(map: Map) -> Bool {
             guardPosition = newPosition
         }
 
-
         let newPositionDirectionCombo = PositionDirectionCombo(position: guardPosition, direction: guardDirection)
-        print(newPositionDirectionCombo)
         if positionDirections.contains(newPositionDirectionCombo) {
             return true
         } else {
@@ -100,7 +114,7 @@ func guardIsTrappedInLoop(map: Map) -> Bool {
 struct Map {
     let width: Int 
     let height: Int
-    let obstacles: Set<Vector>
+    var obstacles: Set<Vector>
     let guardPosition: Vector
 
     func isInsideMap(_ coord: Vector) -> Bool {
