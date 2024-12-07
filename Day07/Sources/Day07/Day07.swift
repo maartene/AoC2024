@@ -4,5 +4,6 @@ func equationCanBeMadeTrue(_ equation: String) -> Bool {
     
     let numbersToPlayAroundWith = split[1].split(separator: " ").map(String.init).compactMap(Int.init)
     
-    return numbersToPlayAroundWith[0] * numbersToPlayAroundWith[1] == expectedNumber
+    return (numbersToPlayAroundWith[0] * numbersToPlayAroundWith[1] == expectedNumber) ||
+        (numbersToPlayAroundWith[0] + numbersToPlayAroundWith[1] == expectedNumber)
 }

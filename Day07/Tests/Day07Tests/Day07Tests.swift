@@ -12,7 +12,8 @@ import Testing
     }
     
     @Test("These equations can be made true:", arguments: [
-        "10: 2 5"
+        "10: 2 5",
+        "7: 2 5"
     ]) func equationThatCanBeMadeTrue(equation: String) {
         #expect(equationCanBeMadeTrue(equation) == true)
     }
