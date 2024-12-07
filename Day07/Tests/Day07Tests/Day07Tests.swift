@@ -8,7 +8,7 @@ import Testing
 @Suite("To get the first star on day 07") struct Day07StarOneTests {
     @Test("An input of '10: 1 2' cannot be made true") func equationThatCannotBeMadeTrue() {
         let equation = Equation("10: 1 2")
-        #expect(equationCanBeMadeTrue(equation) == false)
+        #expect(equation.equationCanBeMadeTrue() == false)
     }
     
     @Test("These equations can be made true:", arguments: [
@@ -17,8 +17,9 @@ import Testing
         "3267: 81 40 27",
         "292: 11 6 16 20",
         "21: 1 2 3 4 5 6"
-    ]) func equationsThatCanBeMadeTrue(equation: String) {
-        #expect(equationCanBeMadeTrue(Equation(equation)) == true)
+    ]) func equationsThatCanBeMadeTrue(equationString: String) {
+        let equation = Equation(equationString)
+        #expect(equation.equationCanBeMadeTrue() == true)
     }
     
     @Test("Creation of operations") func creationOfOperations() {
@@ -67,7 +68,7 @@ import Testing
     @Test("In the example input only three equations should be true") func numberOfTrueEquationsInExampleInput() {
         let equations = convertInputToEquations(exampleInput)
         
-        let trueEquations = equations.filter(equationCanBeMadeTrue)
+        let trueEquations = equations.filter {  $0.equationCanBeMadeTrue() }
         
         #expect(trueEquations.count == 3)
     }
