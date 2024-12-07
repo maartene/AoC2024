@@ -21,4 +21,6 @@
 
 ## 🍅 Pomodoro 3
 - ✅ Lets get that first star
+- ⚠️ Understand the twist
+- ⚠️ The total calibration result of the example input should be 11387 when taking the || operator into account
 - ⚠️ Edge case: what happens if only one number is passed in?

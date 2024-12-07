@@ -23,8 +23,8 @@ import Testing
     }
     
     @Test("Creation of operations") func creationOfOperations() {
-        let operations = createOperations(maxOperators: 3)
-        let expectedOperations: [[Character]] = [
+        let operations = createOperations(maxOperators: 3, usingThirdOperator: false)
+        let expectedOperations: [[String]] = [
             [],
             ["*"],
             ["+"],
@@ -79,5 +79,13 @@ import Testing
     
     @Test("The total calibration result of the actual input should be 7579994664753") func totalCalibrationResult_forActualInput() {
         #expect(totalCalibrationResult(for: input) == 7579994664753)
+    }
+}
+
+@Suite("To get the second star on day 07") struct Day07StarTwoTests {
+    @Test("This equation should also be able to made true using the third operator: '12345: 12 345'") func equationThatCanBeMadeTrueUsingThirdOperator() {
+        let equation = Equation("12345: 12 345")
+        #expect(equation.equationCanBeMadeTrue(usingThirdOperator: true))
+        
     }
 }

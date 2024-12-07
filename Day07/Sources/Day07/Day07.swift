@@ -15,10 +15,12 @@ struct Equation {
         numbersToPlayAroundWith.count - 1
     }
     
-    func equationCanBeMadeTrue() -> Bool {
-        let operations = createOperations(maxOperators: expectedOperatorCount)
+    func equationCanBeMadeTrue(usingThirdOperator: Bool = false) -> Bool {
+        let operations = createOperations(maxOperators: expectedOperatorCount, usingThirdOperator: usingThirdOperator)
         
         let relevantOperations = operations.filter { $0.count == expectedOperatorCount }
+        
+        var numbersToPlayAroundWith = self.numbersToPlayAroundWith
         
         for relevantOperation in relevantOperations {
             var result = numbersToPlayAroundWith[0]
@@ -28,6 +30,11 @@ struct Equation {
                     result += numbersToPlayAroundWith[i + 1]
                 case "*":
                     result *= numbersToPlayAroundWith[i + 1]
+                case "||":
+                    let numberString = String(numbersToPlayAroundWith[i]) + String(numbersToPlayAroundWith[i + 1])
+                    let number = Int(numberString)!
+                    numbersToPlayAroundWith[i + 1] = number
+                    result = number
                 default:
                     fatalError("Only '+' and '*' are permitted as operators.")
                 }
@@ -50,10 +57,8 @@ func totalCalibrationResult(for input: String) -> Int {
         .reduce(0, +)
 }
 
-
-
-func createOperations(maxOperators: Int) -> Set<[Character]> {
-    var result: Set<[Character]> = [[]]
+func createOperations(maxOperators: Int, usingThirdOperator: Bool) -> Set<[String]> {
+    var result: Set<[String]> = [[]]
     
     for _ in  0 ..< maxOperators {
         for operation in result {
@@ -62,6 +67,12 @@ func createOperations(maxOperators: Int) -> Set<[Character]> {
             
             var multiplyOperation = operation
             multiplyOperation.append("*")
+            
+            if usingThirdOperator {
+                var concatenateOperation = operation
+                concatenateOperation.append("||")
+                result.insert(concatenateOperation)
+            }
             
             result.insert(plusOperation)
             result.insert(multiplyOperation)
