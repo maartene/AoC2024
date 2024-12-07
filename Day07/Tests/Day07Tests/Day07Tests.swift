@@ -10,4 +10,9 @@ import Testing
         let equation = "10: 1 2"
         #expect(equationCanBeMadeTrue(equation) == false)
     }
+    
+    @Test("An input of '10: 2 5' can be made true") func equationThatCanBeMadeTrue() {
+        let equation = "10: 2 5"
+        #expect(equationCanBeMadeTrue(equation) == true)
+    }
 }
