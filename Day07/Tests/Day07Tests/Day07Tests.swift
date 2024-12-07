@@ -50,4 +50,25 @@ import Testing
             #expect(expectedOperations.contains(operation))
         }
     }
+    
+    @Test("In the example input only three equations should be true") func numberOfTrueEquationsInExampleInput() {
+        let exampleInput =
+        """
+        190: 10 19
+        3267: 81 40 27
+        83: 17 5
+        156: 15 6
+        7290: 6 8 6 15
+        161011: 16 10 13
+        192: 17 8 14
+        21037: 9 7 18 13
+        292: 11 6 16 20
+        """
+        
+        let equations = exampleInput.split(separator: "\n").map(String.init)
+        
+        let trueEquations = equations.filter(equationCanBeMadeTrue)
+        
+        #expect(trueEquations.count == 3)
+    }
 }
