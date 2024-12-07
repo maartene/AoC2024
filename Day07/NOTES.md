@@ -16,6 +16,6 @@
 ## 🍅 Pomodoro 2
     - ✅ three number equations
     - ✅ arbitraty number equations
-- ⚠️ In the example input only three equations should be true
+- ✅ In the example input only three equations should be true
 - ⚠️ The total calibration result of the example input should be 3749
 - ⚠️ Edge case: what happens if only one number is passed in?

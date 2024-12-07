@@ -7,7 +7,7 @@ import Testing
 
 @Suite("To get the first star on day 07") struct Day07StarOneTests {
     @Test("An input of '10: 1 2' cannot be made true") func equationThatCannotBeMadeTrue() {
-        let equation = "10: 1 2"
+        let equation = Equation("10: 1 2")
         #expect(equationCanBeMadeTrue(equation) == false)
     }
     
@@ -18,7 +18,7 @@ import Testing
         "292: 11 6 16 20",
         "21: 1 2 3 4 5 6"
     ]) func equationsThatCanBeMadeTrue(equation: String) {
-        #expect(equationCanBeMadeTrue(equation) == true)
+        #expect(equationCanBeMadeTrue(Equation(equation)) == true)
     }
     
     @Test("Creation of operations") func creationOfOperations() {
@@ -51,24 +51,28 @@ import Testing
         }
     }
     
+    let exampleInput =
+    """
+    190: 10 19
+    3267: 81 40 27
+    83: 17 5
+    156: 15 6
+    7290: 6 8 6 15
+    161011: 16 10 13
+    192: 17 8 14
+    21037: 9 7 18 13
+    292: 11 6 16 20
+    """
+    
     @Test("In the example input only three equations should be true") func numberOfTrueEquationsInExampleInput() {
-        let exampleInput =
-        """
-        190: 10 19
-        3267: 81 40 27
-        83: 17 5
-        156: 15 6
-        7290: 6 8 6 15
-        161011: 16 10 13
-        192: 17 8 14
-        21037: 9 7 18 13
-        292: 11 6 16 20
-        """
-        
-        let equations = exampleInput.split(separator: "\n").map(String.init)
+        let equations = convertInputToEquations(exampleInput)
         
         let trueEquations = equations.filter(equationCanBeMadeTrue)
         
         #expect(trueEquations.count == 3)
+    }
+    
+    @Test("The total calibration result of the example input should be 3749") func totalCalibrationResult_forExampleInput() {
+        #expect(totalCalibrationResult(for: exampleInput) == 3749)
     }
 }

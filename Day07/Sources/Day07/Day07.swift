@@ -1,29 +1,51 @@
 import Foundation
 
-func equationCanBeMadeTrue(_ equation: String) -> Bool {
-    let split = equation.split(separator: ":").map(String.init)
-    let expectedNumber = Int(split[0])
+struct Equation {
+    let expectedNumber: Int
+    let numbersToPlayAroundWith: [Int]
     
-    let numbersToPlayAroundWith = split[1].split(separator: " ").map(String.init).compactMap(Int.init)
+    init(_ equationString: String) {
+        let split = equationString.split(separator: ":").map(String.init)
+        expectedNumber = Int(split[0])!
+        
+        numbersToPlayAroundWith = split[1].split(separator: " ").map(String.init).compactMap(Int.init)
+    }
     
-    let operations = createOperations(maxOperators: numbersToPlayAroundWith.count - 1)
+    var expectedOperatorCount: Int {
+        numbersToPlayAroundWith.count - 1
+    }
     
-    let relevantOperations = operations.filter { $0.count == numbersToPlayAroundWith.count - 1 }
+}
+
+func totalCalibrationResult(for input: String) -> Int {
+    let equations = input.split(separator: "\n").map(String.init)
+        .map(Equation.init)
+    
+    let trueEquations = equations.filter(equationCanBeMadeTrue)
+    
+    return trueEquations.map { $0.expectedNumber }
+        .reduce(0, +)
+}
+
+func equationCanBeMadeTrue(_ equation: Equation) -> Bool {
+    let operations = createOperations(maxOperators: equation.expectedOperatorCount)
+    
+    let relevantOperations = operations.filter { $0.count == equation.expectedOperatorCount }
     
     for relevantOperation in relevantOperations {
-        var result = numbersToPlayAroundWith[0]
+        var result = equation.numbersToPlayAroundWith[0]
         for i in 0 ..< relevantOperation.count {
             switch relevantOperation[i] {
             case "+":
-                result += numbersToPlayAroundWith[i + 1]
+                result += equation.numbersToPlayAroundWith[i + 1]
             case "*":
-                result *= numbersToPlayAroundWith[i + 1]
+                result *= equation.numbersToPlayAroundWith[i + 1]
             default:
                 fatalError("Only '+' and '*' are permitted as operators.")
             }
         }
         
-        if result == expectedNumber {
+        if result == equation.expectedNumber {
             return true
         }
     }
@@ -48,4 +70,8 @@ func createOperations(maxOperators: Int) -> Set<[Character]> {
     }
     
     return result
+}
+
+func convertInputToEquations(_ input: String) -> [Equation] {
+    input.split(separator: "\n").map(String.init).map(Equation.init)
 }
