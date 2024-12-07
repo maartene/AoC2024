@@ -52,19 +52,6 @@ import Testing
         }
     }
     
-    let exampleInput =
-    """
-    190: 10 19
-    3267: 81 40 27
-    83: 17 5
-    156: 15 6
-    7290: 6 8 6 15
-    161011: 16 10 13
-    192: 17 8 14
-    21037: 9 7 18 13
-    292: 11 6 16 20
-    """
-    
     @Test("In the example input only three equations should be true") func numberOfTrueEquationsInExampleInput() {
         let equations = convertInputToEquations(exampleInput)
         
@@ -93,4 +80,26 @@ import Testing
         let equation = Equation(equationString)
         #expect(equation.equationCanBeMadeTrue(usingThirdOperator: true))
     }
+    
+    @Test("The total calibration result of the example input should be 11387") func totalCalibrationResult_forExampleInput() {
+        #expect(totalCalibrationResult(for: exampleInput, usingThirdOperator: true) == 11387)
+    }
+    
+    // Be careful! This one runs for ~100 seconds (M2 Pro)
+    @Test("The total calibration result of the actual input should be 438027111276610") func totalCalibrationResult_forActualInput() {
+        #expect(totalCalibrationResult(for: input, usingThirdOperator: true) == 438027111276610)
+    }
 }
+
+let exampleInput =
+"""
+190: 10 19
+3267: 81 40 27
+83: 17 5
+156: 15 6
+7290: 6 8 6 15
+161011: 16 10 13
+192: 17 8 14
+21037: 9 7 18 13
+292: 11 6 16 20
+"""

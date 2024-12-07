@@ -19,11 +19,7 @@ struct Equation {
         let operations = createOperations(maxOperators: expectedOperatorCount, usingThirdOperator: usingThirdOperator)
         
         let relevantOperations = operations.filter { $0.count == expectedOperatorCount }
-        
-        //let relevantOperations = [["*", "||", "*"]]
-        
-        var numbersToPlayAroundWith = self.numbersToPlayAroundWith
-        
+                
         for relevantOperation in relevantOperations {
             var result = numbersToPlayAroundWith[0]
             for i in 0 ..< relevantOperation.count {
@@ -35,10 +31,9 @@ struct Equation {
                 case "||":
                     let numberString = String(result) + String(numbersToPlayAroundWith[i + 1])
                     let number = Int(numberString)!
-                    //numbersToPlayAroundWith[i + 1] = number
                     result = number
                 default:
-                    fatalError("Only '+' and '*' are permitted as operators.")
+                    fatalError("Only '+', '*' and '||' are permitted as operators.")
                 }
             }
             
@@ -50,10 +45,16 @@ struct Equation {
     }
 }
 
-func totalCalibrationResult(for input: String) -> Int {
+func totalCalibrationResult(for input: String, usingThirdOperator: Bool = false) -> Int {
     let equations = convertInputToEquations(input)
     
-    let trueEquations = equations.filter { $0.equationCanBeMadeTrue() }
+    var trueEquations = [Equation]()
+    for i in 0 ..< equations.count {
+        print("Testing equation \(i) of \(equations.count)")
+        if equations[i].equationCanBeMadeTrue(usingThirdOperator: usingThirdOperator) {
+            trueEquations.append(equations[i])
+        }
+    }
     
     return trueEquations.map { $0.expectedNumber }
         .reduce(0, +)
