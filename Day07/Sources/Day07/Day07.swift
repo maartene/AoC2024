@@ -20,6 +20,8 @@ struct Equation {
         
         let relevantOperations = operations.filter { $0.count == expectedOperatorCount }
         
+        //let relevantOperations = [["*", "||", "*"]]
+        
         var numbersToPlayAroundWith = self.numbersToPlayAroundWith
         
         for relevantOperation in relevantOperations {
@@ -31,9 +33,9 @@ struct Equation {
                 case "*":
                     result *= numbersToPlayAroundWith[i + 1]
                 case "||":
-                    let numberString = String(numbersToPlayAroundWith[i]) + String(numbersToPlayAroundWith[i + 1])
+                    let numberString = String(result) + String(numbersToPlayAroundWith[i + 1])
                     let number = Int(numberString)!
-                    numbersToPlayAroundWith[i + 1] = number
+                    //numbersToPlayAroundWith[i + 1] = number
                     result = number
                 default:
                     fatalError("Only '+' and '*' are permitted as operators.")

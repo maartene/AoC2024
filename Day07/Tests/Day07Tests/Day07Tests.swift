@@ -85,10 +85,12 @@ import Testing
 @Suite("To get the second star on day 07") struct Day07StarTwoTests {
     @Test("These equations should also be able to made true using the third operator", arguments: [
         "12345: 12 345",
-        
+        "12346: 12 345 1",
+        "156: 15 6",
+        "7290: 6 8 6 15",
+        "192: 17 8 14"
     ]) func equationsThatCanBeMadeTrueUsingThirdOperator(equationString: String) {
         let equation = Equation(equationString)
         #expect(equation.equationCanBeMadeTrue(usingThirdOperator: true))
-        
     }
 }
