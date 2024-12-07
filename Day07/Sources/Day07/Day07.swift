@@ -6,22 +6,7 @@ func equationCanBeMadeTrue(_ equation: String) -> Bool {
     
     let numbersToPlayAroundWith = split[1].split(separator: " ").map(String.init).compactMap(Int.init)
     
-    let operations = [
-        ["*"],
-        ["+"],
-        ["+", "*"],
-        ["*", "+"],
-        ["+", "+"],
-        ["*", "*"],
-        ["*", "*", "*"],
-        ["*", "*", "+"],
-        ["*", "+", "*"],
-        ["*", "+", "+"],
-        ["+", "*", "*"],
-        ["+", "*", "+"],
-        ["+", "+", "*"],
-        ["+", "+", "+"],
-    ]
+    let operations = createOperations(maxOperators: numbersToPlayAroundWith.count - 1)
     
     let relevantOperations = operations.filter { $0.count == numbersToPlayAroundWith.count - 1 }
     
@@ -44,4 +29,23 @@ func equationCanBeMadeTrue(_ equation: String) -> Bool {
     }
     
     return false
+}
+
+func createOperations(maxOperators: Int) -> Set<[Character]> {
+    var result: Set<[Character]> = [[]]
+    
+    for _ in  0 ..< maxOperators {
+        for operation in result {
+            var plusOperation = operation
+            plusOperation.append("+")
+            
+            var multiplyOperation = operation
+            multiplyOperation.append("*")
+            
+            result.insert(plusOperation)
+            result.insert(multiplyOperation)
+        }
+    }
+    
+    return result
 }

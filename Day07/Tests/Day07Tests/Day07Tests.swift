@@ -14,8 +14,40 @@ import Testing
     @Test("These equations can be made true:", arguments: [
         "10: 2 5",
         "7: 2 5",
-        "3267: 81 40 27"
+        "3267: 81 40 27",
+        "292: 11 6 16 20",
+        "21: 1 2 3 4 5 6"
     ]) func equationsThatCanBeMadeTrue(equation: String) {
         #expect(equationCanBeMadeTrue(equation) == true)
+    }
+    
+    @Test("Creation of operations") func creationOfOperations() {
+        let operations = createOperations(maxOperators: 3)
+        let expectedOperations: [[Character]] = [
+            [],
+            ["*"],
+            ["+"],
+            ["+", "*"],
+            ["*", "+"],
+            ["+", "+"],
+            ["*", "*"],
+            ["*", "*", "*"],
+            ["*", "*", "+"],
+            ["*", "+", "*"],
+            ["*", "+", "+"],
+            ["+", "*", "*"],
+            ["+", "*", "+"],
+            ["+", "+", "*"],
+            ["+", "+", "+"],
+        ]
+        
+        for operation in operations {
+            print(operation)
+        }
+        
+        #expect(operations.count == expectedOperations.count)
+        for operation in operations {
+            #expect(expectedOperations.contains(operation))
+        }
     }
 }
