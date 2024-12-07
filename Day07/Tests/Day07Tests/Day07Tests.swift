@@ -75,4 +75,8 @@ import Testing
     @Test("The total calibration result of the example input should be 3749") func totalCalibrationResult_forExampleInput() {
         #expect(totalCalibrationResult(for: exampleInput) == 3749)
     }
+    
+    @Test("The total calibration result of the actual input should be 7579994664753") func totalCalibrationResult_forActualInput() {
+        #expect(totalCalibrationResult(for: input) == 7579994664753)
+    }
 }

@@ -14,7 +14,6 @@ struct Equation {
     var expectedOperatorCount: Int {
         numbersToPlayAroundWith.count - 1
     }
-    
 }
 
 func totalCalibrationResult(for input: String) -> Int {
