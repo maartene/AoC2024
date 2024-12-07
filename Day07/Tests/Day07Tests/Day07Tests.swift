@@ -13,8 +13,9 @@ import Testing
     
     @Test("These equations can be made true:", arguments: [
         "10: 2 5",
-        "7: 2 5"
-    ]) func equationThatCanBeMadeTrue(equation: String) {
+        "7: 2 5",
+        "3267: 81 40 27"
+    ]) func equationsThatCanBeMadeTrue(equation: String) {
         #expect(equationCanBeMadeTrue(equation) == true)
     }
 }
