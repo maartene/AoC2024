@@ -23,6 +23,7 @@ struct Equation {
         for relevantOperation in relevantOperations {
             var result = numbersToPlayAroundWith[0]
             for i in 0 ..< relevantOperation.count {
+                
                 switch relevantOperation[i] {
                 case "+":
                     result += numbersToPlayAroundWith[i + 1]
@@ -36,6 +37,7 @@ struct Equation {
                     fatalError("Only '+', '*' and '||' are permitted as operators.")
                 }
             }
+            
             
             if result == expectedNumber {
                 return true

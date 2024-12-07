@@ -24,3 +24,6 @@
 - ✅ Understand the twist
 - ✅ The total calibration result of the example input should be 11387 when taking the || operator into account
 - ✅ Let's get that second star
+
+## 🍅 Pomodoro 4
+- ⚠️ Optimize code
