@@ -8,6 +8,8 @@
 - ⚠️ TODO
 
 ## 🍅 Pomodoro 1
-- ⚠️ Read the description
-- ⚠️ Import the input data
-- ⚠️ Make the example input pass
+- ✅ Read the description
+- ✅ Import the input data
+- 🚧 Triangulate a function that can - for an input - determine whether it can be made true or not
+- ⚠️ In the example input only three equations should be true
+- ⚠️ The total calibration result of the example input should be 3749
