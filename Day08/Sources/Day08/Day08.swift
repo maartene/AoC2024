@@ -24,6 +24,32 @@ func calculateNumberOfAntinodePositions(in map: String) -> Int {
         .count
 }
 
+func calculateNumberOfAntinodePositions_includingLines(in map: String) -> Int {
+    let map = Map(map)
+    let nodes = map.nodes
+    
+    var antinodePositions = Set<Vector>()
+    for node in nodes {
+        let otherNodes = nodes.filter {
+            $0.key != node.key && $0.value == node.value
+        }
+        
+        for otherNode in otherNodes {
+            let distance = otherNode.key - node.key
+            var reflections: Set = [node.key, otherNode.key]
+            for i in 0 ..< 1000 {
+                reflections.insert(otherNode.key + distance * i)
+                reflections.insert(node.key - distance * i)
+            }
+            antinodePositions.formUnion(reflections)
+        }
+    }
+    
+    return antinodePositions
+        .filter { map.isWithinBounds($0) }
+        .count
+}
+
 struct Map {
     let nodes: [Vector: Character]
     let width: Int
