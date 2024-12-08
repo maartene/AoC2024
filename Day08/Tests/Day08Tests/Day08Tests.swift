@@ -65,7 +65,7 @@ import Testing
         #expect(calculateNumberOfAntinodePositions(in: map) == 4)
     }
     
-    @Test("The number of unique locations that contain an antinode should equal 14") func uniqueAntinodeLocations_forExampleInput() {
+    @Test("The number of unique locations in the example input that contain an antinode should equal 14") func uniqueAntinodeLocations_forExampleInput() {
         let exampleInput =
         """
         ............
@@ -82,5 +82,9 @@ import Testing
         ............
         """
         #expect(calculateNumberOfAntinodePositions(in: exampleInput) == 14)
+    }
+    
+    @Test("The number of unique locations in the actual input that contain an antinode should equal 361") func uniqueAntinodeLocations_forActualInput() {
+        #expect(calculateNumberOfAntinodePositions(in: input) == 361)
     }
 }
