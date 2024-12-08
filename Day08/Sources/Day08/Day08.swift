@@ -19,7 +19,9 @@ func calculateNumberOfAntinodePositions(in map: String) -> Int {
         }
     }
     
-    return antinodePositions.count
+    return antinodePositions
+        .filter { map.isWithinBounds($0) }
+        .count
 }
 
 struct Map {
@@ -45,5 +47,9 @@ struct Map {
         }
         
         self.nodes = nodes
+    }
+    
+    func isWithinBounds(_ position: Vector) -> Bool {
+        position.x >= 0 && position.x < width && position.y >= 0 && position.y < height
     }
 }
