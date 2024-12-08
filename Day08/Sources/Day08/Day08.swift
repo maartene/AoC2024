@@ -1,7 +1,8 @@
 import Shared
 
 func calculateNumberOfAntinodePositions(in map: String) -> Int {
-    let nodes = convertInputToNodes(in: map)
+    let map = Map(map)
+    let nodes = map.nodes
     
     var antinodePositions = Set<Vector>()
     for node in nodes {
@@ -21,19 +22,28 @@ func calculateNumberOfAntinodePositions(in map: String) -> Int {
     return antinodePositions.count
 }
 
-func convertInputToNodes(in map: String) -> [Vector: Character] {
-    var nodes = [Vector: Character]()
-    let rows = map.split(separator: "\n").map(String.init)
+struct Map {
+    let nodes: [Vector: Character]
+    let width: Int
+    let height: Int
     
-    for y in 0 ..< rows.count {
-        let cols: [Character] = rows[y].map { $0 }
-        for x in 0 ..< cols.count {
-            let position = Vector(x: x, y: y)
-            if cols[x] != "." {
-                nodes[position] = cols[x]
+    init(_ mapString: String) {
+        var nodes = [Vector: Character]()
+        let rows = mapString.split(separator: "\n").map(String.init)
+        
+        height = rows.count
+        width = rows.first?.count ?? 0
+        
+        for y in 0 ..< height {
+            let cols: [Character] = rows[y].map { $0 }
+            for x in 0 ..< width {
+                let position = Vector(x: x, y: y)
+                if cols[x] != "." {
+                    nodes[position] = cols[x]
+                }
             }
         }
+        
+        self.nodes = nodes
     }
-    
-    return nodes
 }
