@@ -35,24 +35,31 @@ func calculateNumberOfAntinodePositions_includingLines(in map: String) -> Int {
         }
         
         for otherNode in otherNodes {
-            let distance = otherNode.key - node.key
-            var reflections: Set = [node.key, otherNode.key]
-            var testCoord = otherNode.key + distance
-            while map.isWithinBounds(testCoord) {
-                reflections.insert(testCoord)
-                testCoord += distance
-            }
-            testCoord = node.key - distance
-            while map.isWithinBounds(testCoord) {
-                reflections.insert(testCoord)
-                testCoord -= distance
-            }
-
+            let reflections = findReflections(node: node.key, otherNode: otherNode.key, in: map)
             antinodePositions.formUnion(reflections)
         }
     }
     
     return antinodePositions.count
+    
+    func findReflections(node: Vector, otherNode: Vector, in map: Map) -> Set<Vector> {
+        let distance = otherNode - node
+        var reflections: Set = [node, otherNode]
+        
+        var testCoord = otherNode + distance
+        while map.isWithinBounds(testCoord) {
+            reflections.insert(testCoord)
+            testCoord += distance
+        }
+        
+        testCoord = node - distance
+        while map.isWithinBounds(testCoord) {
+            reflections.insert(testCoord)
+            testCoord -= distance
+        }
+        
+        return reflections
+    }
 }
 
 struct Map {
