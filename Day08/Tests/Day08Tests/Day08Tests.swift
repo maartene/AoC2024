@@ -111,4 +111,8 @@ let exampleInput =
     @Test("The number of unique locations in the example input that contain an antinode should equal 34 when lines are taken into account") func uniqueAntinodeLocations_forExampleInput_withLinesTakenIntoAccount() {
         #expect(calculateNumberOfAntinodePositions_includingLines(in: exampleInput) == 34)
     }
+    
+    @Test("The number of unique locations in the actual input that contain an antinode should equal 1249 when lines are taken into account") func uniqueAntinodeLocations_forActualInput_withLinesTakenIntoAccount() {
+        #expect(calculateNumberOfAntinodePositions_includingLines(in: input) == 1249)
+    }
 }
