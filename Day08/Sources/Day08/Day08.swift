@@ -1,2 +1,3 @@
-// The Swift Programming Language
-// https://docs.swift.org/swift-book
+func calculateNumberOfAntinodePositions(in map: String) -> Int {
+    0
+}
