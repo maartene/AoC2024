@@ -1,6 +1,12 @@
 import Shared
 
 func calculateNumberOfAntinodePositions(in map: String) -> Int {
+    let nodes = convertInputToNodes(in: map)
+    
+    return nodes.count
+}
+
+func convertInputToNodes(in map: String) -> [Vector: Character] {
     var nodes = [Vector: Character]()
     let rows = map.split(separator: "\n").map(String.init)
     
@@ -14,5 +20,5 @@ func calculateNumberOfAntinodePositions(in map: String) -> Int {
         }
     }
     
-    return nodes.count
+    return nodes
 }
