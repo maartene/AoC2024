@@ -12,10 +12,8 @@ func calculateNumberOfAntinodePositions(in map: String) -> Int {
         
         for otherNode in otherNodes {
             let distance = otherNode.key - node.key
-            let reflectionOne = otherNode.key + distance
-            let reflectionTwo = node.key - distance
-            antinodePositions.insert(reflectionOne)
-            antinodePositions.insert(reflectionTwo)
+            let reflections = [otherNode.key + distance, node.key - distance]
+            antinodePositions.formUnion(reflections)
         }
     }
     
