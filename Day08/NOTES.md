@@ -17,6 +17,6 @@
     - ✅ calculate antinode positions for three nodes
     
 ## 🍅 Pomodoro 2    
-    - ⚠️ exclude antinode positions that are not on the map
-- ⚠️ The number of unique locations that contain an antinode should equal 14
-- ⚠️ Make the example input pass
+    - ✅ exclude antinode positions that are not on the map
+- ✅ The number of unique locations that contain an antinode should equal 14
+- ⚠️ Lets get that first star
