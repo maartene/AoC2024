@@ -3,7 +3,22 @@ import Shared
 func calculateNumberOfAntinodePositions(in map: String) -> Int {
     let nodes = convertInputToNodes(in: map)
     
-    return nodes.count
+    var antinodePositions = Set<Vector>()
+    for node in nodes {
+        let otherNodes = nodes.filter {
+            $0.key != node.key && $0.value == node.value
+        }
+        
+        for otherNode in otherNodes {
+            let distance = otherNode.key - node.key
+            let reflectionOne = otherNode.key + distance
+            let reflectionTwo = node.key - distance
+            antinodePositions.insert(reflectionOne)
+            antinodePositions.insert(reflectionTwo)
+        }
+    }
+    
+    return antinodePositions.count
 }
 
 func convertInputToNodes(in map: String) -> [Vector: Character] {
