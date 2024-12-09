@@ -43,8 +43,8 @@ import Testing
     }
     
     // This test runs for 8 minutes
-//    @Test("The checksum for the defragmented filesystem for the actual input should be 6398252054886") func checksumForDefragmentedFilesystem_forActualInput() {
-//        #expect(defragmentFilesystemAndReturnChecksum(filesystemString: input) == 6398252054886)
-//    }
+    @Test("The checksum for the defragmented filesystem for the actual input should be 6398252054886") func checksumForDefragmentedFilesystem_forActualInput() {
+        #expect(defragmentFilesystemAndReturnChecksum(filesystemString: input) == 6398252054886)
+    }
 
 }

@@ -11,10 +11,20 @@ func defragmentFilesystem(_ filesystem: String) -> [Int?] {
     
     var defragmentedFilesystem = expandedFilesystem
     
-    while let firstNil = defragmentedFilesystem.firstIndex(of: nil), let lastFileID = defragmentedFilesystem.last {
-        print("Firstnil: \(firstNil) of \(defragmentedFilesystem.count)")
-        defragmentedFilesystem[firstNil] = lastFileID
-        defragmentedFilesystem = defragmentedFilesystem.dropLast()
+    var nextNil: Int = defragmentedFilesystem.firstIndex(of: nil)!
+    var lastFileID = defragmentedFilesystem.lastIndex(where: { $0 != nil } )!
+    while nextNil < lastFileID {
+        defragmentedFilesystem.swapAt(nextNil, lastFileID)
+        
+        nextNil += 1
+        while defragmentedFilesystem[nextNil] != nil {
+            nextNil += 1
+        }
+        
+        lastFileID -= 1
+        while defragmentedFilesystem[lastFileID] == nil {
+            lastFileID -= 1
+        }
     }
     
     return defragmentedFilesystem
