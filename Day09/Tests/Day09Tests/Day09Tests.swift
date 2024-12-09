@@ -10,4 +10,12 @@ import Testing
         let filesystem = "90909"
         #expect(defragmentFilesystem(filesystem) == "90909")
     }
+    
+    @Test("Calculate checksum for defragmented filesystem") func calculateChecksumForDefragmentedFilesystem() {
+        let expandedFilesystem = "0099811188827773336446555566.............."
+            .map { String($0) }
+            .map { Int($0) }
+        
+        #expect(calculateChecksum(expandedFilesystem: expandedFilesystem) == 1928)
+    }
 }
