@@ -32,9 +32,41 @@ func defragmentFilesystem(_ filesystem: String) -> [Int?] {
     return defragmentedFilesystem.filter { $0 != nil }
 }
 
+
+
 func defragmentFilesystemBasedOnFiles(_ filesystem: String) -> [Int?] {
     []
+    
 }
+
+enum File: Equatable {
+    case free(size: Int)
+    case file(id: Int, size: Int)
+}
+
+
+func convertFilesystemStringIntoFilesAndFreespace(_ filesystemString: String) -> [File] {
+    let filesystem = filesystemString.map { String($0)
+    }
+        .compactMap(Int.init)
+    
+    var result = [File]()
+    var isFile = true
+    
+    var fileCount = 0
+    for number in filesystem {
+        if isFile {
+            result.append(File.file(id: fileCount, size: number))
+            isFile = false
+            fileCount += 1
+        } else {
+            isFile = true
+            result.append(File.free(size: number))
+        }
+    }
+    return result
+}
+
 
 // MARK: Util
 

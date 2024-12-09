@@ -45,6 +45,32 @@ let exampleInput = "2333133121414131402"
 }
 
 @Suite("To get the second star on day 09") struct Day09StarTwoTests {
+    @Test("We should be able to convert a filesystem string into a set of files and freespace") func testConversionFilesystemStringIntoFilesAndFreespace() {
+        let expected = [
+            File.file(id: 0, size: 2),
+            .free(size: 3),
+            .file(id: 1, size: 3),
+            .free(size: 3),
+            .file(id: 2, size: 1),
+            .free(size: 3),
+            .file(id: 3, size: 3),
+            .free(size: 1),
+            .file(id: 4, size: 2),
+            .free(size: 1),
+            .file(id: 5, size: 4),
+            .free(size: 1),
+            .file(id: 6, size: 4),
+            .free(size: 1),
+            .file(id: 7, size: 3),
+            .free(size: 1),
+            .file(id: 8, size: 4),
+            .free(size: 0),
+            .file(id: 9, size: 2)
+        ]
+                
+        #expect(convertFilesystemStringIntoFilesAndFreespace(exampleInput) == expected)
+    }
+    
 //    @Test("The example input defragments down to '00992111777.44.333....5555.6666.....8888..'") func defragmentExampleInput() {
 //        let expected = convertExpandedFilesystemString("00992111777.44.333....5555.6666.....8888")
 //        #expect(defragmentFilesystemBasedOnFiles(exampleInput) == expected)
