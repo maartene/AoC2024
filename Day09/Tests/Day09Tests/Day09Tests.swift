@@ -36,5 +36,10 @@ import Testing
         let expected = convertExpandedFilesystemString(testcase.expected)
         #expect(defragmentFilesystem(testcase.filesystem) == expected)
     }
+    
+    @Test("The checksum for the defragmented filesystem for the example input should be 1928") func checksumForDefragmentedFilesystem_forExampleInput() {
+        let exampleInput = "2333133121414131402"
+        #expect(defragmentFilesystemAndReturnChecksum(filesystemString: exampleInput) == 1928)
+    }
 
 }

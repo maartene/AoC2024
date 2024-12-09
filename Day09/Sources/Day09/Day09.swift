@@ -1,6 +1,11 @@
 // The Swift Programming Language
 // https://docs.swift.org/swift-book
 
+func defragmentFilesystemAndReturnChecksum(filesystemString: String) -> Int {
+    let defragmentedFilesystem = defragmentFilesystem(filesystemString)
+    return calculateChecksum(expandedFilesystem: defragmentedFilesystem)
+}
+
 func defragmentFilesystem(_ filesystem: String) -> [Int?] {
     let expandedFilesystem = expandFilesystem(filesystem)
     
