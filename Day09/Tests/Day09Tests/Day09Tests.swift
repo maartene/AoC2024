@@ -22,7 +22,8 @@ import Testing
     }
     
     @Test("Defragment a filesystem that is already defragmented remains unchanged", arguments: [
-        ("10", [0])
+        ("10", [0]),
+        ("20", [0,0])
     ]) func defragmentDefragmentedFilesystem(testcase: (filesystem: String, expected: [Int?])) {
         #expect(defragmentFilesystem(testcase.filesystem) == testcase.expected)
     }
