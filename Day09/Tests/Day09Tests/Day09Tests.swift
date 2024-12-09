@@ -21,11 +21,10 @@ import Testing
         #expect(expandFilesystem(testcase.filesystemString) == expected)
     }
     
-    @Test("Defragment a filesystem that is already defragmented remains unchanged") func defragmentDefragmentedFilesystem() {
-        let filesystem = "10"
-        let expected = [0]
-        
-        #expect(defragmentFilesystem(filesystem) == expected)
+    @Test("Defragment a filesystem that is already defragmented remains unchanged", arguments: [
+        ("10", [0])
+    ]) func defragmentDefragmentedFilesystem(testcase: (filesystem: String, expected: [Int?])) {
+        #expect(defragmentFilesystem(testcase.filesystem) == testcase.expected)
     }
 
 }
