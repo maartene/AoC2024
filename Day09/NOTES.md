@@ -8,6 +8,7 @@
 - ⚠️ TODO
 
 ## 🍅 Pomodoro 1
-- ⚠️ Read the description
-- ⚠️ Import the input data
-- ⚠️ Make the example input pass
+- ✅ Read the description
+- ✅ Import the input data
+- ⚠️ Defragment a filesystem that is already deframented: 90909
+- ⚠️ Checksum for the example input should be 1928
