@@ -6,9 +6,9 @@ func defragmentFilesystem(_ filesystem: String) -> [Int?] {
     
     var defragmentedFilesystem = expandedFilesystem
     
-    if defragmentedFilesystem.contains(nil) {
-        defragmentedFilesystem.swapAt(1, 2)
-        defragmentedFilesystem.remove(at: 2)
+    while let firstNil = defragmentedFilesystem.firstIndex(of: nil), let lastFileID = defragmentedFilesystem.last {
+        defragmentedFilesystem[firstNil] = lastFileID
+        defragmentedFilesystem = defragmentedFilesystem.dropLast()
     }
     
     return defragmentedFilesystem

@@ -29,7 +29,8 @@ import Testing
     }
     
     @Test("Defragment a filesystem", arguments: [
-        ("111","01")
+        ("111","01"),
+        ("12345", "022111222")
     ]) func defragmentingAFilesystemCreatesExpectedResult(testcase: (filesystem: String, expected: String)) {
         let expected = convertExpandedFilesystemString(testcase.expected)
         #expect(defragmentFilesystem(testcase.filesystem) == expected)
