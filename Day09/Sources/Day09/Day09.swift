@@ -34,6 +34,11 @@ func defragmentFilesystem(_ filesystem: String) -> [Int?] {
 }
 
 // MARK: Star 2
+func defragmentFilesystemBasedOnFilesAndReturnChecksum(_ filesystem: String) -> Int {
+    let defragmentedFilesystem = defragmentFilesystemBasedOnFiles(filesystem)
+    return calculateChecksum(expandedFilesystem: defragmentedFilesystem)
+}
+
 func defragmentFilesystemBasedOnFiles(_ filesystem: String) -> [Int?] {
     let convertedFilesystem = convertFilesystemStringIntoFilesAndFreespace(filesystem)
     
@@ -41,7 +46,6 @@ func defragmentFilesystemBasedOnFiles(_ filesystem: String) -> [Int?] {
     
     var defragmentedFilesystem = convertFilesAndFreespaceIntoExpandedFilesystem(convertedFilesystem)
     for fileToMove in filesToMove {
-        print(fileToMove.id)
         printExpandedFilesystem(defragmentedFilesystem)
         let defragmentedFilesAndFreespace = convertExpandedFilesystemIntoFilesAndFreespace(defragmentedFilesystem)
         // find free space

@@ -83,5 +83,7 @@ let exampleInput = "2333133121414131402"
         #expect(result == expected)
     }
     
-    @Test("")
+    @Test("Checksum for the example input while moving files should be 2858") func checksumOfDefragmentedExampleInput() {
+        #expect(defragmentFilesystemBasedOnFilesAndReturnChecksum(exampleInput) == 2858)
+    }
 }
