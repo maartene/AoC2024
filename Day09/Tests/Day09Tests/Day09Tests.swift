@@ -46,33 +46,42 @@ let exampleInput = "2333133121414131402"
 
 @Suite("To get the second star on day 09") struct Day09StarTwoTests {
     @Test("We should be able to convert a filesystem string into a set of files and freespace") func testConversionFilesystemStringIntoFilesAndFreespace() {
+        let fileSystemString = "12345"
         let expected = [
-            File.file(id: 0, size: 2),
-            .free(size: 3),
-            .file(id: 1, size: 3),
-            .free(size: 3),
-            .file(id: 2, size: 1),
-            .free(size: 3),
-            .file(id: 3, size: 3),
-            .free(size: 1),
-            .file(id: 4, size: 2),
-            .free(size: 1),
-            .file(id: 5, size: 4),
-            .free(size: 1),
-            .file(id: 6, size: 4),
-            .free(size: 1),
-            .file(id: 7, size: 3),
-            .free(size: 1),
-            .file(id: 8, size: 4),
-            .free(size: 0),
-            .file(id: 9, size: 2)
+            File(id: 0, size: 1, startPosition: 0),
+            File(size: 2, startPosition: 1),
+            File(id: 1, size: 3, startPosition: 3),
+            File(size: 4, startPosition: 6),
+            File(id: 2, size: 5, startPosition: 10)
         ]
                 
-        #expect(convertFilesystemStringIntoFilesAndFreespace(exampleInput) == expected)
+        #expect(convertFilesystemStringIntoFilesAndFreespace(fileSystemString) == expected)
     }
     
-//    @Test("The example input defragments down to '00992111777.44.333....5555.6666.....8888..'") func defragmentExampleInput() {
-//        let expected = convertExpandedFilesystemString("00992111777.44.333....5555.6666.....8888")
-//        #expect(defragmentFilesystemBasedOnFiles(exampleInput) == expected)
-//    }
+    @Test("We should be able to convert an expanded filesystem into a set of files and free space") func testConversionExpandedFilesystemIntoFilesAndFreespace() {
+        let expandedFilesystem = convertExpandedFilesystemString("0..111....22222")
+        
+        let expected = [
+            File(id: 0, size: 1, startPosition: 0),
+            File(size: 2, startPosition: 1),
+            File(id: 1, size: 3, startPosition: 3),
+            File(size: 4, startPosition: 6),
+            File(id: 2, size: 5, startPosition: 10)
+        ]
+        
+        let result = convertExpandedFilesystemIntoFilesAndFreespace(expandedFilesystem)
+        
+        #expect(result == expected)
+    }
+        
+    
+    @Test("The example input defragments down to '00992111777.44.333....5555.6666.....8888..'") func defragmentExampleInput() {
+        let expected = convertExpandedFilesystemString("00992111777.44.333....5555.6666.....8888..")
+        
+        let result = defragmentFilesystemBasedOnFiles(exampleInput)
+        
+        #expect(result == expected)
+    }
+    
+    @Test("")
 }
