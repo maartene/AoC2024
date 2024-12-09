@@ -13,5 +13,8 @@
 - ✅ Defragment a filesystem that is already deframented: 90909
 - ✅ Calculate checksum based on expanded filesystem
 - ⚠️ Convert a filesystem into an expanded blockdescription
+
+## 🍅 Pomodoro 2
+    - one more example to feel safe
 - ⚠️ Calculate checksum based on blockdescription
 - ⚠️ Checksum for the example input should be 1928

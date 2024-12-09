@@ -19,12 +19,13 @@ import Testing
         #expect(calculateChecksum(expandedFilesystem: expandedFilesystem) == 1928)
     }
     
-    @Test("Expand a filesystem") func testExpandFilesystem() {
-        let filesystem = "12345"
-        let expected = "0..111....22222"
+    @Test("Expand a filesystem", arguments: [
+        ("12345", "0..111....22222")
+    ]) func testExpandFilesystem(testcase: (filesystemString: String, expectedFilesystemString: String)) {
+        let expected = testcase.expectedFilesystemString
             .map { String($0) }
             .map { Int($0) }
         
-        #expect(expandFilesystem(filesystem) == expected)
+        #expect(expandFilesystem(testcase.filesystemString) == expected)
     }
 }
