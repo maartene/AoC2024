@@ -11,8 +11,10 @@ func defragmentFilesystem(_ filesystem: String) -> [Int?] {
     
     var defragmentedFilesystem = expandedFilesystem
     
-    var nextNil: Int = defragmentedFilesystem.firstIndex(of: nil)!
-    var lastFileID = defragmentedFilesystem.lastIndex(where: { $0 != nil } )!
+    guard var nextNil: Int = defragmentedFilesystem.firstIndex(of: nil), var lastFileID = defragmentedFilesystem.lastIndex(where: { $0 != nil } ) else {
+        return expandedFilesystem
+    }
+    
     while nextNil < lastFileID {
         defragmentedFilesystem.swapAt(nextNil, lastFileID)
         
@@ -27,8 +29,14 @@ func defragmentFilesystem(_ filesystem: String) -> [Int?] {
         }
     }
     
-    return defragmentedFilesystem
+    return defragmentedFilesystem.filter { $0 != nil }
 }
+
+func defragmentFilesystemBasedOnFiles(_ filesystem: String) -> [Int?] {
+    []
+}
+
+// MARK: Util
 
 func calculateChecksum(expandedFilesystem: [Int?]) -> Int {
     var checksum = 0

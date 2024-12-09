@@ -1,9 +1,7 @@
 import Testing
 @testable import Day09
 
-@Test func example() async throws {
-    // Write your test here and use APIs like `#expect(...)` to check expected conditions.
-}
+let exampleInput = "2333133121414131402"
 
 @Suite("To get the first star on day 09") struct Day09StarOneTests {
     @Test("Calculate checksum for defragmented filesystem") func calculateChecksumForDefragmentedFilesystem() {
@@ -38,13 +36,17 @@ import Testing
     }
     
     @Test("The checksum for the defragmented filesystem for the example input should be 1928") func checksumForDefragmentedFilesystem_forExampleInput() {
-        let exampleInput = "2333133121414131402"
         #expect(defragmentFilesystemAndReturnChecksum(filesystemString: exampleInput) == 1928)
     }
     
-    // This test runs for 8 minutes
     @Test("The checksum for the defragmented filesystem for the actual input should be 6398252054886") func checksumForDefragmentedFilesystem_forActualInput() {
         #expect(defragmentFilesystemAndReturnChecksum(filesystemString: input) == 6398252054886)
     }
+}
 
+@Suite("To get the second star on day 09") struct Day09StarTwoTests {
+//    @Test("The example input defragments down to '00992111777.44.333....5555.6666.....8888..'") func defragmentExampleInput() {
+//        let expected = convertExpandedFilesystemString("00992111777.44.333....5555.6666.....8888")
+//        #expect(defragmentFilesystemBasedOnFiles(exampleInput) == expected)
+//    }
 }

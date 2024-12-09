@@ -19,4 +19,10 @@
 - ✅ Calculate checksum based on blockdescription
 - ✅ Actually defragment
 - ✅ Checksum for the example input should be 1928
-- ⚠️ Lets get that first star
+- ✅ Lets get that first star
+
+## 🍅 Pomodoro 3
+- ✅ Understand the twist
+- ✅ Fixed ❌ where optimized algorithm broke existing tests
+- ⚠️ Checksum for the example input while moving files should be 2858
+- ⚠️ Lets get that second star
