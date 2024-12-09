@@ -20,7 +20,8 @@ import Testing
     }
     
     @Test("Expand a filesystem", arguments: [
-        ("12345", "0..111....22222")
+        ("12345", "0..111....22222"),
+        ("2333133121414131402", "00...111...2...333.44.5555.6666.777.888899")
     ]) func testExpandFilesystem(testcase: (filesystemString: String, expectedFilesystemString: String)) {
         let expected = testcase.expectedFilesystemString
             .map { String($0) }
