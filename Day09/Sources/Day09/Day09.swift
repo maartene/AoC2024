@@ -41,3 +41,9 @@ func expandFilesystem(_ filesystemString: String) -> [Int?] {
     
     return result
 }
+
+func convertExpandedFilesystemString(_ expandedFilesystemString: String) -> [Int?] {
+    expandedFilesystemString
+        .map { String($0) }
+        .map { Int($0) }
+}
