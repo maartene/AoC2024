@@ -26,8 +26,8 @@
 - ✅ Fixed ❌ where optimized algorithm broke existing tests
 
 ## 🍅 Pomodoro 4
-
+- ✅ What a mess!!!!
 
 ## 🍅 Pomodoro 5
-- ⚠️ Checksum for the example input while moving files should be 2858
-- ⚠️ Lets get that second star
+- ✅ Checksum for the example input while moving files should be 2858
+- ✅ Lets get that second star

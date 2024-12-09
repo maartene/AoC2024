@@ -86,4 +86,9 @@ let exampleInput = "2333133121414131402"
     @Test("Checksum for the example input while moving files should be 2858") func checksumOfDefragmentedExampleInput() {
         #expect(defragmentFilesystemBasedOnFilesAndReturnChecksum(exampleInput) == 2858)
     }
+    
+    // Test runs for about 4 minutes (M2 Pro)
+//    @Test("Checksum for the actual input while moving files should be 6415666220005") func checksumOfDefragmentedActualInput() {
+//        #expect(defragmentFilesystemBasedOnFilesAndReturnChecksum(input) == 6415666220005)
+//    }
 }

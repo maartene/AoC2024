@@ -46,7 +46,7 @@ func defragmentFilesystemBasedOnFiles(_ filesystem: String) -> [Int?] {
     
     var defragmentedFilesystem = convertFilesAndFreespaceIntoExpandedFilesystem(convertedFilesystem)
     for fileToMove in filesToMove {
-        printExpandedFilesystem(defragmentedFilesystem)
+        print("Moving file: \(fileToMove.id!)")
         let defragmentedFilesAndFreespace = convertExpandedFilesystemIntoFilesAndFreespace(defragmentedFilesystem)
         // find free space
         if let freespace = defragmentedFilesAndFreespace.first(where: { $0.id == nil && $0.size >= fileToMove.size }), freespace.startPosition < fileToMove.startPosition {
