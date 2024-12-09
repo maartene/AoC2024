@@ -6,11 +6,6 @@ import Testing
 }
 
 @Suite("To get the first star on day 09") struct Day09StarOneTests {
-    @Test("Defragment a filesystem that is already defragmented remains unchanged") func defragmentDefragmentedFilesystem() {
-        let filesystem = "90909"
-        #expect(defragmentFilesystem(filesystem) == "90909")
-    }
-    
     @Test("Calculate checksum for defragmented filesystem") func calculateChecksumForDefragmentedFilesystem() {
         let expandedFilesystem = convertExpandedFilesystemString("0099811188827773336446555566..............")
         
@@ -25,4 +20,12 @@ import Testing
         
         #expect(expandFilesystem(testcase.filesystemString) == expected)
     }
+    
+    @Test("Defragment a filesystem that is already defragmented remains unchanged") func defragmentDefragmentedFilesystem() {
+        let filesystem = "10"
+        let expected = [0]
+        
+        #expect(defragmentFilesystem(filesystem) == expected)
+    }
+
 }
