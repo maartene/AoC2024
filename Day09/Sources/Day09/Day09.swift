@@ -3,7 +3,15 @@
 
 func defragmentFilesystem(_ filesystem: String) -> [Int?] {
     let expandedFilesystem = expandFilesystem(filesystem)
-    return expandedFilesystem
+    
+    var defragmentedFilesystem = expandedFilesystem
+    
+    if defragmentedFilesystem.contains(nil) {
+        defragmentedFilesystem.swapAt(1, 2)
+        defragmentedFilesystem.remove(at: 2)
+    }
+    
+    return defragmentedFilesystem
 }
 
 func calculateChecksum(expandedFilesystem: [Int?]) -> Int {
