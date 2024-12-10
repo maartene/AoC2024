@@ -63,15 +63,7 @@ func sumOfDistinctTrailsCount(in mapString: String) -> Int {
 
 func countDistinctHikingTrails(in mapString: String) -> [Int] {
     let map = convertMapStringToMap(mapString)
-
-    var trailheads = [Vector]()
-    for y in 0 ..< map.count {
-        for x in 0 ..< map[y].count {
-            if map[y][x] == 0 {
-                trailheads.append(Vector(x: x, y: y))
-            }
-        }
-    }
+    let trailheads = extractTrailheads(in: map) 
 
     return trailheads.map { countDistinctHikingTrails(startingAt: $0, in: map) }
 }
