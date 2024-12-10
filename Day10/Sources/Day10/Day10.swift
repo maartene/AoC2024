@@ -64,6 +64,21 @@ func countTrails(startingAt startPosition: Vector, in mapString: String) -> Int 
 }
 
 // MARK: Part 2
+func countDistinctHikingTrails(in mapString: String) -> [Int] {
+    let map = convertMapStringToMap(mapString)
+
+    var trailheads = [Vector]()
+    for y in 0 ..< map.count {
+        for x in 0 ..< map[y].count {
+            if map[y][x] == 0 {
+                trailheads.append(Vector(x: x, y: y))
+            }
+        }
+    }
+
+    return trailheads.map { countDistinctHikingTrails(startingAt: $0, in: map) }
+}
+
 func countDistinctHikingTrails(startingAt startPosition: Vector, in map: [[Int]]) -> Int {
     var reachedNinePositions = [Vector]()
 
