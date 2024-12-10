@@ -23,4 +23,5 @@
 - ✅ first pass at counting distinct routes
 - ✅ Refactor map parsing to return an [Int?]
 - ✅ Make the example input pass
-- ⚠️ Lets get that second star ⭐️⭐️
+- ✅ Lets get that second star ⭐️⭐️
+- ✅ Cleanup of code

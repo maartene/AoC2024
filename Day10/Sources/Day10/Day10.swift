@@ -35,6 +35,7 @@ func countDistinctHikingTrails(in mapString: String) -> [Int] {
     return trailheads.map { countDistinctHikingTrails(startingAt: $0, in: map).count }
 }
 
+// MARK: Generic
 func countDistinctHikingTrails(startingAt startPosition: Vector, in map: [[Int]]) -> [Vector] {
     var reachedNinePositions = [Vector]()
 
@@ -65,8 +66,6 @@ func getPossibleNextLocations(position: Vector, currentValue: Int, map: [[Int]])
             map[neighbour.y][neighbour.x] == currentValue + 1
         }
 }
-
-// MARK: Generic
 
 func convertMapStringToMap(_ mapString: String) -> [[Int]] {
     let lines = mapString.split(separator: "\n").map(String.init)
