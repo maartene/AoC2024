@@ -58,4 +58,22 @@ import Shared
         """
         #expect(countTrails(startingAt: testcase.trailhead, in: map) == testcase.expectedTrailCount)
     }
+
+    @Test("In the final example, the number of trails per trailhead is 5, 6, 5, 3, 1, 3, 5, 3, and 5") func finalExampleTrailsCountPerTrailHead() {
+        let map = 
+        """
+        89010123
+        78121874
+        87430965
+        96549874
+        45678903
+        32019012
+        01329801
+        10456732
+        """
+        
+        let expected = [5, 6, 5, 3, 1, 3, 5, 3, 5]
+
+        #expect(countTrails(in: map) == expected)
+    }
 }

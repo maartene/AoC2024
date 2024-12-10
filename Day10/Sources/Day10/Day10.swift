@@ -1,8 +1,21 @@
 import Shared 
 
-func countTrails(startingAt startPosition: Vector, in mapString: String) -> Int {
+func countTrails(in mapString: String) -> [Int] {
     let map = convertMapStringToMap(mapString)
 
+    var trailheads = [Vector]()
+    for y in 0 ..< map.count {
+        for x in 0 ..< map[y].count {
+            if map[y][x] == 0 {
+                trailheads.append(Vector(x: x, y: y))
+            }
+        }
+    }
+
+    return trailheads.map { countTrails(startingAt: $0, in: map) }
+}
+
+func countTrails(startingAt startPosition: Vector, in map: [[Int]]) -> Int {
     var reachedNinePositions = Set<Vector>()
 
     var position = startPosition
@@ -37,6 +50,11 @@ func countTrails(startingAt startPosition: Vector, in mapString: String) -> Int 
     }
 
     return reachedNinePositions.count
+}
+
+func countTrails(startingAt startPosition: Vector, in mapString: String) -> Int {
+    let map = convertMapStringToMap(mapString)
+    return countTrails(startingAt: startPosition, in: map)
 }
 
 func convertMapStringToMap(_ mapString: String) -> [[Int]] {
