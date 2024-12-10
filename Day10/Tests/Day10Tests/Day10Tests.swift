@@ -149,7 +149,7 @@ import Shared
         #expect(countDistinctHikingTrails(startingAt: Vector(x: 0, y: 0), in: map) == 227)
     }
 
-    @Test("In the final example, the number of trails per trailhead is 5, 6, 5, 3, 1, 3, 5, 3, and 5") func finalExampleTrailsCountPerTrailHead() {
+    @Test("In the final example, the number of trails per trailhead is 5, 6, 5, 3, 1, 3, 5, 3, and 5") func finalExampleDistinctTrailsCountPerTrailHead() {
         let map = 
         """
         89010123
@@ -165,6 +165,22 @@ import Shared
         let expected = [20, 24, 10, 4, 1, 4, 5, 8, 5]
 
         #expect(countDistinctHikingTrails(in: map) == expected)
+    }
+
+     @Test("In the final example, sum of distinct trails count should be 81") func finalExampleSumOfDistinctTrailsCount() {
+        let map = 
+        """
+        89010123
+        78121874
+        87430965
+        96549874
+        45678903
+        32019012
+        01329801
+        10456732
+        """
+        
+        #expect(sumOfDistinctTrailsCount(in: map) == 81)
     }
     
 }
