@@ -1,5 +1,10 @@
 import Shared 
 
+func sumOfTrailsCount(in mapString: String) -> Int {
+    let trailsCounts = countTrails(in: mapString)
+    return trailsCounts.reduce(0, +)
+}
+
 func countTrails(in mapString: String) -> [Int] {
     let map = convertMapStringToMap(mapString)
 
