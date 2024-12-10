@@ -39,16 +39,8 @@ func countDistinctHikingTrails(startingAt startPosition: Vector, in map: [[Int]]
     var reachedNinePositions = [Vector]()
 
     var position = startPosition
-    var possibleNextPositions = [Vector]()
     var currentValue = map[position.y][position.x]
-    possibleNextPositions = Array(position.neighbours
-        .filter { neighbour in
-            neighbour.x >= 0 && neighbour.x < map[0].count && neighbour.y >= 0 && neighbour.y < map.count
-        }
-        .filter { neighbour in
-            map[neighbour.y][neighbour.x] == currentValue + 1
-        }
-    )
+    var possibleNextPositions = getPossibleNextLocations(position: position, currentValue: currentValue, map: map)
 
     while possibleNextPositions.isEmpty == false {
         position = possibleNextPositions.removeFirst()
