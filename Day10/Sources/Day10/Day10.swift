@@ -58,17 +58,20 @@ func countDistinctHikingTrails(startingAt startPosition: Vector, in map: [[Int]]
             reachedNinePositions.append(position)
         }
         
-        possibleNextPositions.append(contentsOf: position.neighbours
-            .filter { neighbour in
-                neighbour.x >= 0 && neighbour.x < map[0].count && neighbour.y >= 0 && neighbour.y < map.count
-            }
-            .filter { neighbour in
-                map[neighbour.y][neighbour.x] == currentValue + 1
-            }
-        )
+        possibleNextPositions.append(contentsOf: getPossibleNextLocations(position: position, currentValue: currentValue, map: map))
     }
 
     return reachedNinePositions
+}
+
+func getPossibleNextLocations(position: Vector, currentValue: Int, map: [[Int]]) -> [Vector] {
+    position.neighbours
+        .filter { neighbour in
+            neighbour.x >= 0 && neighbour.x < map[0].count && neighbour.y >= 0 && neighbour.y < map.count
+        }
+        .filter { neighbour in
+            map[neighbour.y][neighbour.x] == currentValue + 1
+        }
 }
 
 // MARK: Generic
