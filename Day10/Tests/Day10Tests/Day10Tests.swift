@@ -28,17 +28,17 @@ import Shared
         #expect(countTrails(startingAt: Vector(x: 3, y: 0), in: map) == 2)
     }
 
-    // @Test("In third example given, when starting from the single trailhead in the top row, there should be four trails available") func exampleThreeWithUnreachableNine() {
-    //     let map = 
-    //     """
-    //     1190119
-    //     1111198
-    //     1112117
-    //     6543456
-    //     7651987
-    //     8761111
-    //     9871111
-    //     """
-    //     #expect(countTrails(startingAt: Vector(x: 3, y: 0), in: map) == 4)
-    // }
+    @Test("In third example given, when starting from the single trailhead in the top row, there should be four trails available") func exampleThreeWithUnreachableNine() {
+        let map = 
+        """
+        1190119
+        1111198
+        1112117
+        6543456
+        7651987
+        8761111
+        9871111
+        """
+        #expect(countTrails(startingAt: Vector(x: 3, y: 0), in: map) == 4)
+    }
 }

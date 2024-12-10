@@ -3,11 +3,40 @@ import Shared
 func countTrails(startingAt startPosition: Vector, in mapString: String) -> Int {
     let map = convertMapStringToMap(mapString)
 
-    let nineCount = map.flatMap { $0 }
-        .filter { $0 == 9 }
-        .count
+    var reachedNinePositions = Set<Vector>()
 
-    return nineCount
+    var position = startPosition
+    var possibleNextPositions = Set<Vector>()
+    var currentValue = map[position.y][position.x]
+    possibleNextPositions = Set(position.neighbours
+        .filter { neighbour in
+            neighbour.x >= 0 && neighbour.x < map[0].count && neighbour.y >= 0 && neighbour.y < map.count
+        }
+        .filter { neighbour in
+            map[neighbour.y][neighbour.x] == currentValue + 1
+        }
+        
+    )
+
+    while possibleNextPositions.isEmpty == false {
+        position = possibleNextPositions.removeFirst()
+        currentValue = map[position.y][position.x]
+        
+        if currentValue == 9 {
+            reachedNinePositions.insert(position)
+        }
+        
+        possibleNextPositions.formUnion(position.neighbours
+            .filter { neighbour in
+                neighbour.x >= 0 && neighbour.x < map[0].count && neighbour.y >= 0 && neighbour.y < map.count
+            }
+            .filter { neighbour in
+                map[neighbour.y][neighbour.x] == currentValue + 1
+            }
+        )
+    }
+
+    return reachedNinePositions.count
 }
 
 func convertMapStringToMap(_ mapString: String) -> [[Int]] {

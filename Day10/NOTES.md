@@ -13,6 +13,6 @@
 - ✅ In the first example given, there is only one trail when starting from the top left trailhead
 - ✅ Import the input data
  In the second example given, there is only one trail when starting from the single trailhead 
-- ⚠️ In the third example there is also an unreachable '9'
+- ✅ In the third example there is also an unreachable '9'
 - ⚠️ Adding these trailhead scores together, the sum of the scores of all trailheads in the example input is 36
 - ⚠️ Make the example input pass
