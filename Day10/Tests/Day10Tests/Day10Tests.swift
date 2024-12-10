@@ -2,6 +2,18 @@ import Testing
 import Shared
 @testable import Day10
 
+let exampleMap =
+"""
+89010123
+78121874
+87430965
+96549874
+45678903
+32019012
+01329801
+10456732
+"""
+
 @Suite("To get the first star on day 10") struct Day10StarOneTests {
     @Test("In first example given, when starting from the trailhead at the top left position, there should be only one trail available") func exampleOneStartingTopLeft() {
         let map = 
@@ -60,37 +72,13 @@ import Shared
     }
 
     @Test("In the final example, the number of trails per trailhead is 5, 6, 5, 3, 1, 3, 5, 3, and 5") func finalExampleTrailsCountPerTrailHead() {
-        let map = 
-        """
-        89010123
-        78121874
-        87430965
-        96549874
-        45678903
-        32019012
-        01329801
-        10456732
-        """
-        
         let expected = [5, 6, 5, 3, 1, 3, 5, 3, 5]
 
-        #expect(countTrails(in: map) == expected)
+        #expect(countTrails(in: exampleMap) == expected)
     }
 
     @Test("In the final example, sum of trails count should be 36") func finalExampleSumOfTrailsCount() {
-        let map = 
-        """
-        89010123
-        78121874
-        87430965
-        96549874
-        45678903
-        32019012
-        01329801
-        10456732
-        """
-        
-        #expect(sumOfTrailsCount(in: map) == 36)
+        #expect(sumOfTrailsCount(in: exampleMap) == 36)
     }
 
     @Test("In the actual input, sum of trails count should be 698") func inputSumOfTrailsCount() {
@@ -149,38 +137,16 @@ import Shared
         #expect(countDistinctHikingTrails(startingAt: Vector(x: 0, y: 0), in: map).count == 227)
     }
 
+
+
     @Test("In the final example, the number of trails per trailhead is 5, 6, 5, 3, 1, 3, 5, 3, and 5") func finalExampleDistinctTrailsCountPerTrailHead() {
-        let map = 
-        """
-        89010123
-        78121874
-        87430965
-        96549874
-        45678903
-        32019012
-        01329801
-        10456732
-        """
-        
         let expected = [20, 24, 10, 4, 1, 4, 5, 8, 5]
 
-        #expect(countDistinctHikingTrails(in: map) == expected)
+        #expect(countDistinctHikingTrails(in: exampleMap) == expected)
     }
 
      @Test("In the final example, sum of distinct trails count should be 81") func finalExampleSumOfDistinctTrailsCount() {
-        let map = 
-        """
-        89010123
-        78121874
-        87430965
-        96549874
-        45678903
-        32019012
-        01329801
-        10456732
-        """
-        
-        #expect(sumOfDistinctTrailsCount(in: map) == 81)
+        #expect(sumOfDistinctTrailsCount(in: exampleMap) == 81)
     }
     
     @Test("In the actual input, sum of trails count should be 1436") func inputSumOfDistinctTrailsCount() {
