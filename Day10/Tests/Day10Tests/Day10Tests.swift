@@ -13,4 +13,18 @@ import Shared
         """
         #expect(countTrails(startingAt: Vector.zero, in: map) == 1)
     }
+
+    @Test("In second example given, when starting from the single trailhead in the top row, there should be two trails available") func exampleTwoStartingTopTopRowt() {
+        let map = 
+        """
+        1110111
+        1111111
+        1112111
+        6543456
+        7111117
+        8111118
+        9111119
+        """
+        #expect(countTrails(startingAt: Vector(x: 3, y: 0), in: map) == 2)
+    }
 }
