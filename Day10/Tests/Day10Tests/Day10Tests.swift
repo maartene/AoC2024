@@ -97,3 +97,22 @@ import Shared
         #expect(sumOfTrailsCount(in: input) == 698)
     }
 }
+
+@Suite("To get the second star on day 10") struct Day10StarTwoTests {
+    @Test("The number of distinct hiking trails which begin at the trailhead in the first example should be 3") func firstExampleHikingTrails() {
+        let mapString =
+        """
+        1111505
+        1143215
+        1151421
+        1165431
+        1171141
+        1187651
+        1191111
+        """
+
+        let map = convertMapStringToMap(mapString)
+
+        #expect(countDistinctHikingTrails(startingAt: Vector(x: 5, y: 0), in: map) == 3)
+    }
+}

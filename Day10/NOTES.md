@@ -18,3 +18,5 @@
 - ✅ Adding these trailhead scores together, the sum of the scores of all trailheads in the final example input is 36
 - ✅ Make the example input pass
 - ✅ Lets get that first star ⭐️
+
+## 🍅 Pomodoro 2
