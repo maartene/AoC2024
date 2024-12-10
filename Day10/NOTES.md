@@ -22,3 +22,5 @@
 ## 🍅 Pomodoro 2
 - ✅ first pass at counting distinct routes
 - ✅ Refactor map parsing to return an [Int?]
+- ✅ Make the example input pass
+- ⚠️ Lets get that second star ⭐️⭐️

@@ -183,4 +183,7 @@ import Shared
         #expect(sumOfDistinctTrailsCount(in: map) == 81)
     }
     
+    @Test("In the actual input, sum of trails count should be 1436") func inputSumOfDistinctTrailsCount() {
+        #expect(sumOfDistinctTrailsCount(in: input) == 1436)
+    }
 }
