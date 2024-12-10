@@ -8,15 +8,7 @@ func sumOfTrailsCount(in mapString: String) -> Int {
 
 func countTrails(in mapString: String) -> [Int] {
     let map = convertMapStringToMap(mapString)
-
-    var trailheads = [Vector]()
-    for y in 0 ..< map.count {
-        for x in 0 ..< map[y].count {
-            if map[y][x] == 0 {
-                trailheads.append(Vector(x: x, y: y))
-            }
-        }
-    }
+    let trailheads = extractTrailheads(in: map)   
 
     return trailheads.map { countTrails(startingAt: $0, in: map) }
 }
@@ -128,4 +120,17 @@ func convertMapStringToMap(_ mapString: String) -> [[Int]] {
         line.map { character in Int(String(character)) ?? 99 }
     }
     return map
+}
+
+func extractTrailheads(in map: [[Int]]) -> [Vector] {
+    var trailheads = [Vector]()
+    for y in 0 ..< map.count {
+        for x in 0 ..< map[y].count {
+            if map[y][x] == 0 {
+                trailheads.append(Vector(x: x, y: y))
+            }
+        }
+    }
+
+    return trailheads
 }
