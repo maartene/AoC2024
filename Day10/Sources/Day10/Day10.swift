@@ -14,40 +14,7 @@ func countTrails(in mapString: String) -> [Int] {
 }
 
 func countTrails(startingAt startPosition: Vector, in map: [[Int]]) -> Int {
-    var reachedNinePositions = Set<Vector>()
-
-    var position = startPosition
-    var possibleNextPositions = Set<Vector>()
-    var currentValue = map[position.y][position.x]
-    possibleNextPositions = Set(position.neighbours
-        .filter { neighbour in
-            neighbour.x >= 0 && neighbour.x < map[0].count && neighbour.y >= 0 && neighbour.y < map.count
-        }
-        .filter { neighbour in
-            map[neighbour.y][neighbour.x] == currentValue + 1
-        }
-        
-    )
-
-    while possibleNextPositions.isEmpty == false {
-        position = possibleNextPositions.removeFirst()
-        currentValue = map[position.y][position.x]
-        
-        if currentValue == 9 {
-            reachedNinePositions.insert(position)
-        }
-        
-        possibleNextPositions.formUnion(position.neighbours
-            .filter { neighbour in
-                neighbour.x >= 0 && neighbour.x < map[0].count && neighbour.y >= 0 && neighbour.y < map.count
-            }
-            .filter { neighbour in
-                map[neighbour.y][neighbour.x] == currentValue + 1
-            }
-        )
-    }
-
-    return reachedNinePositions.count
+    Set(countDistinctHikingTrails(startingAt: startPosition, in: map)).count
 }
 
 func countTrails(startingAt startPosition: Vector, in mapString: String) -> Int {
@@ -65,10 +32,10 @@ func countDistinctHikingTrails(in mapString: String) -> [Int] {
     let map = convertMapStringToMap(mapString)
     let trailheads = extractTrailheads(in: map) 
 
-    return trailheads.map { countDistinctHikingTrails(startingAt: $0, in: map) }
+    return trailheads.map { countDistinctHikingTrails(startingAt: $0, in: map).count }
 }
 
-func countDistinctHikingTrails(startingAt startPosition: Vector, in map: [[Int]]) -> Int {
+func countDistinctHikingTrails(startingAt startPosition: Vector, in map: [[Int]]) -> [Vector] {
     var reachedNinePositions = [Vector]()
 
     var position = startPosition
@@ -101,7 +68,7 @@ func countDistinctHikingTrails(startingAt startPosition: Vector, in map: [[Int]]
         )
     }
 
-    return reachedNinePositions.count
+    return reachedNinePositions
 }
 
 // MARK: Generic
