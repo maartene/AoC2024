@@ -20,3 +20,5 @@
 - ✅ Lets get that first star ⭐️
 
 ## 🍅 Pomodoro 2
+- ✅ first pass at counting distinct routes
+- ⚠️ Refactor map parsing to return an [Int?]

@@ -17,13 +17,13 @@ import Shared
     @Test("In second example given, when starting from the single trailhead in the top row, there should be two trails available") func exampleTwoStartingTopTopRowt() {
         let map = 
         """
-        1110111
-        1111111
-        1112111
+        ...0...
+        ...1...
+        ...2...
         6543456
-        7111117
-        8111118
-        9111119
+        7.....7
+        8.....8
+        9.....9
         """
         #expect(countTrails(startingAt: Vector(x: 3, y: 0), in: map) == 2)
     }
@@ -31,13 +31,13 @@ import Shared
     @Test("In third example given, when starting from the single trailhead in the top row, there should be four trails available") func exampleThreeWithUnreachableNine() {
         let map = 
         """
-        1190119
-        1111198
-        1112117
+        ..90..9
+        ...1.98
+        ...2..7
         6543456
-        7651987
-        8761111
-        9871111
+        765.987
+        876....
+        987....
         """
         #expect(countTrails(startingAt: Vector(x: 3, y: 0), in: map) == 4)
     }
@@ -48,13 +48,13 @@ import Shared
     ]) func exampleFourWithTwoTrailheads(testcase: (trailhead: Vector, expectedTrailCount: Int)) {
         let map = 
         """
-        1011911
-        2111811
-        3111711
+        10..9..
+        2...8..
+        3...7..
         4567654
-        1118113
-        1119112
-        1111101
+        ...8..3
+        ...9..2
+        .....01
         """
         #expect(countTrails(startingAt: testcase.trailhead, in: map) == testcase.expectedTrailCount)
     }
@@ -102,17 +102,34 @@ import Shared
     @Test("The number of distinct hiking trails which begin at the trailhead in the first example should be 3") func firstExampleHikingTrails() {
         let mapString =
         """
-        1111505
-        1143215
-        1151421
-        1165431
-        1171141
-        1187651
-        1191111
+        .....0.
+        ..4321.
+        ..5..2.
+        ..6543.
+        ..7..4.
+        ..8765.
+        ..9....
         """
 
         let map = convertMapStringToMap(mapString)
 
         #expect(countDistinctHikingTrails(startingAt: Vector(x: 5, y: 0), in: map) == 3)
     }
+
+    // @Test("The number of distinct hiking trails which begin at the trailhead in the second example should be 3") func firstExampleHikingTrails() {
+    //     let mapString =
+    //     """
+    //     ..90..9
+    //     ...1.98
+    //     ...2..7
+    //     6543456
+    //     765.987
+    //     876....
+    //     987....
+    //     """
+
+    //     let map = convertMapStringToMap(mapString)
+
+    //     #expect(countDistinctHikingTrails(startingAt: Vector(x: 3, y: 0), in: map) == 13)
+    // }
 }

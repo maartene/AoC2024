@@ -106,7 +106,7 @@ func countDistinctHikingTrails(startingAt startPosition: Vector, in map: [[Int]]
 func convertMapStringToMap(_ mapString: String) -> [[Int]] {
     let lines = mapString.split(separator: "\n").map(String.init)
     let map = lines.map { line in 
-        line.compactMap { character in Int(String(character)) }
+        line.map { character in Int(String(character)) ?? 99 }
     }
     return map
 }
