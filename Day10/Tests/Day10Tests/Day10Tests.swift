@@ -116,20 +116,20 @@ import Shared
         #expect(countDistinctHikingTrails(startingAt: Vector(x: 5, y: 0), in: map) == 3)
     }
 
-    // @Test("The number of distinct hiking trails which begin at the trailhead in the second example should be 3") func firstExampleHikingTrails() {
-    //     let mapString =
-    //     """
-    //     ..90..9
-    //     ...1.98
-    //     ...2..7
-    //     6543456
-    //     765.987
-    //     876....
-    //     987....
-    //     """
+    @Test("The number of distinct hiking trails which begin at the trailhead in the second example should be 13") func secondExampleHikingTrails() {
+        let mapString =
+        """
+        ..90..9
+        ...1.98
+        ...2..7
+        6543456
+        765.987
+        876....
+        987....
+        """
 
-    //     let map = convertMapStringToMap(mapString)
+        let map = convertMapStringToMap(mapString)
 
-    //     #expect(countDistinctHikingTrails(startingAt: Vector(x: 3, y: 0), in: map) == 13)
-    // }
+        #expect(countDistinctHikingTrails(startingAt: Vector(x: 3, y: 0), in: map) == 13)
+    }
 }

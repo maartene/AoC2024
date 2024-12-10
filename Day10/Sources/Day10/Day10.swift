@@ -68,16 +68,15 @@ func countDistinctHikingTrails(startingAt startPosition: Vector, in map: [[Int]]
     var reachedNinePositions = [Vector]()
 
     var position = startPosition
-    var possibleNextPositions = Set<Vector>()
+    var possibleNextPositions = [Vector]()
     var currentValue = map[position.y][position.x]
-    possibleNextPositions = Set(position.neighbours
+    possibleNextPositions = Array(position.neighbours
         .filter { neighbour in
             neighbour.x >= 0 && neighbour.x < map[0].count && neighbour.y >= 0 && neighbour.y < map.count
         }
         .filter { neighbour in
             map[neighbour.y][neighbour.x] == currentValue + 1
         }
-        
     )
 
     while possibleNextPositions.isEmpty == false {
@@ -88,7 +87,7 @@ func countDistinctHikingTrails(startingAt startPosition: Vector, in map: [[Int]]
             reachedNinePositions.append(position)
         }
         
-        possibleNextPositions.formUnion(position.neighbours
+        possibleNextPositions.append(contentsOf: position.neighbours
             .filter { neighbour in
                 neighbour.x >= 0 && neighbour.x < map[0].count && neighbour.y >= 0 && neighbour.y < map.count
             }
