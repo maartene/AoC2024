@@ -96,3 +96,5 @@ extension Vector {
             .map { self + $0 }
     }
 }
+
+extension Vector: Sendable { }

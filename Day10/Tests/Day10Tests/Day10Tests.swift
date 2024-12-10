@@ -41,4 +41,21 @@ import Shared
         """
         #expect(countTrails(startingAt: Vector(x: 3, y: 0), in: map) == 4)
     }
+
+    @Test("In fourth example given, there are two trailheads with different trail counts", arguments: [
+        (Vector(x: 1, y: 0), 1),
+        (Vector(x: 5, y: 6), 2)
+    ]) func exampleFourWithTwoTrailheads(testcase: (trailhead: Vector, expectedTrailCount: Int)) {
+        let map = 
+        """
+        1011911
+        2111811
+        3111711
+        4567654
+        1118113
+        1119112
+        1111101
+        """
+        #expect(countTrails(startingAt: testcase.trailhead, in: map) == testcase.expectedTrailCount)
+    }
 }
