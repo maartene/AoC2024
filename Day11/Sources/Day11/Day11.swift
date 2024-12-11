@@ -29,8 +29,7 @@ class StoneCounter {
 
     func blink(_ stoneArrangement: String, count: Int) -> String {
         var blinkedStones = stoneArrangement
-        for i in 0 ..< count {
-            print("Pass: \(i)")
+        for _ in 0 ..< count {
             blinkedStones = blink(blinkedStones)
         }
         return blinkedStones
