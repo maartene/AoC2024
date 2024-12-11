@@ -1,11 +1,34 @@
-func numberOfStonesAfterBlinking(stoneArrangement: String, count: Int) -> Int {
-    let blinkedStones = blink(stoneArrangement, count: count)
-    return blinkedStones.split(separator: " ").count
+struct CacheEntry: Hashable {
+    let stoneArrangement: String 
+    let count: Int
+}
+nonisolated(unsafe) var cache: [CacheEntry: Int] = [:]
+
+func numberOfStonesAfterBlinking(stoneArrangement: String, count: Int) -> Int {    
+    if let cachedResult = cache[CacheEntry(stoneArrangement: stoneArrangement, count: count)] {
+        return cachedResult
+    }
+
+    if count == 0 {
+        return stoneArrangement.split(separator: " ").count
+    }
+
+    let stonesArrangementAfterBlinking = blink(stoneArrangement)
+
+    let stones = stonesArrangementAfterBlinking.split(separator: " ").map(String.init)
+    var numberOfStones = 0
+    for stone in stones {
+        numberOfStones += numberOfStonesAfterBlinking(stoneArrangement: stone, count: count - 1)
+    }
+    
+    cache[CacheEntry(stoneArrangement: stoneArrangement, count: count)] = numberOfStones
+    return numberOfStones
 }
 
 func blink(_ stoneArrangement: String, count: Int) -> String {
     var blinkedStones = stoneArrangement
-    for _ in 0 ..< count {
+    for i in 0 ..< count {
+        print("Pass: \(i)")
         blinkedStones = blink(blinkedStones)
     }
     return blinkedStones

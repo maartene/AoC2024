@@ -41,3 +41,10 @@ import Testing
         #expect(numberOfStonesAfterBlinking(stoneArrangement: input, count: 25) == 186996)
     }
 }
+
+@Suite("To get the second star on day 11") struct Day11StarTwoTests {
+    @Test("After blinking 75 times with the actual input, the number of stones should be 221683913164898") func numberOfStonesWhenCountingNTimes_withActualInput() {
+        print(numberOfStonesAfterBlinking(stoneArrangement: input, count: 75))
+        #expect(numberOfStonesAfterBlinking(stoneArrangement: input, count: 75) == 221683913164898)
+    }
+}

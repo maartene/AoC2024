@@ -17,3 +17,7 @@
 - ✅ Validate the first example while blinking once
 - ✅ Blink multiple times
 - ✅ Let's get that first star ⭐️
+
+## 🍅 Pomodoro 2
+- ⚠️ Understand the twist
+- ⚠️ Make cache thread safe
