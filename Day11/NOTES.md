@@ -15,4 +15,5 @@
 - ✅ Implement the rules one by one for one stone
 - ✅ Handle multiple stones
 - ✅ Validate the first example while blinking once
-- ⚠️ Blink multiple times
+- ✅ Blink multiple times
+- ✅ Let's get that first star ⭐️

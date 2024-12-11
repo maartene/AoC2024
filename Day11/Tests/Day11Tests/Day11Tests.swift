@@ -30,9 +30,14 @@ import Testing
         #expect(blink(secondExampleInput, count: 6) == "2097446912 14168 4048 2 0 2 4 40 48 2024 40 48 80 96 2 8 6 7 6 0 3 2")
     }
 
-    @Test("After blinking 6 times with initial arrangement '125 17' the number of stones should be'", arguments: [
+    @Test("After blinking N times with initial arrangement '125 17' the number of stones should be'", arguments: [
         (6, 22),
+        (25, 55312)
     ]) func numberOfStonesWhenCountingNTimes_withSecondExampleInput(testcase: (blinkCount: Int, expectedStoneCount: Int)) {
         #expect(numberOfStonesAfterBlinking(stoneArrangement: secondExampleInput, count: testcase.blinkCount) == testcase.expectedStoneCount)
+    }
+
+    @Test("After blinking 25 times with the actual input, the number of stones should be 186996") func numberOfStonesWhenCountingNTimes_withActualInput() {
+        #expect(numberOfStonesAfterBlinking(stoneArrangement: input, count: 25) == 186996)
     }
 }
