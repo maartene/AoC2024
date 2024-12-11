@@ -24,4 +24,9 @@ import Testing
         let secondExampleInput = "125 17"
         #expect(blink("125 17", count: 2) == "253 0 2024 14168")
     }
+
+    @Test("After blinking 6 times with initial arrangement '125 17' the arrangement should be '2097446912 14168 4048 2 0 2 4 40 48 2024 40 48 80 96 2 8 6 7 6 0 3 2'") func blinkSixTimes_withSecondExampleInput() {
+        let secondExampleInput = "125 17"
+        #expect(blink("125 17", count: 6) == "2097446912 14168 4048 2 0 2 4 40 48 2024 40 48 80 96 2 8 6 7 6 0 3 2")
+    }
 }
