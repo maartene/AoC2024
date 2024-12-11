@@ -1,5 +1,7 @@
 func blink(_ stoneArrangement: String) -> String {
-    blinkIndividualStone(stoneArrangement)
+    let stones = stoneArrangement.split(separator: " ").map(String.init)
+    let blinkedStones = stones.map { blinkIndividualStone($0) }
+    return blinkedStones.joined(separator: " ")
 }
 
 func blinkIndividualStone(_ stone: String) -> String {

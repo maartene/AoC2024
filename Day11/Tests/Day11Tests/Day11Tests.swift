@@ -11,6 +11,10 @@ import Testing
         #expect(blink(testcase.initialStoneArrangement) == testcase.expectedStoneArrangement)
     }
 
+    @Test("Blink two stones") func blinkTwoStones() {
+        #expect(blink("0 1") == "1 2024")
+    }
+
     // First acceptance test
     // @Test("After blinking once, the stones in the example input should be ararnged as '1 2024 1 0 9 9 2021976'") func blinkOnce_withExampleInput() {
     //     let exampleInput = "0 1 10 99 999"
