@@ -16,7 +16,12 @@ import Testing
     }
 
     @Test("After blinking once, the stones in the first example should be ararnged as '1 2024 1 0 9 9 2021976'") func blinkOnce_withFirstExampleInput() {
-        let exampleInput = "0 1 10 99 999"
-        #expect(blink(exampleInput) == "1 2024 1 0 9 9 2021976")
+        let firstExampleInput = "0 1 10 99 999"
+        #expect(blink(firstExampleInput) == "1 2024 1 0 9 9 2021976")
+    }
+
+    @Test("After blinking two times with initial arrangement '125 17' the arrangement should be '253 0 2024 14168'") func blinkTwice_withSecondExampleInput() {
+        let secondExampleInput = "125 17"
+        #expect(blink("125 17", count: 2) == "253 0 2024 14168")
     }
 }

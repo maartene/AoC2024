@@ -1,3 +1,11 @@
+func blink(_ stoneArrangement: String, count: Int) -> String {
+    var blinkedStones = stoneArrangement
+    for _ in 0 ..< count {
+        blinkedStones = blink(blinkedStones)
+    }
+    return blinkedStones
+}
+
 func blink(_ stoneArrangement: String) -> String {
     let stones = stoneArrangement.split(separator: " ").map(String.init)
     let blinkedStones = stones.map { blinkIndividualStone($0) }
