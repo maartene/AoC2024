@@ -7,7 +7,9 @@
 - ❌ ERROR
 - ⚠️ TODO
 
+## 🍅 Pomodoro 0
+- ✅ Read the description
+- ✅ Import the input data
+
 ## 🍅 Pomodoro 1
-- ⚠️ Read the description
-- ⚠️ Import the input data
 - ⚠️ Make the example input pass
