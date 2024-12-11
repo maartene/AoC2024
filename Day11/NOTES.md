@@ -12,5 +12,7 @@
 - ✅ Import the input data
 
 ## 🍅 Pomodoro 1
-- ⚠️ Implement the rules one by one
-- ⚠️ Make the example input pass
+- ✅ Implement the rules one by one for one stone
+- ✅ Handle multiple stones
+- ✅ Validate the first example while blinking once
+- ⚠️ Blink multiple times
