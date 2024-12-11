@@ -1,3 +1,8 @@
+func numberOfStonesAfterBlinking(stoneArrangement: String, count: Int) -> Int {
+    let blinkedStones = blink(stoneArrangement, count: count)
+    return blinkedStones.split(separator: " ").count
+}
+
 func blink(_ stoneArrangement: String, count: Int) -> String {
     var blinkedStones = stoneArrangement
     for _ in 0 ..< count {
