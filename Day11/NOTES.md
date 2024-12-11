@@ -12,4 +12,5 @@
 - ✅ Import the input data
 
 ## 🍅 Pomodoro 1
+- ⚠️ Implement the rules one by one
 - ⚠️ Make the example input pass
