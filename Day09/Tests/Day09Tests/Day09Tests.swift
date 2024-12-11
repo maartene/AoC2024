@@ -45,36 +45,6 @@ let exampleInput = "2333133121414131402"
 }
 
 @Suite("To get the second star on day 09") struct Day09StarTwoTests {
-    @Test("We should be able to convert a filesystem string into a set of files and freespace") func testConversionFilesystemStringIntoFilesAndFreespace() {
-        let fileSystemString = "12345"
-        let expected = [
-            File(id: 0, size: 1, startPosition: 0),
-            File(size: 2, startPosition: 1),
-            File(id: 1, size: 3, startPosition: 3),
-            File(size: 4, startPosition: 6),
-            File(id: 2, size: 5, startPosition: 10)
-        ]
-                
-        #expect(convertFilesystemStringIntoFilesAndFreespace(fileSystemString) == expected)
-    }
-    
-    @Test("We should be able to convert an expanded filesystem into a set of files and free space") func testConversionExpandedFilesystemIntoFilesAndFreespace() {
-        let expandedFilesystem = convertExpandedFilesystemString("0..111....22222")
-        
-        let expected = [
-            File(id: 0, size: 1, startPosition: 0),
-            File(size: 2, startPosition: 1),
-            File(id: 1, size: 3, startPosition: 3),
-            File(size: 4, startPosition: 6),
-            File(id: 2, size: 5, startPosition: 10)
-        ]
-        
-        let result = convertExpandedFilesystemIntoFilesAndFreespace(expandedFilesystem)
-        
-        #expect(result == expected)
-    }
-        
-    
     @Test("The example input defragments down to '00992111777.44.333....5555.6666.....8888..'") func defragmentExampleInput() {
         let expected = convertExpandedFilesystemString("00992111777.44.333....5555.6666.....8888..")
         
@@ -87,8 +57,9 @@ let exampleInput = "2333133121414131402"
         #expect(defragmentFilesystemBasedOnFilesAndReturnChecksum(exampleInput) == 2858)
     }
     
-    // Test runs for about 4 minutes (M2 Pro)
-//    @Test("Checksum for the actual input while moving files should be 6415666220005") func checksumOfDefragmentedActualInput() {
-//        #expect(defragmentFilesystemBasedOnFilesAndReturnChecksum(input) == 6415666220005)
-//    }
+    // First attempt runs for about 4 minutes (M2 Pro)
+    // Second attempt runs for about 2 minutes (Surface Book)
+    @Test("Checksum for the actual input while moving files should be 6415666220005") func checksumOfDefragmentedActualInput() {
+        #expect(defragmentFilesystemBasedOnFilesAndReturnChecksum(input) == 6415666220005)
+    }
 }
