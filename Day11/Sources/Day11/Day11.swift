@@ -1,9 +1,13 @@
 func blink(_ stoneArrangement: String) -> String {
-    if stoneArrangement == "0" {                    // rule 1
+    blinkIndividualStone(stoneArrangement)
+}
+
+func blinkIndividualStone(_ stone: String) -> String {
+    if stone == "0" {                    // rule 1
         return "1"  
-    } else if stoneArrangement.count % 2 == 0 {     // rule 2
-        let splitPoint = stoneArrangement.count / 2
-        let characters: [String] = stoneArrangement.map { String($0) }
+    } else if stone.count % 2 == 0 {     // rule 2
+        let splitPoint = stone.count / 2
+        let characters: [String] = stone.map { String($0) }
         var left = ""
         var right = "" 
         for i in 0 ..< characters.count {
@@ -15,7 +19,7 @@ func blink(_ stoneArrangement: String) -> String {
         }
         return "\(Int(left)!) \(Int(right)!)"
     } else {
-        let stoneValue = Int(stoneArrangement)!
+        let stoneValue = Int(stone)!
         return String(stoneValue * 2024)
     }
 }
