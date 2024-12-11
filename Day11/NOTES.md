@@ -19,5 +19,8 @@
 - ✅ Let's get that first star ⭐️
 
 ## 🍅 Pomodoro 2
-- ⚠️ Understand the twist
+- ✅ Understand the twist
+- ✅ Let's get that first star ⭐️⭐️
+
+## 🍅 Pomodoro 3
 - ⚠️ Make cache thread safe
