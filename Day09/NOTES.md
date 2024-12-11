@@ -31,3 +31,6 @@
 ## 🍅 Pomodoro 5
 - ✅ Checksum for the example input while moving files should be 2858
 - ✅ Lets get that second star
+
+## 🍅 Pomodoro 5
+- ✅ Refactored solution to be more performant and way simpler in design

@@ -58,7 +58,7 @@ let exampleInput = "2333133121414131402"
     }
     
     // First attempt runs for about 4 minutes (M2 Pro)
-    // Second attempt runs for about 2 minutes (Surface Book)
+    // Second attempt runs for about 2 minutes (Surface Book) or 86s (M2 Pro)
     @Test("Checksum for the actual input while moving files should be 6415666220005") func checksumOfDefragmentedActualInput() {
         #expect(defragmentFilesystemBasedOnFilesAndReturnChecksum(input) == 6415666220005)
     }
