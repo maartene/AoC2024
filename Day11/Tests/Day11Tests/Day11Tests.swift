@@ -3,7 +3,8 @@ import Testing
 
 @Suite("To get the first star on day 11") struct Day11StarOneTests {
     @Test("After blinking, a single stones should be have changed in the following manners", arguments: [
-        ("0", "1")
+        ("0", "1"),     // rule 1
+        ("1234", "12 34") // rule 2
     ]) func testIndividualrulesOnSingleStone(testcase: (initialStoneArrangement: String, expectedStoneArrangement: String)) {
         #expect(blink(testcase.initialStoneArrangement) == testcase.expectedStoneArrangement)
     }
