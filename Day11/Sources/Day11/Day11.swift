@@ -13,8 +13,9 @@ func blink(_ stoneArrangement: String) -> String {
                 right += characters[i]
             }
         }
-        return "\(left) \(right)"
+        return "\(Int(left)!) \(Int(right)!)"
+    } else {
+        let stoneValue = Int(stoneArrangement)!
+        return String(stoneValue * 2024)
     }
-    return ""
-    
 }
