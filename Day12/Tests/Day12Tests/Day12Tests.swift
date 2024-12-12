@@ -41,4 +41,20 @@ import Testing
         
         #expect(perimeterForPlant(firstExample, plant: testcase.plant) == testcase.expectedArea)
     }
+    
+    @Test("The perimeter for a plant in the second example should return the correct expected perimeter", arguments: [
+        ("O", 36),
+        ("X", 16),
+    ]) func perimeterForPlantInSecondExample(testcase: (plant: Character, expectedArea: Int)) {
+        let secondExample =
+        """
+        OOOOO
+        OXOXO
+        OOOOO
+        OXOXO
+        OOOOO
+        """
+        
+        #expect(perimeterForPlant(secondExample, plant: testcase.plant) == testcase.expectedArea)
+    }
 }
