@@ -76,7 +76,7 @@ import Testing
         #expect(pricePerPlant(secondExample, plant: testcase.plant) == testcase.expectedArea)
     }
     
-//    @Test("The total price for the second example is 772") func totalCostForRegionsInSecondExample() {
-//        #expect(totalCostForRegions(secondExample) == 772)
-//    }
+    @Test("The total price for the second example is 772") func totalCostForRegionsInSecondExample() {
+        #expect(totalCostForRegions(secondExample) == 772)
+    }
 }
