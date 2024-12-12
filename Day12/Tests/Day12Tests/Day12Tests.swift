@@ -112,7 +112,36 @@ let thirdExample =
 }
 
 @Suite("To get the second star on day 12") struct Day12StarTwoTests {
-    @Test("The number of sides of each region in the first example") func sidesPerRegionInFirstExample() {
-        #expect(sidesPerRegionForPlant(firstExample, plant: "A") == Set([4]))
+    @Test("The number of sides of each region in the first example", arguments: [
+        ("A", 4),
+        ("B", 4),
+        ("C", 8),
+        ("D", 4),
+        ("E", 4),
+    ]) func sidesPerRegionInFirstExample(testcase: (plant: Character, expectedFacesInRegion: Int)) {
+        #expect(sidesPerRegionForPlant(firstExample, plant: testcase.plant) == Set([testcase.expectedFacesInRegion]))
+    }
+    
+    @Test("The number of sides of the O region in the second example", arguments: [
+        ("O", 20),
+        ("X", 4),
+    ]) func sidesPerRegionInSecondExample(testcase: (plant: Character, expectedFacesInRegion: Int)) {
+        #expect(sidesPerRegionForPlant(secondExample, plant: testcase.plant) == Set([testcase.expectedFacesInRegion]))
+    }
+    
+    
+    
+    @Test("The total price for the first example input is 80") func totalCostForRegionsInFirstExample() {
+        #expect(totalCostForRegionsWithDiscount(firstExample) == 80)
+    }
+    
+    @Test("The total price for the second example input is 436") func totalCostForRegionsInSecondExample() {
+        #expect(totalCostForRegionsWithDiscount(secondExample) == 436)
+    }
+    
+    @Test("The total price for the actual input is 921636") func totalCostForRegionsInActualInput() {
+        #expect(totalCostForRegionsWithDiscount(input) == 921636)
     }
 }
+
+// 690448 too low

@@ -1,5 +1,12 @@
 import Shared
 
+func totalCostForRegionsWithDiscount(_ mapString: String) -> Int {
+    let plants = Set(mapString.filter(\.isLetter))
+        
+    return plants.map { pricePerPlantWithDiscount(mapString, plant: $0) }
+        .reduce(0, +)
+}
+
 func totalCostForRegions(_ mapString: String) -> Int {
     let plants = Set(mapString.filter(\.isLetter))
         
@@ -14,6 +21,17 @@ func pricePerPlant(_ mapString: String, plant: Character) -> Int {
     
     let costsPerRegion = zip(areas, perimeters).map { area, perimeter in
         area * perimeter
+    }
+    
+    return costsPerRegion.reduce(0, +)
+}
+
+func pricePerPlantWithDiscount(_ mapString: String, plant: Character) -> Int {
+    let regions = regionsForPlant(mapString, plant: plant)
+    let areas = regions.map { areaForPlantInRegion(plantCoords: $0) }
+    let sides = regions.map { sidesOfRegion($0) }
+    let costsPerRegion = zip(areas, sides).map { area, side in
+        area * side
     }
     
     return costsPerRegion.reduce(0, +)
@@ -95,20 +113,60 @@ func perimeterForPlantInRegion(_ mapString: String, plantCoords: Set<Vector>) ->
 }
 
 func sidesPerRegionForPlant(_ mapString: String, plant: Character) -> Set<Int> {
-    let regions = regionsForPlant(mapString, plant: plant)
-    
+    let regions = regionsForPlant(mapString, plant: plant)    
     return Set(regions.map { sidesOfRegion($0) } )
 }
 
 func sidesOfRegion(_ region: Set<Vector>) -> Int {
-    let height = region.max { $0.y < $1.y }?.y ?? 0
-    let width = region.max { $0.x < $1.x }?.x ?? 0
+    // this was the best explanation https://www.reddit.com/r/adventofcode/comments/1hcdnk0/comment/m1p6fil/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+    //  Inner corner            Outside corners
+    //   X    X                 .A     A.
+    //  XX    XX                AX     XA
+    //
     
-    guard height > 0 else {
-        return 4
+    //  XX    XX                AX     XA
+    //   X    X                 .A     A.
+    
+    var corners = 0
+    
+    for coord in region {
+        // count inside corners
+        if region.contains(coord + Vector(x: -1, y: 0)) && region.contains(coord + Vector(x: 0, y: -1)) && region.contains(coord + Vector(x: -1, y: -1)) == false {
+            corners += 1
+        }
+        
+        if region.contains(coord + Vector(x: 0, y: -1)) && region.contains(coord + Vector(x: 1, y: 0)) && region.contains(coord + Vector(x: 1, y: -1)) == false {
+            corners += 1
+        }
+        
+        if region.contains(coord + Vector(x: -1, y: 0)) && region.contains(coord + Vector(x: 0, y: 1)) && region.contains(coord + Vector(x: -1, y: 1)) == false {
+            corners += 1
+        }
+        
+        if region.contains(coord + Vector(x: 1, y: 0)) && region.contains(coord + Vector(x: 0, y: 1)) && region.contains(coord + Vector(x: 1, y: 1)) == false {
+            corners += 1
+        }
+        
+        // count outside corners
+        if region.contains(coord + Vector(x: -1, y: 0)) == false && region.contains(coord + Vector(x: 0, y: -1)) == false {
+            corners += 1
+        }
+        
+        if region.contains(coord + Vector(x: 0, y: -1)) == false && region.contains(coord + Vector(x: 1, y: 0)) == false {
+            corners += 1
+        }
+        
+        if region.contains(coord + Vector(x: -1, y: 0)) == false && region.contains(coord + Vector(x: 0, y: 1)) == false {
+            corners += 1
+        }
+        
+        if region.contains(coord + Vector(x: 1, y: 0)) == false && region.contains(coord + Vector(x: 0, y: 1)) == false {
+            corners += 1
+        }
     }
     
-    return 0
+    
+    return corners
 }
 
 func coordIsInMap(in map: [[Character]], coord: Vector) -> Bool {

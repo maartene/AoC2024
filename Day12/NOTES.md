@@ -21,4 +21,7 @@
 
 ## 🍅 Pomodoro 3
 - ✅ Acceptance test: the total price for the third example is 1930
-- ⚠️ Lets get that first star
+- ✅ Lets get that first star
+
+## 🍅 Pomodoro 4 --???
+- ✅ Lets get that second star
