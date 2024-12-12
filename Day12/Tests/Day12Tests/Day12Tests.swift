@@ -5,7 +5,17 @@ import Testing
     // Write your test here and use APIs like `#expect(...)` to check expected conditions.
 }
 
+
+
 @Suite("To get the first star on day 12") struct Day12StarOneTests {
+    let firstExample =
+        """
+        AAAA
+        BBCD
+        BBCC
+        EEEC
+        """
+    
     @Test("The area for a plant in the first example should return the correct expected area", arguments: [
         ("A", 4),
         ("B", 4),
@@ -13,14 +23,6 @@ import Testing
         ("D", 1),
         ("E", 3),
     ]) func areaForPlantInFirstExample(testcase: (plant: Character, expectedArea: Int)) {
-        let firstExample =
-        """
-        AAAA
-        BBCD
-        BBCC
-        EEEC
-        """
-        
         #expect(areaForPlant(firstExample, plant: testcase.plant) == testcase.expectedArea)
     }
     
@@ -31,14 +33,6 @@ import Testing
         ("D", 4),
         ("E", 8),
     ]) func perimeterForPlantInFirstExample(testcase: (plant: Character, expectedArea: Int)) {
-        let firstExample =
-        """
-        AAAA
-        BBCD
-        BBCC
-        EEEC
-        """
-        
         #expect(perimeterForPlant(firstExample, plant: testcase.plant) == testcase.expectedArea)
     }
     
