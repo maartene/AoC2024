@@ -12,6 +12,7 @@
 - ✅ Import the input data
 - ✅ Calculate the area of a plant in a region
 - ✅ Calculate the perimeter for a plant in a region
+- ⚠️ We need to take the number of regions into account
 - ⚠️ The price for a region is area * perimeter
 - ⚠️ Acceptance test: the total price for the first example is 140
 - ⚠️ Acceptance test: the total price for the second example is 772
