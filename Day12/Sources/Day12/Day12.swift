@@ -1,2 +1,3 @@
-// The Swift Programming Language
-// https://docs.swift.org/swift-book
+func areaForPlant(_ mapString: String, plant: Character) -> Int {
+    4
+}
