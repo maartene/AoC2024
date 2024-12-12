@@ -34,16 +34,20 @@ func regionsForPlant(_ mapString: String, plant: Character) -> [Set<Vector>] {
     var regions = [Set<Vector>]()
     var region = Set<Vector>()
     while coordsOfPlants.count > 0 {
-        let plantCoord = coordsOfPlants.removeFirst()
-        region.insert(plantCoord)
-        let neighbours = plantCoord.neighbours
-    
-        if neighbours.allSatisfy({ neighbour in
-            (neighbour.x < 0 || neighbour.x >= map[0].count || neighbour.y < 0 || neighbour.y >= map.count) ||
-            map[neighbour.y][neighbour.x] != plant }) {
-            regions.append(region)
-            region.removeAll()
+        var queue: Set = [coordsOfPlants.removeFirst()]
+        
+        while queue.count > 0 {
+            let coord = queue.removeFirst()
+            coordsOfPlants.remove(coord)
+            region.insert(coord)
+            
+            queue.formUnion(coord.neighbours
+                .filter { coordsOfPlants.contains($0) }
+            )
         }
+        
+        regions.append(region)
+        region.removeAll()
     }
     
     if region.count > 0 {
@@ -90,4 +94,8 @@ func perimeterForPlantInRegion(_ mapString: String, plantCoords: Set<Vector>) ->
     }
     
     return perimeter
+}
+
+func coordIsInMap(in map: [[Character]], coord: Vector) -> Bool {
+    coord.x >= 0 && coord.x < map[0].count && coord.y >= 0 && coord.y < map.count
 }
