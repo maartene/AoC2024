@@ -1,38 +1,38 @@
 import Testing
 @testable import Day12
 
+let firstExample =
+    """
+    AAAA
+    BBCD
+    BBCC
+    EEEC
+    """
+
+let secondExample =
+    """
+    OOOOO
+    OXOXO
+    OOOOO
+    OXOXO
+    OOOOO
+    """
+
+let thirdExample =
+    """
+    RRRRIICCFF
+    RRRRIICCCF
+    VVRRRCCFFF
+    VVRCCCJFFF
+    VVVVCJJCFE
+    VVIVCCJJEE
+    VVIIICJJEE
+    MIIIIIJJEE
+    MIIISIJEEE
+    MMMISSJEEE
+    """
+
 @Suite("To get the first star on day 12") struct Day12StarOneTests {
-    let firstExample =
-        """
-        AAAA
-        BBCD
-        BBCC
-        EEEC
-        """
-    
-    let secondExample =
-        """
-        OOOOO
-        OXOXO
-        OOOOO
-        OXOXO
-        OOOOO
-        """
-    
-    let thirdExample =
-        """
-        RRRRIICCFF
-        RRRRIICCCF
-        VVRRRCCFFF
-        VVRCCCJFFF
-        VVVVCJJCFE
-        VVIVCCJJEE
-        VVIIICJJEE
-        MIIIIIJJEE
-        MIIISIJEEE
-        MMMISSJEEE
-        """
-    
     @Test("The area for a plant in the first example should return the correct expected area", arguments: [
         ("A", 4),
         ("B", 4),
@@ -61,7 +61,7 @@ import Testing
     }
     
     @Test("The number of regions per plant in the first example should be one", arguments: [
-        "A", //"B", "C", "D", "E"
+        "A", "B", "C", "D", "E"
     ]) func numberOfRegionsInFirstExample(plant: Character) {
         #expect(regionsForPlant(firstExample, plant: plant).count == 1)
     }
@@ -108,5 +108,11 @@ import Testing
     
     @Test("The total price for the actual input is 1457298") func totalCostForRegionsInActualInput() {
         #expect(totalCostForRegions(input) == 1457298)
+    }
+}
+
+@Suite("To get the second star on day 12") struct Day12StarTwoTests {
+    @Test("The number of sides of each region in the first example") func sidesPerRegionInFirstExample() {
+        #expect(sidesPerRegionForPlant(firstExample, plant: "A") == Set([4]))
     }
 }

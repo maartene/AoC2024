@@ -83,9 +83,7 @@ func perimeterForPlantInRegion(_ mapString: String, plantCoords: Set<Vector>) ->
     
     for coordsOfPlant in plantCoords {
         let neighbours = coordsOfPlant.neighbours
-            .filter {
-                $0.x >= 0 && $0.x < map[0].count && $0.y >= 0 && $0.y < map.count
-            }
+            .filter { coordIsInMap(in: map, coord: $0) }
         for neighbour in neighbours {
             if map[neighbour.y][neighbour.x] == plant {
                 perimeter -= 1
@@ -94,6 +92,23 @@ func perimeterForPlantInRegion(_ mapString: String, plantCoords: Set<Vector>) ->
     }
     
     return perimeter
+}
+
+func sidesPerRegionForPlant(_ mapString: String, plant: Character) -> Set<Int> {
+    let regions = regionsForPlant(mapString, plant: plant)
+    
+    return Set(regions.map { sidesOfRegion($0) } )
+}
+
+func sidesOfRegion(_ region: Set<Vector>) -> Int {
+    let height = region.max { $0.y < $1.y }?.y ?? 0
+    let width = region.max { $0.x < $1.x }?.x ?? 0
+    
+    guard height > 0 else {
+        return 4
+    }
+    
+    return 0
 }
 
 func coordIsInMap(in map: [[Character]], coord: Vector) -> Bool {
