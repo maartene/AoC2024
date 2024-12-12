@@ -6,7 +6,7 @@ import Testing
 }
 
 @Suite("To get the first star on day 12") struct Day12StarOneTests {
-    @Test("The area for Plant 'A' in the first example is 4", arguments: [
+    @Test("The area for a plant in the first example should return the correct expected area", arguments: [
         ("A", 4),
         ("B", 4),
         ("C", 4),
@@ -22,5 +22,23 @@ import Testing
         """
         
         #expect(areaForPlant(firstExample, plant: testcase.plant) == testcase.expectedArea)
+    }
+    
+    @Test("The perimeter for a plant in the first example should return the correct expected perimeter", arguments: [
+        ("A", 10),
+        ("B", 8),
+        ("C", 10),
+        ("D", 4),
+        ("E", 8),
+    ]) func perimeterForPlantInFirstExample(testcase: (plant: Character, expectedArea: Int)) {
+        let firstExample =
+        """
+        AAAA
+        BBCD
+        BBCC
+        EEEC
+        """
+        
+        #expect(perimeterForPlant(firstExample, plant: testcase.plant) == testcase.expectedArea)
     }
 }
