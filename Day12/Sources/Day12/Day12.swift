@@ -1,3 +1,3 @@
 func areaForPlant(_ mapString: String, plant: Character) -> Int {
-    4
+    return mapString.filter { $0 == plant }.count
 }
