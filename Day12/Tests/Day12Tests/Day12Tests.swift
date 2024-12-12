@@ -51,4 +51,8 @@ import Testing
         
         #expect(perimeterForPlant(secondExample, plant: testcase.plant) == testcase.expectedArea)
     }
+    
+    @Test("The total price for the first example is 140") func totalCostForRegionsInFirstExample() {
+        #expect(totalCostForRegions(firstExample) == 140)
+    }
 }

@@ -1,5 +1,17 @@
 import Shared
 
+func totalCostForRegions(_ mapString: String) -> Int {
+    let plants = Set(mapString.filter(\.isLetter))
+    
+    let areasForPlants = plants.map { areaForPlant(mapString, plant: $0) }
+    
+    let perimetersForPlants = plants.map { perimeterForPlant(mapString, plant: $0) }
+    
+    return zip(areasForPlants, perimetersForPlants)
+        .map { $0.0 * $0.1 }
+        .reduce(0, +)
+}
+
 func areaForPlant(_ mapString: String, plant: Character) -> Int {
     return mapString.filter { $0 == plant }.count
 }
