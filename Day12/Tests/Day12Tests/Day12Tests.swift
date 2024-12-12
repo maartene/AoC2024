@@ -6,7 +6,9 @@ import Testing
 }
 
 @Suite("To get the first star on day 12") struct Day12StarOneTests {
-    @Test("The area for Plant 'A' in the first example is 4") func areaForPlantInFirstExample() {
+    @Test("The area for Plant 'A' in the first example is 4", arguments: [
+        ("A", 4),
+    ]) func areaForPlantInFirstExample(testcase: (plant: Character, expectedArea: Int)) {
         let firstExample =
         """
         AAAA
@@ -15,6 +17,6 @@ import Testing
         EEEC
         """
         
-        #expect(areaForPlant(firstExample, plant: "A") == 4)
+        #expect(areaForPlant(firstExample, plant: testcase.plant) == testcase.expectedArea)
     }
 }
