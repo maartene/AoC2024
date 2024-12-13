@@ -73,3 +73,17 @@ import Testing
         #expect(minimalCostForAllPrizes(in: input) == 29023)
     }
 }
+
+@Suite("To get the second star on Day 13") struct Day13StarTwoTests {
+    @Test("Machine four brings a prize") func MachineFourBringsAPrize() {
+        let machineFour =
+        """
+        Button A: X+69, Y+23
+        Button B: X+27, Y+71
+        Prize: X=18641, Y=10279
+        """
+        
+        #expect(minimalCostButtonPressesForMachine(machineFour, prizeAdjustment: 10000000000000) != nil)
+    }
+    
+}

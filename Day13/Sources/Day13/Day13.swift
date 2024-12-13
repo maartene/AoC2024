@@ -14,32 +14,26 @@ func minimalCostForAllPrizes(in machinesString: String) -> Int {
     return costsPerPrize.reduce(0, +)
 }
 
-func minimalCostButtonPressesForMachine(_ machineString: String) -> (A: Int, B: Int, cost: Int)? {
+func minimalCostButtonPressesForMachine(_ machineString: String, prizeAdjustment: Int = 0) -> (A: Int, B: Int, cost: Int)? {
     // construct the machine
     let lines = machineString.split(separator: "\n").map(String.init)
     
     guard let buttonAOffset = stringToVector(lines[0]),
           let buttonBOffset = stringToVector(lines[1]),
-          let prizeLocation = stringToVector(lines[2]) else {
-        return nil
-    }
-        
-    var validPresses = [(A: Int, B: Int, cost: Int)]()
-    for aPresses in 0 ... 100 {
-        for bPresses in 0 ... 100 {
-            if buttonAOffset * aPresses + buttonBOffset * bPresses == prizeLocation {
-                let cost = 3 * aPresses + bPresses
-                validPresses.append((aPresses, bPresses, cost))
-            }
-        }
-    }
-    
-    let sortedValidPresses = validPresses.sorted { $0.cost < $1.cost }
-    guard let minimalCostPresses = sortedValidPresses.first else {
+          var prizeLocation = stringToVector(lines[2]) else {
         return nil
     }
     
-    return minimalCostPresses
+    prizeLocation += Vector.one * prizeAdjustment
+    
+    let aPresses = (prizeLocation.x * buttonBOffset.y - buttonBOffset.x * prizeLocation.y) / ( buttonAOffset.x * buttonBOffset.y - buttonBOffset.x * buttonAOffset.y)
+    let bPresses = (prizeLocation.y - aPresses * buttonAOffset.y) / buttonBOffset.y
+    
+    if buttonAOffset * aPresses + buttonBOffset * bPresses == prizeLocation {
+        return (aPresses, bPresses, 3 * aPresses + bPresses)
+    } else {
+        return nil
+    }
 }
 
 func stringToVector(_ string: String) -> Vector? {
