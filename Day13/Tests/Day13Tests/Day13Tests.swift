@@ -17,4 +17,16 @@ import Testing
         let result = try #require(minimalCostButtonPressesForMachine(machineOneInput))
         #expect(result == (80, 40))
     }
+    
+    @Test("To get the prize in machine three for minimal cost means pressing the A button 38 times and the B button 86 times") func buttonPressesForMachineTwoInTheExampleInput() throws {
+        let machineThreeInput =
+        """
+        Button A: X+17, Y+86
+        Button B: X+84, Y+37
+        Prize: X=7870, Y=6450
+        """
+        
+        let result = try #require(minimalCostButtonPressesForMachine(machineThreeInput))
+        #expect(result == (38, 86))
+    }
 }
