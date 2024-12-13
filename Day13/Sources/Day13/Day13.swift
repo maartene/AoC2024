@@ -1,6 +1,20 @@
 import Shared
 
-func minimalCostButtonPressesForMachine(_ machineString: String) -> (A: Int, B: Int)? {
+func minimalCostForAllPrizes(in machinesString: String) -> Int {
+    let lines = machinesString.split(separator: "\n").map(String.init)
+    
+    var machineStrings = [String]()
+    for i in 0 ..< lines.count / 3 {
+        let machineString = [lines[i * 3], lines[i * 3 + 1], lines[i * 3 + 2]].joined(separator: "\n")
+        machineStrings.append(machineString)
+    }
+        
+    let costsPerPrize = machineStrings.compactMap { minimalCostButtonPressesForMachine($0) }
+        .map { $0.cost }
+    return costsPerPrize.reduce(0, +)
+}
+
+func minimalCostButtonPressesForMachine(_ machineString: String) -> (A: Int, B: Int, cost: Int)? {
     // construct the machine
     let lines = machineString.split(separator: "\n").map(String.init)
     
@@ -25,7 +39,7 @@ func minimalCostButtonPressesForMachine(_ machineString: String) -> (A: Int, B: 
         return nil
     }
     
-    return (minimalCostPresses.A, minimalCostPresses.B)
+    return minimalCostPresses
 }
 
 func stringToVector(_ string: String) -> Vector? {
