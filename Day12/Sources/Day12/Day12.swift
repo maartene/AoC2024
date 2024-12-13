@@ -129,6 +129,12 @@ func sidesOfRegion(_ region: Set<Vector>) -> Int {
     
     var corners = 0
     
+    //  Inner corner
+    //   X    X
+    //  XX    XX
+    //
+    //  XX    XX
+    //   X    X
     let innerCornerCases = [
         [Vector(x: -1, y: 0), Vector(x: 0, y: -1), Vector(x: -1, y: -1)],
         [Vector(x: 0, y: -1), Vector(x: 1, y: 0), Vector(x: 1, y: -1)],
@@ -136,8 +142,22 @@ func sidesOfRegion(_ region: Set<Vector>) -> Int {
         [Vector(x: 1, y: 0), Vector(x: 0, y: 1), Vector(x: 1, y: 1)]
     ]
     
+    //  Outside corners
+    //  .A     A.
+    //  AX     XA
+    //
+    
+    //  AX     XA
+    //  .A     A.
+    let outerCornerCases = [
+        [Vector(x: -1, y: 0), Vector(x: 0, y: -1)],
+        [Vector(x: 0, y: -1), Vector(x: 1, y: 0)],
+        [Vector(x: -1, y: 0), Vector(x: 0, y: 1)],
+        [Vector(x: 1, y: 0), Vector(x: 0, y: 1)]
+    ]
+    
     for coord in region {
-        // count inside corners
+        
         for innerCornerCase in innerCornerCases {
             let testCoords = innerCornerCase.map { $0 + coord }
             if region.contains(testCoords[0]) && region.contains(testCoords[1]) && region.contains(testCoords[2]) == false {
@@ -145,21 +165,11 @@ func sidesOfRegion(_ region: Set<Vector>) -> Int {
             }
         }
         
-        // count outside corners
-        if region.contains(coord + Vector(x: -1, y: 0)) == false && region.contains(coord + Vector(x: 0, y: -1)) == false {
-            corners += 1
-        }
-        
-        if region.contains(coord + Vector(x: 0, y: -1)) == false && region.contains(coord + Vector(x: 1, y: 0)) == false {
-            corners += 1
-        }
-        
-        if region.contains(coord + Vector(x: -1, y: 0)) == false && region.contains(coord + Vector(x: 0, y: 1)) == false {
-            corners += 1
-        }
-        
-        if region.contains(coord + Vector(x: 1, y: 0)) == false && region.contains(coord + Vector(x: 0, y: 1)) == false {
-            corners += 1
+        for outerCornerCase in outerCornerCases {
+            let testCoords = outerCornerCase.map { $0 + coord }
+            if (region.contains(testCoords[0]) == false && region.contains(testCoords[1]) == false) {
+                corners += 1
+            }
         }
     }
     
