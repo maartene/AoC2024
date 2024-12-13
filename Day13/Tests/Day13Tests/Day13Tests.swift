@@ -1,14 +1,21 @@
 import Testing
 @testable import Day13
 
+let machineOneInput =
+"""
+Button A: X+94, Y+34
+Button B: X+22, Y+67
+Prize: X=8400, Y=5400
+"""
+
+let machineFour =
+"""
+Button A: X+69, Y+23
+Button B: X+27, Y+71
+Prize: X=18641, Y=10279
+"""
+
 @Suite("To get the first star on Day 13") struct Day13StarOneTests {
-    let machineOneInput =
-    """
-    Button A: X+94, Y+34
-    Button B: X+22, Y+67
-    Prize: X=8400, Y=5400
-    """
-    
     @Test("To get the prize in machine one for minimal cost means pressing the A button 80 times and the B button 40 times") func buttonPressesForMachineOneInTheExampleInput() throws {
         let result = try #require(minimalCostButtonPressesForMachine(machineOneInput))
         #expect(result.A == 80 && result.B == 40)
@@ -32,11 +39,7 @@ import Testing
                 Button B: X+67, Y+21
                 Prize: X=12748, Y=12176
                 """,
-                """
-                Button A: X+69, Y+23
-                Button B: X+27, Y+71
-                Prize: X=18641, Y=10279
-                """
+                machineFour
                 
     ]) func machinesTwoAndFourCantGiveOutPrizes(machineString: String) throws {
         #expect(minimalCostButtonPressesForMachine(machineString) == nil)
@@ -76,13 +79,6 @@ import Testing
 
 @Suite("To get the second star on Day 13") struct Day13StarTwoTests {
     @Test("Machine four brings a prize") func MachineFourBringsAPrize() {
-        let machineFour =
-        """
-        Button A: X+69, Y+23
-        Button B: X+27, Y+71
-        Prize: X=18641, Y=10279
-        """
-        
         #expect(minimalCostButtonPressesForMachine(machineFour, prizeAdjustment: 10000000000000) != nil)
     }
     

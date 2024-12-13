@@ -9,7 +9,8 @@ func minimalCostForAllPrizes(in machinesString: String, prizeAdjustment: Int = 0
         machineStrings.append(machineString)
     }
         
-    let costsPerPrize = machineStrings.compactMap { minimalCostButtonPressesForMachine($0, prizeAdjustment: prizeAdjustment) }
+    let costsPerPrize = machineStrings
+        .compactMap { minimalCostButtonPressesForMachine($0, prizeAdjustment: prizeAdjustment) }
         .map { $0.cost }
     return costsPerPrize.reduce(0, +)
 }
