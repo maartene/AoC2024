@@ -16,4 +16,9 @@
 - ✅ In the example input, only machine 1 and 3 provide prizes 
 
 ## 🍅 Pomodoro 2
-- ⚠️ The fewest number of tokens needed to win all possible prizes in the example input is 480
+- ✅ The fewest number of tokens needed to win all possible prizes in the example input is 480
+- ✅ Lets get the first star ⭐️
+
+## 🍅 Pomodoro 3
+- ✅ Refactor to use linear algebra
+- ✅ Lets get the second star ⭐️⭐️

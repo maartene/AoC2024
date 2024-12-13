@@ -1,6 +1,6 @@
 import Shared
 
-func minimalCostForAllPrizes(in machinesString: String) -> Int {
+func minimalCostForAllPrizes(in machinesString: String, prizeAdjustment: Int = 0) -> Int {
     let lines = machinesString.split(separator: "\n").map(String.init)
     
     var machineStrings = [String]()
@@ -9,7 +9,7 @@ func minimalCostForAllPrizes(in machinesString: String) -> Int {
         machineStrings.append(machineString)
     }
         
-    let costsPerPrize = machineStrings.compactMap { minimalCostButtonPressesForMachine($0) }
+    let costsPerPrize = machineStrings.compactMap { minimalCostButtonPressesForMachine($0, prizeAdjustment: prizeAdjustment) }
         .map { $0.cost }
     return costsPerPrize.reduce(0, +)
 }

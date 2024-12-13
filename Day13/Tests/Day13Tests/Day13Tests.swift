@@ -86,4 +86,8 @@ import Testing
         #expect(minimalCostButtonPressesForMachine(machineFour, prizeAdjustment: 10000000000000) != nil)
     }
     
+    @Test("It takes a minimum of 96787395375634 tokens to get all the prizes in the actual input") func minimalCostForAllPrizesInActualInput() throws {
+        #expect(minimalCostForAllPrizes(in: input, prizeAdjustment: 10000000000000) == 96787395375634)
+    }
+    
 }
