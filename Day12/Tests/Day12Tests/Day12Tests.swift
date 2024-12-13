@@ -143,5 +143,3 @@ let thirdExample =
         #expect(totalCostForRegionsWithDiscount(input) == 921636)
     }
 }
-
-// 690448 too low
