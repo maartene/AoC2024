@@ -29,4 +29,20 @@ import Testing
         let result = try #require(minimalCostButtonPressesForMachine(machineThreeInput))
         #expect(result == (38, 86))
     }
+    
+    @Test("Machines two and four can't give out prizes", arguments: [
+                """
+                Button A: X+26, Y+66
+                Button B: X+67, Y+21
+                Prize: X=12748, Y=12176
+                """,
+                """
+                Button A: X+69, Y+23
+                Button B: X+27, Y+71
+                Prize: X=18641, Y=10279
+                """
+                
+    ]) func machinesTwoAndFourCantGiveOutPrizes(machineString: String) throws {
+        #expect(minimalCostButtonPressesForMachine(machineString) == nil)
+    }
 }
