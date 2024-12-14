@@ -27,12 +27,18 @@ func safetyFactor(for input: String) -> Int {
     
     var robotsInQuadrant2 = 0
     for row in 0 ..< robotState.count / 2 {
-        for column in robotState[row].count / 2 ..< robotState[row].count {
+        for column in 1 + robotState[row].count / 2 ..< robotState[row].count {
             robotsInQuadrant2 += robotState[row][column] ?? 0
         }
     }
     
-    let robotsInQuadrant3 = 4
+    var robotsInQuadrant3 = 0
+    for row in 1 + robotState.count / 2 ..< robotState.count {
+        for column in 0 ..< robotState[row].count / 2 {
+            robotsInQuadrant3 += robotState[row][column] ?? 0
+        }
+    }
+    
     let robotsInQuadrant4 = 1
     
     return robotsInQuadrant1 * robotsInQuadrant2 * robotsInQuadrant3 * robotsInQuadrant4
