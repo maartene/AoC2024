@@ -2,7 +2,7 @@
 // https://docs.swift.org/swift-book
 
 func safetyFactor(for input: String) -> Int {
-    let lines =
+    let robotState =
     """
     ......2..1.
     ...........
@@ -13,13 +13,11 @@ func safetyFactor(for input: String) -> Int {
     .1....1....
     """
         .split(separator: "\n").map(String.init)
-    
-    let robotState = lines.map { line in
-        let row: [Character] = line.map { $0 }
-        return row.map { Int(String($0)) }
-    }
-        //.map { Int(String($0)) }
-    
+        .map { line in
+            let row: [Character] = line.map { $0 }
+            return row.map { Int(String($0)) }
+        }
+
     var robotsInQuadrant1 = 0
     for row in 0 ..< robotState.count / 2 {
         for column in 0 ..< robotState[row].count / 2 {
