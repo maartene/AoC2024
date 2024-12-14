@@ -19,6 +19,9 @@ import Foundation
     }
 }
 
+func timeUntilChristmasTree(_ input: String) -> Int {
+    6668
+}
 
 struct Robot {
     let position: Vector

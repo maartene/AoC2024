@@ -51,3 +51,9 @@ let exampleInput =
         #expect(safetyFactor(for: input, size: Vector(x: 101, y: 103)) == 230461440)
     }
 }
+
+@Suite("To get the second star on day 14") struct Day14StarTwoTests {
+    @Test("We should get a christmas tree after 6668 seconds") func xmasTreeAfterSeconds() {
+        #expect(timeUntilChristmasTree(input) == 6668)
+    }
+}
