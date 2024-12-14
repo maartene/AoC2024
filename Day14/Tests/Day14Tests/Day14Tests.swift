@@ -1,4 +1,5 @@
 import Testing
+import Shared
 @testable import Day14
 
 @Suite("To get the first star on day 14") struct Day14StarOneTests {
@@ -18,6 +19,6 @@ import Testing
         p=2,4 v=2,-3
         p=9,5 v=-3,-3
         """
-        #expect(safetyFactor(for: exampleInput) == 12)
+        #expect(safetyFactor(for: exampleInput, size: Vector(x: 11, y: 7)) == 12)
     }
 }
