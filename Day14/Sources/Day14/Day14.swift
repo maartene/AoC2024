@@ -20,7 +20,42 @@ import Foundation
 }
 
 func timeUntilChristmasTree(_ input: String) -> Int {
-    6668
+    func getStandardDeviation(robotState: [Robot]) -> Double {
+        let midPoint = robotState.map { $0.position }
+            .reduce(Vector.zero, +)
+        / robotState.count
+        
+        let distanceFromCenter = robotState.map { robot in
+            (robot.position - midPoint / 2).length
+        }
+        
+        let averageDistanceFromCenter = distanceFromCenter.reduce(0) { partialResult, distance in
+            partialResult + distance
+        } / Double(distanceFromCenter.count)
+        
+        let squaredError = distanceFromCenter.reduce(0) { partialResult, distance in
+            let error = distance - averageDistanceFromCenter
+            return partialResult + error * error / Double(distanceFromCenter.count)
+        }
+        
+        return sqrt(squaredError)
+    }
+    
+    var robotState = parseInputIntoRobotState(input: input)
+    let mapSize = Vector(x: 101, y: 103)
+    
+    // calculate standard deviation
+    var standardDeviation = getStandardDeviation(robotState: robotState)
+    
+    var deviations = [Int: Double]()
+    
+    for i in 0 ..< mapSize.x * mapSize.y {
+        deviations[i] = standardDeviation
+        robotState = step(state: robotState, mapSize: mapSize)
+        standardDeviation = getStandardDeviation(robotState: robotState)
+    }
+    
+    return deviations.min(by: { $0.value < $1.value} )?.key ?? 0
 }
 
 struct Robot {
