@@ -8,6 +8,7 @@
 - ⚠️ TODO
 
 ## 🍅 Pomodoro 1 - Try outside in approach
-- ⚠️ Read the description
+- ✅ Read the description
 - ✅ Import the input data
-- ⚠️ Make the example input pass
+- ✅ Make the example input pass by faking it
+- ⚠️ Keep unpacking hard coded values until they are all calculated
