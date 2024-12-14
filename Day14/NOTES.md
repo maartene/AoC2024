@@ -7,7 +7,7 @@
 - ❌ ERROR
 - ⚠️ TODO
 
-## 🍅 Pomodoro 1
+## 🍅 Pomodoro 1 - Try outside in approach
 - ⚠️ Read the description
-- ⚠️ Import the input data
+- ✅ Import the input data
 - ⚠️ Make the example input pass
