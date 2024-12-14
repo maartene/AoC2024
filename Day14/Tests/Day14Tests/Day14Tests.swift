@@ -45,4 +45,8 @@ import Shared
         
         #expect(robot.position == Vector(x: 1, y: 3))
     }
+    
+    @Test("The safety factor for the robots in the actual input should be 230461440") func safetyFactorForActualInput() {
+        #expect(safetyFactor(for: input, size: Vector(x: 101, y: 103)) == 230461440)
+    }
 }
