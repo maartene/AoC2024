@@ -1,4 +1,24 @@
 import Shared
+import Foundation
+
+
+@main struct EscapeWithYourBooty {
+    static func main() {
+        var robotState = parseInputIntoRobotState(input: input)
+        let mapSize = Vector(x: 101, y: 103)
+        var positionCount = Set(robotState.map { $0.position } ).count
+        var stepCount = 0
+        while positionCount != robotState.count {
+            stepCount += 1
+            robotState = step(state: robotState, mapSize: mapSize)
+            positionCount = Set(robotState.map { $0.position } ).count
+        }
+        
+        print("X-Mas at step \(stepCount)")
+        printRobotState(robotState: robotState, mapSize: mapSize)
+    }
+}
+
 
 struct Robot {
     let position: Vector
@@ -12,20 +32,23 @@ struct Robot {
     }
 }
 
-func safetyFactor(for input: String, size: Vector) -> Int {
-    let lines = input.split(separator: "\n").map { String($0) }
-    
-    var robotState = [Robot]()
-    for line in lines {
-        let numbers = line.matches(of: /-*\d+/)
-            .map { String($0.0) }
-            .compactMap(Int.init)
-        let robot = Robot(position: Vector(x: numbers[0], y: numbers[1]), velocity: Vector(x: numbers[2], y: numbers[3]))
-        robotState.append(robot)
+func printRobotState(robotState: [Robot], mapSize: Vector) {
+    for y in 0 ..< mapSize.y {
+        var line = ""
+        for x in 0 ..< mapSize.x {
+            if robotState.contains(where: { $0.position == Vector(x: x, y: y) }) {
+                line += "\u{2588}"
+            } else {
+                line += " "
+            }
+        }
+        print(line)
     }
-    
-    print(robotState)
+}
 
+func safetyFactor(for input: String, size: Vector) -> Int {
+    let robotState = parseInputIntoRobotState(input: input)
+    
     let robotStateAfter100Seconds = advanceTime(initialState: robotState, seconds: 100, mapSize: size)
     
     func getRobotsInQuadrant(in robotState: [Robot], for quadrant: Int, mapSize: Vector) -> Int {
@@ -58,10 +81,30 @@ func safetyFactor(for input: String, size: Vector) -> Int {
     return robotsInQuadrant1 * robotsInQuadrant2 * robotsInQuadrant3 * robotsInQuadrant4
 }
 
+func step(state: [Robot], mapSize: Vector) -> [Robot] {
+    state.map { $0.step(mapSize: mapSize) }
+}
+
 func advanceTime(initialState: [Robot], seconds: Int, mapSize: Vector) -> [Robot] {
     var robotState = initialState
     for _ in 0 ..< seconds {
-        robotState = robotState.map { $0.step(mapSize: mapSize) }
+        robotState = step(state: robotState, mapSize: mapSize)
     }
+    return robotState
+}
+
+
+func parseInputIntoRobotState(input: String) -> [Robot] {
+    let lines = input.split(separator: "\n").map { String($0) }
+    
+    var robotState = [Robot]()
+    for line in lines {
+        let numbers = line.matches(of: /-*\d+/)
+            .map { String($0.0) }
+            .compactMap(Int.init)
+        let robot = Robot(position: Vector(x: numbers[0], y: numbers[1]), velocity: Vector(x: numbers[2], y: numbers[3]))
+        robotState.append(robot)
+    }
+    
     return robotState
 }
