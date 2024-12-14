@@ -12,3 +12,5 @@
 - ✅ Import the input data
 - ✅ Make the example input pass by faking it
 - ⚠️ Keep unpacking hard coded values until they are all calculated
+    - ✅ based on robot state we can count the safety factor
+    - ⚠️ Calculate the required robot state 
