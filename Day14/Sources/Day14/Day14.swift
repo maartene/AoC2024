@@ -3,34 +3,30 @@ import Shared
 struct Robot {
     let position: Vector
     let velocity: Vector
+    
+    func step(mapSize: Vector) -> Robot {
+        var newPosition = position + velocity + mapSize
+        newPosition.x = newPosition.x % mapSize.x
+        newPosition.y = newPosition.y % mapSize.y
+        return Robot(position: newPosition, velocity: velocity)
+    }
 }
 
 func safetyFactor(for input: String, size: Vector) -> Int {
+    let lines = input.split(separator: "\n").map { String($0) }
     
-    
-    let characters =
-    convertInputToMatrixOfCharacters(
-    """
-    ......2..1.
-    ...........
-    1..........
-    .11........
-    .....1.....
-    ...12......
-    .1....1....
-    """
-    )
     var robotState = [Robot]()
-    for y in 0 ..< characters.count {
-        for x in 0 ..< characters[y].count {
-            if let robotCount = Int(String(characters[y][x])) {
-                let robot = Robot(position: Vector(x: x, y: y), velocity: Vector(x: 0, y: 0))
-                robotState.append(contentsOf: Array(repeating: robot, count: robotCount))
-            }
-        }
+    for line in lines {
+        let numbers = line.matches(of: /-*\d+/)
+            .map { String($0.0) }
+            .compactMap(Int.init)
+        let robot = Robot(position: Vector(x: numbers[0], y: numbers[1]), velocity: Vector(x: numbers[2], y: numbers[3]))
+        robotState.append(robot)
     }
     
-    let robotStateAfter100Seconds = advanceTime(initialState: robotState, seconds: 100)
+    print(robotState)
+
+    let robotStateAfter100Seconds = advanceTime(initialState: robotState, seconds: 100, mapSize: size)
     
     func getRobotsInQuadrant(in robotState: [Robot], for quadrant: Int, mapSize: Vector) -> Int {
         let bounds: (rowStart: Int, rowEnd: Int, columnStart: Int, columnEnd: Int) = switch quadrant {
@@ -59,25 +55,13 @@ func safetyFactor(for input: String, size: Vector) -> Int {
     let robotsInQuadrant3 = getRobotsInQuadrant(in: robotStateAfter100Seconds, for: 3, mapSize: size)
     let robotsInQuadrant4 = getRobotsInQuadrant(in: robotStateAfter100Seconds, for: 4, mapSize: size)
     
-    
     return robotsInQuadrant1 * robotsInQuadrant2 * robotsInQuadrant3 * robotsInQuadrant4
 }
 
-func advanceTime(initialState: [Robot], seconds: Int) -> [Robot] {
-    initialState
+func advanceTime(initialState: [Robot], seconds: Int, mapSize: Vector) -> [Robot] {
+    var robotState = initialState
+    for _ in 0 ..< seconds {
+        robotState = robotState.map { $0.step(mapSize: mapSize) }
+    }
+    return robotState
 }
-
-
-
-/// Stash
-/// // convert input to robotState
-//let lines = input.split(separator: "\n").map(String.init)
-//
-//var robots: [(positing: Vector, velocity: Vector)] = []
-//for line in lines {
-//    let numbers = line.matches(of: /\d+/)
-//        .map { String($0.0) }
-//        .compactMap(Int.init)
-//    let robot = (Vector(x: numbers[0], y: numbers[1]), Vector(x: numbers[2], y: numbers[3]))
-//    robots.append(robot)
-//}

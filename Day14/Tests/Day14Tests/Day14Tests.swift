@@ -21,4 +21,28 @@ import Shared
         """
         #expect(safetyFactor(for: exampleInput, size: Vector(x: 11, y: 7)) == 12)
     }
+    
+    @Test("A robot that starts at position: (2,4) in a map with size (11,7) with velocity (2, -3) should be at position (4,1) after one step") func singleStep() {
+        var robot = Robot(position: Vector(x: 2, y: 4), velocity: Vector(x: 2, y: -3))
+        robot = robot.step(mapSize: Vector(x: 11, y: 7))
+        #expect(robot.position == Vector(x: 4, y: 1))
+    }
+    
+    @Test("A robot that starts at position: (2,4) in a map with size (11,7) with velocity (2, -3) should be at position (6,5) after two steps") func twoSteps() {
+        let mapSize = Vector(x: 11, y: 7)
+        var robot = Robot(position: Vector(x: 2, y: 4), velocity: Vector(x: 2, y: -3))
+        robot = robot.step(mapSize: mapSize).step(mapSize: mapSize)
+        #expect(robot.position == Vector(x: 6, y: 5))
+    }
+    
+    @Test("A robot that starts at position: (2,4) in a map with size (11,7) with velocity (2, -3) should be at position (1,3) after five steps") func fiveSteps() {
+        let mapSize = Vector(x: 11, y: 7)
+        var robot = Robot(position: Vector(x: 2, y: 4), velocity: Vector(x: 2, y: -3))
+        
+        for _ in 0 ..< 5 {
+            robot = robot.step(mapSize: mapSize)
+        }
+        
+        #expect(robot.position == Vector(x: 1, y: 3))
+    }
 }
