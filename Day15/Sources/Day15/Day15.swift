@@ -112,23 +112,30 @@ struct Map {
     
     func tryMoveObstacle(direction: Vector) -> Map {
         var freePosition: Vector?
+        var boxesToShift = [Vector: Character]()
         
         var testPosition = playerPosition + direction
         while walls.contains(testPosition) == false && freePosition == nil {
             if obstacles.keys.contains(testPosition) == false {
                 freePosition = testPosition
             }
+            boxesToShift[testPosition] = obstacles[testPosition]
             testPosition += direction
         }
         
-        guard let freePosition else {
+        guard freePosition != nil else {
             return self
         }
         
         let newPlayerPosition = self.playerPosition + direction
         var obstaclesCopy = obstacles
         obstaclesCopy.removeValue(forKey: newPlayerPosition)
-        obstaclesCopy[freePosition] = "O"
+        
+        // shift boxes
+        for boxToShift in boxesToShift {
+            obstaclesCopy[boxToShift.key + direction] = boxToShift.value
+        }
+
         return Map(walls: walls, obstacles: obstaclesCopy, playerPosition: newPlayerPosition, mapSize: mapSize)
     }
 }

@@ -236,28 +236,22 @@ let smallExample =
 }
 
 @Suite("To get the second star on day 15") struct Day15StarTwoTests {
-    let expandedMapString =
+    let expandedExampleMap =
     """
     ##############
-    ##@.....##..##
+    ##......##..##
     ##..........##
-    ##....[][]..##
+    ##....[][]@.##
     ##....[]....##
     ##..........##
     ##############
     """
     
     @Test("For this expanded map, after applying '<' nothing should change") func noChangeExpandedMap() {
-        let map = Map(expandedMapString)
-        
-        #expect(map.applyStep(instruction: "<").toString == expandedMapString)
-    }
-    
-    @Test("For this expanded map, after applying '>' the correct map should be returned") func simpleMoveRightExpandedMap() {
-        let expectedMapString =
+        let expandedMapString =
         """
         ##############
-        ##.@....##..##
+        ##@.....##..##
         ##..........##
         ##....[][]..##
         ##....[]....##
@@ -267,6 +261,40 @@ let smallExample =
         
         let map = Map(expandedMapString)
         
+        #expect(map.applyStep(instruction: "<").toString == expandedMapString)
+    }
+    
+    @Test("For the expanded example map, after applying '>' the correct map should be returned") func simpleMoveRightExpandedMap() {
+        let expectedMapString =
+        """
+        ##############
+        ##......##..##
+        ##..........##
+        ##....[][].@##
+        ##....[]....##
+        ##..........##
+        ##############
+        """
+        
+        let map = Map(expandedExampleMap)
+        
         #expect(map.applyStep(instruction: ">").toString == expectedMapString)
+    }
+    
+    @Test("For the expanded example map, after applying '<' two boxes should shift left one position") func shiftLeftTwoBoxes() {
+        let expectedMapString =
+        """
+        ##############
+        ##......##..##
+        ##..........##
+        ##...[][]@..##
+        ##....[]....##
+        ##..........##
+        ##############
+        """
+        
+        let map = Map(expandedExampleMap)
+        
+        #expect(map.applyStep(instruction: "<").toString == expectedMapString)
     }
 }
