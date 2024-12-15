@@ -1,7 +1,19 @@
 import Shared
 
 func sumOfAllBoxesApplying(_ input: String) -> Int {
-    let obstacles = Map(input).obstacles
+    var map = Map(input)
+    
+    let instructionString = input.split(separator: "\n")
+        .map(String.init)
+        .filter { $0.first != "#" }
+        .joined()
+    
+    let instructions: [Character] = instructionString.map { $0 }.filter { ["^", "<", ">", "v"].contains($0) }
+    for instruction in instructions {
+        map = map.applyStep(instruction: instruction)
+    }
+    
+    let obstacles = map.obstacles
     
     let coordinates = obstacles.map { $0.x + 100 * $0.y }
     
