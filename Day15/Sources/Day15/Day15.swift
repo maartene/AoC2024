@@ -1,8 +1,7 @@
 import Shared
 
 func sumOfAllBoxesApplying(_ input: String) -> Int {
-    let obstacles = parseInput(input).obstacles
-    
+    let obstacles = Map(input).obstacles
     
     let coordinates = obstacles.map { $0.x + 100 * $0.y }
     
@@ -36,22 +35,31 @@ func stateToString(obstacles: Set<Vector>, mapSize: Vector, walls: Set<Vector>, 
     return result.trimmingCharacters(in: .whitespacesAndNewlines)
 }
 
-func parseInput(_ input: String) -> (obstacles: Set<Vector>, walls: Set<Vector>, playerPosition: Vector) {
-    let matrix = convertInputToMatrixOfCharacters(input)
+struct Map {
+    let walls: Set<Vector>
+    let obstacles: Set<Vector>
+    let playerPosition: Vector
     
-    var walls = Set<Vector>()
-    var obstacles = Set<Vector>()
-    var playerPosition = Vector.zero
-    for y in 0 ..< matrix.count {
-        for x in 0 ..< matrix[y].count {
-            switch matrix[y][x] {
-            case "#": walls.insert(Vector(x: x, y: y))
-            case "O": obstacles.insert(Vector(x: x, y: y))
-            case "@": playerPosition = Vector(x: x, y: y)
-            default:
-                break
+    init(_ input: String) {
+        let matrix = convertInputToMatrixOfCharacters(input)
+        
+        var walls = Set<Vector>()
+        var obstacles = Set<Vector>()
+        var playerPosition = Vector.zero
+        for y in 0 ..< matrix.count {
+            for x in 0 ..< matrix[y].count {
+                switch matrix[y][x] {
+                case "#": walls.insert(Vector(x: x, y: y))
+                case "O": obstacles.insert(Vector(x: x, y: y))
+                case "@": playerPosition = Vector(x: x, y: y)
+                default:
+                    break
+                }
             }
         }
+        
+        self.walls = walls
+        self.obstacles = obstacles
+        self.playerPosition = playerPosition
     }
-    return (obstacles, walls, playerPosition)
 }

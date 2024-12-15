@@ -72,9 +72,9 @@ let smallExample =
         ########
         """
         
-        let map = parseInput(smallExample)
+        let map = Map(smallExample)
         
         let result = stateToString(obstacles: applyStep(obstacles: map.obstacles, instruction: ">"), mapSize: Vector(x: 8, y: 8), walls: map.walls, playerPosition: map.playerPosition)
-        #expect(result == expectedState)        
+        #expect(result == expectedState)
     }
 }
