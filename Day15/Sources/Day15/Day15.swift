@@ -133,19 +133,9 @@ struct Map {
         }
         
         let newPlayerPosition = self.playerPosition + direction
-        var obstaclesCopy = obstacles
-        obstaclesCopy.removeValue(forKey: newPlayerPosition)
+        let movedBoxes = createNewObstaclesSet(direction: direction, boxesToShift: boxesToShift)
 
-        for boxToShift in boxesToShift {
-            obstaclesCopy.removeValue(forKey: boxToShift.key)
-        }
-        
-        // shift boxes
-        for boxToShift in boxesToShift {
-            obstaclesCopy[boxToShift.key + direction] = boxToShift.value
-        }
-
-        return Map(walls: walls, obstacles: obstaclesCopy, playerPosition: newPlayerPosition, mapSize: mapSize)
+        return Map(walls: walls, obstacles: movedBoxes, playerPosition: newPlayerPosition, mapSize: mapSize)
     }
     
     func findBoxesToShift(direction: Vector) -> [Vector: Character]? {
@@ -175,6 +165,21 @@ struct Map {
         }
         
         return boxesToShift
+    }
+    
+    func createNewObstaclesSet(direction: Vector, boxesToShift: [Vector: Character]) -> [Vector: Character] {
+        var obstaclesCopy = obstacles
+        obstaclesCopy.removeValue(forKey: playerPosition + direction)
+
+        for boxToShift in boxesToShift {
+            obstaclesCopy.removeValue(forKey: boxToShift.key)
+        }
+        
+        for boxToShift in boxesToShift {
+            obstaclesCopy[boxToShift.key + direction] = boxToShift.value
+        }
+        
+        return obstaclesCopy
     }
     
     func additionalTestPositionWhenMovingWideBoxesInUpAndDown(obstacle: Character, testPosition: Vector, direction: Vector, visited: Set<Vector>) -> Vector? {
