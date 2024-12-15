@@ -144,16 +144,16 @@ struct Map {
                 boxesToShift[testPosition] = obstacles[testPosition]
                 
                 if (obstacle == "[" || obstacle == "]") && (direction == .down || direction == .up) {
-                    // first shift left or right pair as well
+                    var newTestPosition = testPosition
+                    
                     if obstacle == "[" {
-                        if visited.contains(testPosition + .right) == false {
-                            boxesToCheck.insert(testPosition + .right)
-                        }
+                        newTestPosition = testPosition + .right
                     } else {
-                        //boxesToShift[testPosition + .left] = "["
-                        if visited.contains(testPosition + .left) == false {
-                            boxesToCheck.insert(testPosition + .left)
-                        }
+                        newTestPosition = testPosition + .left
+                    }
+                    
+                    if visited.contains(newTestPosition) == false {
+                        boxesToCheck.insert(newTestPosition)
                     }
                 }
                 
@@ -163,10 +163,6 @@ struct Map {
                 }
             }
         }
-        
-        
-        
-        
         
         guard canComplete else {
             return nil
