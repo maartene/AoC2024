@@ -234,3 +234,22 @@ let smallExample =
         #expect(sumOfAllBoxesApplying(input) == 1511865)
     }
 }
+
+@Suite("To get the second star on day 15") struct Day15StarTwoTests {
+    @Test("For this expanded map, after applying '<' nothing should change") func noChangeExpandedMap() {
+        let expandedMapString =
+        """
+        ##############
+        ##@.....##..##
+        ##..........##
+        ##....[][]..##
+        ##....[]....##
+        ##..........##
+        ##############
+        """
+        
+        let map = Map(expandedMapString)
+        
+        #expect(map.applyStep(instruction: "<").toString == expandedMapString)
+    }
+}

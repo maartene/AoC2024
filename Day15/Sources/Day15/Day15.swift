@@ -15,18 +15,18 @@ func sumOfAllBoxesApplying(_ input: String) -> Int {
     
     let obstacles = map.obstacles
     
-    let coordinates = obstacles.map { $0.x + 100 * $0.y }
+    let coordinates = obstacles.map { $0.key.x + 100 * $0.key.y }
     
     return coordinates.reduce(0, +)
 }
 
 struct Map {
     let walls: Set<Vector>
-    let obstacles: Set<Vector>
+    let obstacles: [Vector: Character]
     let playerPosition: Vector
     let mapSize: Vector
     
-    init(walls: Set<Vector>, obstacles: Set<Vector>, playerPosition: Vector, mapSize: Vector) {
+    init(walls: Set<Vector>, obstacles: [Vector: Character], playerPosition: Vector, mapSize: Vector) {
         self.walls = walls
         self.obstacles = obstacles
         self.playerPosition = playerPosition
@@ -39,13 +39,15 @@ struct Map {
             .filter { $0.first == "#" }
         
         var walls = Set<Vector>()
-        var obstacles = Set<Vector>()
+        var obstacles = [Vector: Character]()
         var playerPosition = Vector.zero
         for y in 0 ..< matrix.count {
             for x in 0 ..< matrix[y].count {
                 switch matrix[y][x] {
                 case "#": walls.insert(Vector(x: x, y: y))
-                case "O": obstacles.insert(Vector(x: x, y: y))
+                case "O": obstacles[Vector(x: x, y: y)] = "O"
+                case "[": obstacles[Vector(x: x, y: y)] = "["
+                case "]": obstacles[Vector(x: x, y: y)] = "]"
                 case "@": playerPosition = Vector(x: x, y: y)
                 default:
                     break
@@ -65,8 +67,8 @@ struct Map {
             var line = ""
             for x in 0 ..< mapSize.x {
                 let coord = Vector(x: x, y: y)
-                if obstacles.contains(coord) {
-                    line += "O"
+                if let obstacle = obstacles[coord] {
+                    line += String(obstacle)
                 } else if walls.contains(coord){
                     line += "#"
                 } else if coord == playerPosition {
@@ -101,7 +103,7 @@ struct Map {
         
         if walls.contains(newPlayerPosition) {
             return self
-        } else if obstacles.contains(newPlayerPosition) {
+        } else if obstacles.keys.contains(newPlayerPosition) {
             return tryMoveObstacle(direction: direction)
         } else {
             return Map(walls: walls, obstacles: obstacles, playerPosition: newPlayerPosition, mapSize: mapSize)
@@ -113,7 +115,7 @@ struct Map {
         
         var testPosition = playerPosition + direction
         while walls.contains(testPosition) == false && freePosition == nil {
-            if obstacles.contains(testPosition) == false {
+            if obstacles.keys.contains(testPosition) == false {
                 freePosition = testPosition
             }
             testPosition += direction
@@ -125,8 +127,8 @@ struct Map {
         
         let newPlayerPosition = self.playerPosition + direction
         var obstaclesCopy = obstacles
-        obstaclesCopy.remove(newPlayerPosition)
-        obstaclesCopy.insert(freePosition)
+        obstaclesCopy.removeValue(forKey: newPlayerPosition)
+        obstaclesCopy[freePosition] = "O"
         return Map(walls: walls, obstacles: obstaclesCopy, playerPosition: newPlayerPosition, mapSize: mapSize)
     }
 }
