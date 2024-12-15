@@ -59,25 +59,26 @@ let smallExample =
         #expect(sumOfAllBoxesApplying(endState) == 10092)
     }
     
-    @Test("After applying the first step for the smaller example, the correct state should be shown") func firstStepForSmallExample() {
-        let expectedState =
-        """
-        ########
-        #..O.O.#
-        ##@.O..#
-        #...O..#
-        #.#.O..#
-        #...O..#
-        #......#
-        ########
-        """
+    @Test("After applying the first step for the smaller example, the correct state should be shown", arguments: [
+        ("<",
+            """
+            ########
+            #..O.O.#
+            ##@.O..#
+            #...O..#
+            #.#.O..#
+            #...O..#
+            #......#
+            ########
+            """),
         
+        
+    ]) func firstStepForSmallExample(testcase: (instructionString: String, expectedState: String)) {
         let map = Map(smallExample)
         
-        let result = map.applyStep(instruction: "<").toString
-        print(result)
-        print(expectedState)
-        #expect(result == expectedState)
+        let instruction = Character(testcase.instructionString)
+        let result = map.applyStep(instruction: instruction).toString
+        #expect(result == testcase.expectedState)
     }
     
     @Test("After applying the first two steps for the smaller example, the correct state should be shown") func firstTwoStepsForSmallExample() {
