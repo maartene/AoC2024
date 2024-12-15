@@ -128,31 +128,7 @@ struct Map {
     }
     
     func tryMoveObstacle(direction: Vector) -> Map? {
-        var boxesToShift = [Vector: Character]()
-        
-        var testPosition = playerPosition + direction
-        
-        var canComplete = true
-        var boxesToCheck = Set([testPosition])
-        var visited = Set<Vector>()
-        
-        while boxesToCheck.isEmpty == false && canComplete {
-            testPosition = boxesToCheck.removeFirst()
-            visited.insert(testPosition)
-            
-            while let obstacle = obstacles[testPosition], canComplete {
-                boxesToShift[testPosition] = obstacles[testPosition]
-                
-                if let additionalTestPosition = additionalTestPositionWhenMovingWideBoxesInUpAndDown(obstacle: obstacle, testPosition: testPosition, direction: direction, visited: visited) {
-                    boxesToCheck.insert(additionalTestPosition)
-                }
-                
-                testPosition += direction
-                canComplete = canComplete && walls.contains(testPosition) == false
-            }
-        }
-        
-        guard canComplete else {
+        guard let boxesToShift = findBoxesToShift(direction: direction) else {
             return nil
         }
         
@@ -170,6 +146,35 @@ struct Map {
         }
 
         return Map(walls: walls, obstacles: obstaclesCopy, playerPosition: newPlayerPosition, mapSize: mapSize)
+    }
+    
+    func findBoxesToShift(direction: Vector) -> [Vector: Character]? {
+        var boxesToShift = [Vector: Character]()
+        
+        var testPosition = playerPosition + direction
+        
+        var boxesToCheck = Set([testPosition])
+        var visited = Set<Vector>()
+
+        while boxesToCheck.isEmpty == false {
+            testPosition = boxesToCheck.removeFirst()
+            visited.insert(testPosition)
+            
+            while let obstacle = obstacles[testPosition] {
+                boxesToShift[testPosition] = obstacles[testPosition]
+                
+                if let additionalTestPosition = additionalTestPositionWhenMovingWideBoxesInUpAndDown(obstacle: obstacle, testPosition: testPosition, direction: direction, visited: visited) {
+                    boxesToCheck.insert(additionalTestPosition)
+                }
+                
+                testPosition += direction
+                if walls.contains(testPosition) {
+                    return nil
+                }
+            }
+        }
+        
+        return boxesToShift
     }
     
     func additionalTestPositionWhenMovingWideBoxesInUpAndDown(obstacle: Character, testPosition: Vector, direction: Vector, visited: Set<Vector>) -> Vector? {
