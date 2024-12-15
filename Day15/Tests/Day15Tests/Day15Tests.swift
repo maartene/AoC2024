@@ -1,26 +1,27 @@
 import Testing
+import Shared
 @testable import Day15
 
 @Test func example() async throws {
     // Write your test here and use APIs like `#expect(...)` to check expected conditions.
 }
 
+let smallExample =
+    """
+    ########
+    #..O.O.#
+    ##@.O..#
+    #...O..#
+    #.#.O..#
+    #...O..#
+    #......#
+    ########
+
+    <^^>>>vv<v>>v<<
+    """
+
 @Suite("To get the first star on day 15") struct Day15StarOneTests {
 //    @Test("The sum of all the boxes' GPS coordinates in the small example should be 2028") func sumOfAllBoxesInSmallExample() {
-//        let smallExample =
-//        """
-//        ########
-//        #..O.O.#
-//        ##@.O..#
-//        #...O..#
-//        #.#.O..#
-//        #...O..#
-//        #......#
-//        ########
-//        
-//        <^^>>>vv<v>>v<<
-//        """
-//        
 //        #expect(sumOfAllBoxesApplying(smallExample) == 2028)
 //    }
     
@@ -56,5 +57,24 @@ import Testing
         """
         
         #expect(sumOfAllBoxesApplying(endState) == 10092)
+    }
+    
+    @Test("After applying the first step for the smaller example, the correct state should be shown") func firstStepForSmallExample() {
+        let expectedState =
+        """
+        ########
+        #..O.O.#
+        ##@.O..#
+        #...O..#
+        #.#.O..#
+        #...O..#
+        #......#
+        ########
+        """
+        
+        let map = parseInput(smallExample)
+        
+        let result = stateToString(obstacles: applyStep(obstacles: map.obstacles, instruction: ">"), mapSize: Vector(x: 8, y: 8), walls: map.walls, playerPosition: map.playerPosition)
+        #expect(result == expectedState)        
     }
 }
