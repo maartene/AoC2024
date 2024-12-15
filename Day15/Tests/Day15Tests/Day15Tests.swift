@@ -115,6 +115,17 @@ let smallExample =
             #......#
             ########
             """),
+        ("<^^>>>",        // obstacle bumps into wall
+            """
+            ########
+            #...@OO#
+            ##..O..#
+            #...O..#
+            #.#.O..#
+            #...O..#
+            #......#
+            ########
+            """),
     ]) func firstStepForSmallExample(testcase: (instructionString: String, expectedState: String)) {
         var map = Map(smallExample)
         
