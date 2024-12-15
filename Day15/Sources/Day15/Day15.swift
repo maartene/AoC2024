@@ -1,6 +1,18 @@
-// The Swift Programming Language
-// https://docs.swift.org/swift-book
+import Shared
 
 func sumOfAllBoxesApplying(_ input: String) -> Int {
-    [105, 106, 306, 403, 504, 604].reduce(0, +)
+    let matrix = convertInputToMatrixOfCharacters(input)
+    
+    var obstacles = Set<Vector>()
+    for y in 0 ..< matrix.count {
+        for x in 0 ..< matrix[y].count {
+            if matrix[y][x] == "O" {
+                obstacles.insert(Vector(x: x, y: y))
+            }
+        }
+    }
+    
+    let coordinates = obstacles.map { $0.x + 100 * $0.y }
+    
+    return coordinates.reduce(0, +)
 }
