@@ -236,11 +236,28 @@ let smallExample =
 }
 
 @Suite("To get the second star on day 15") struct Day15StarTwoTests {
+    let expandedMapString =
+    """
+    ##############
+    ##@.....##..##
+    ##..........##
+    ##....[][]..##
+    ##....[]....##
+    ##..........##
+    ##############
+    """
+    
     @Test("For this expanded map, after applying '<' nothing should change") func noChangeExpandedMap() {
-        let expandedMapString =
+        let map = Map(expandedMapString)
+        
+        #expect(map.applyStep(instruction: "<").toString == expandedMapString)
+    }
+    
+    @Test("For this expanded map, after applying '>' the correct map should be returned") func simpleMoveRightExpandedMap() {
+        let expectedMapString =
         """
         ##############
-        ##@.....##..##
+        ##.@....##..##
         ##..........##
         ##....[][]..##
         ##....[]....##
@@ -250,6 +267,6 @@ let smallExample =
         
         let map = Map(expandedMapString)
         
-        #expect(map.applyStep(instruction: "<").toString == expandedMapString)
+        #expect(map.applyStep(instruction: ">").toString == expectedMapString)
     }
 }
