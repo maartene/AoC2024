@@ -141,23 +141,22 @@ struct Map {
     private func findBoxesToShift(direction: Vector) -> [Vector: Character]? {
         var boxesToShift = [Vector: Character]()
         
-        var testPosition = playerPosition + direction
-        
-        var boxesToCheck = Set([testPosition])
-        var visited = Set<Vector>()
+        var testPositions = Set([playerPosition + direction])
+        var visitedPositions = Set<Vector>()
 
-        while boxesToCheck.isEmpty == false {
-            testPosition = boxesToCheck.removeFirst()
-            visited.insert(testPosition)
+        while testPositions.isEmpty == false {
+            var testPosition = testPositions.removeFirst()
+            visitedPositions.insert(testPosition)
             
             while let obstacle = obstacles[testPosition] {
                 boxesToShift[testPosition] = obstacles[testPosition]
                 
-                if let additionalTestPosition = additionalTestPositionWhenMovingWideBoxesUpAndDown(obstacle: obstacle, testPosition: testPosition, direction: direction, visited: visited) {
-                    boxesToCheck.insert(additionalTestPosition)
+                if let additionalTestPosition = additionalTestPositionWhenMovingWideBoxesUpAndDown(obstacle: obstacle, testPosition: testPosition, direction: direction, visited: visitedPositions) {
+                    testPositions.insert(additionalTestPosition)
                 }
                 
                 testPosition += direction
+                
                 if walls.contains(testPosition) {
                     return nil
                 }
