@@ -24,10 +24,10 @@ import Testing
 //        #expect(sumOfAllBoxesApplying(smallExample) == 2028)
 //    }
     
-    @Test("The sum of all the boxes' GPS coordinates in the end state of the small example should be 2028") func sumOfALlBoxesInLargerExample() {
+    @Test("The sum of all the boxes' GPS coordinates in the end state of the small example should be 2028") func sumOfAllBoxesInEndStateOfSmallExample() {
         let endState =
         """
-        "########
+        ########
         #....OO#
         ##.....#
         #.....O#
@@ -38,5 +38,23 @@ import Testing
         """
         
         #expect(sumOfAllBoxesApplying(endState) == 2028)
+    }
+    
+    @Test("The sum of all the boxes' GPS coordinates in the end state of the larger example should be 10092") func sumOfAllBoxesInEndStateOfLargerExample() {
+        let endState =
+        """
+        ##########
+        #.O.O.OOO#
+        #........#
+        #OO......#
+        #OO@.....#
+        #O#.....O#
+        #O.....OO#
+        #O.....OO#
+        #OO....OO#
+        ##########
+        """
+        
+        #expect(sumOfAllBoxesApplying(endState) == 10092)
     }
 }
