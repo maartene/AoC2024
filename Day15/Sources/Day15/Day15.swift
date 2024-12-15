@@ -14,6 +14,13 @@ struct Map {
     let playerPosition: Vector
     let mapSize: Vector
     
+    init(walls: Set<Vector>, obstacles: Set<Vector>, playerPosition: Vector, mapSize: Vector) {
+        self.walls = walls
+        self.obstacles = obstacles
+        self.playerPosition = playerPosition
+        self.mapSize = mapSize
+    }
+    
     init(_ input: String) {
         // remove rows that are not part of the map
         let matrix = convertInputToMatrixOfCharacters(input)
@@ -64,6 +71,20 @@ struct Map {
     }
     
     func applyStep(instruction: Character) -> Map {
-        self
+        var playerPosition = self.playerPosition
+        switch instruction {
+//        case "<":
+//            playerPosition.x -= 1
+//        case ">":
+//            playerPosition.x += 1
+        case "^":
+            playerPosition.y -= 1
+        case "v":
+            playerPosition.y += 1
+        default:
+            break
+        }
+        
+        return Map(walls: walls, obstacles: obstacles, playerPosition: playerPosition, mapSize: mapSize)
     }
 }

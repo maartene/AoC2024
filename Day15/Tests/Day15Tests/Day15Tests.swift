@@ -74,7 +74,31 @@ let smallExample =
         
         let map = Map(smallExample)
         
-        let result = map.applyStep(instruction: ">").toString
+        let result = map.applyStep(instruction: "<").toString
+        print(result)
+        print(expectedState)
+        #expect(result == expectedState)
+    }
+    
+    @Test("After applying the first two steps for the smaller example, the correct state should be shown") func firstTwoStepsForSmallExample() {
+        let expectedState =
+        """
+        ########
+        #.@O.O.#
+        ##..O..#
+        #...O..#
+        #.#.O..#
+        #...O..#
+        #......#
+        ########
+        """
+        
+        let map = Map(smallExample)
+        
+        let result = map
+            .applyStep(instruction: "<")
+            .applyStep(instruction: "^")
+            .toString
         print(result)
         print(expectedState)
         #expect(result == expectedState)
