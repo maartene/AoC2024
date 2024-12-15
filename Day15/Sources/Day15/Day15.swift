@@ -153,7 +153,7 @@ struct Map {
             while let obstacle = obstacles[testPosition] {
                 boxesToShift[testPosition] = obstacles[testPosition]
                 
-                if let additionalTestPosition = additionalTestPositionWhenMovingWideBoxesInUpAndDown(obstacle: obstacle, testPosition: testPosition, direction: direction, visited: visited) {
+                if let additionalTestPosition = additionalTestPositionWhenMovingWideBoxesUpAndDown(obstacle: obstacle, testPosition: testPosition, direction: direction, visited: visited) {
                     boxesToCheck.insert(additionalTestPosition)
                 }
                 
@@ -182,7 +182,7 @@ struct Map {
         return obstaclesCopy
     }
     
-    private func additionalTestPositionWhenMovingWideBoxesInUpAndDown(obstacle: Character, testPosition: Vector, direction: Vector, visited: Set<Vector>) -> Vector? {
+    private func additionalTestPositionWhenMovingWideBoxesUpAndDown(obstacle: Character, testPosition: Vector, direction: Vector, visited: Set<Vector>) -> Vector? {
         guard (obstacle == "[" || obstacle == "]") && (direction == .down || direction == .up) else {
             return nil
         }
