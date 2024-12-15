@@ -147,4 +147,57 @@ let smallExample =
         
         #expect(map.toString == testcase.expectedState)
     }
+    
+    @Test("When applying all the instructions in the larger example, the correct state should be shown") func largerExampleAllInstructions() {
+        let largerExample =
+        """
+        ##########
+        #..O..O.O#
+        #......O.#
+        #.OO..O.O#
+        #..O@..O.#
+        #O#..O...#
+        #O..O..O.#
+        #.OO.O.OO#
+        #....O...#
+        ##########
+        """
+            
+        let instructionString =
+        """
+        <vv>^<v^>v>^vv^v>v<>v^v<v<^vv<<<^><<><>>v<vvv<>^v^>^<<<><<v<<<v^vv^v>^
+        vvv<<^>^v^^><<>>><>^<<><^vv^^<>vvv<>><^^v>^>vv<>v<<<<v<^v>^<^^>>>^<v<v
+        ><>vv>v^v^<>><>>>><^^>vv>v<^^^>>v^v^<^^>v^^>v^<^v>v<>>v^v^<v>v^^<^^vv<
+        <<v<^>>^^^^>>>v^<>vvv^><v<<<>^^^vv^<vvv>^>v<^^^^v<>^>vvvv><>>v^<<^^^^^
+        ^><^><>>><>^^<<^^v>>><^<v>^<vv>>v>>>^v><>^v><<<<v>>v<v<v>vvv>^<><<>^><
+        ^>><>^v<><^vvv<^^<><v<<<<<><^v<<<><<<^^<v<^^^><^>>^<v^><<<^>>^v<v^v<v^
+        >^>>^v>vv>^<<^v<>><<><<v<<v><>v<^vv<<<>^^v^>^^>>><<^v>>v^v><^^>>^<>vv^
+        <><^^>^^^<><vvvvv^v<v<<>^v<v>v<<^><<><<><<<^^<<<^<<>><<><^^^>^^<>^>v<>
+        ^^>vv<^v^v<vv>^<><v<^v>^^^>>>^^vvv^>vvv<>>>^<^>>>>>^<<^v>^vvv<>^<><<v>
+        v^^>>><<^^<>>^v^<v^vv<>v^<<>^<^v^v><^<<<><<^<v><v<>vv>>v><v^<vv<>v^<<^
+        """
+        
+        let endState =
+        """
+        ##########
+        #.O.O.OOO#
+        #........#
+        #OO......#
+        #OO@.....#
+        #O#.....O#
+        #O.....OO#
+        #O.....OO#
+        #OO....OO#
+        ##########
+        """
+        
+        var map = Map(largerExample)
+        
+        let instructions: [Character] = instructionString.map { $0 }.filter { ["^", "<", ">", "v"].contains($0) }
+        for instruction in instructions {
+            map = map.applyStep(instruction: instruction)
+        }
+        
+        #expect(map.toString == endState)
+    }
 }
