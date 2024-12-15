@@ -312,13 +312,168 @@ let smallExample =
         
         var map = Map(expandedExampleMap)
         
-        let instructionString = "<v<<^"
+        let instructionString = "<vv<<^"
         let instructions: [Character] = instructionString.map { $0 }
         
         for instruction in instructions {
             map = map.applyStep(instruction: instruction)
+            print(map.toString)
         }
         
         #expect(map.toString == expectedMapString)
+    }
+    
+    @Test("For the map state after applying '^' this should be the position") func applyMoveUpInstruction() {
+        
+        
+        let expandedMapString =
+        """
+        ##############
+        ##......##..##
+        ##..........##
+        ##..........##
+        ##....[]....##
+        ##.....@....##
+        ##############
+        """
+        
+        let expectedMapString =
+        """
+        ##############
+        ##......##..##
+        ##..........##
+        ##....[]....##
+        ##.....@....##
+        ##..........##
+        ##############
+        """
+        
+        var map = Map(expandedMapString)
+        
+        map = map.applyStep(instruction: "^")
+        print(map.toString)
+        
+        #expect(map.toString == expectedMapString)
+    }
+    
+    @Test("For the map state after applying '^' this should be the position") func applyMoveUpInstructionWhilePushingMultipleCrates() {
+        
+        
+        let expandedMapString =
+        """
+        ##############
+        ##......##..##
+        ##..........##
+        ##...[][]...##
+        ##....[]....##
+        ##.....@....##
+        ##############
+        """
+        
+        let expectedMapString =
+        """
+        ##############
+        ##......##..##
+        ##...[][]...##
+        ##....[]....##
+        ##.....@....##
+        ##..........##
+        ##############
+        """
+        
+        var map = Map(expandedMapString)
+        
+        map = map.applyStep(instruction: "^")
+        print(map.toString)
+        print(expectedMapString)
+        
+        #expect(map.toString == expectedMapString)
+    }
+    
+    @Test("After processing all the instructions in the expanded larger example the correct state should be shown") func applyAllInstructionsOnLargerExample() {
+        let expandedMapString =
+        """
+        ####################
+        ##....[]....[]..[]##
+        ##............[]..##
+        ##..[][]....[]..[]##
+        ##....[]@.....[]..##
+        ##[]##....[]......##
+        ##[]....[]....[]..##
+        ##..[][]..[]..[][]##
+        ##........[]......##
+        ####################
+        """
+        
+        let expectedMapString =
+        """
+        ####################
+        ##[].......[].[][]##
+        ##[]...........[].##
+        ##[]........[][][]##
+        ##[]......[]....[]##
+        ##..##......[]....##
+        ##..[]............##
+        ##..@......[].[][]##
+        ##......[][]..[]..##
+        ####################
+        """
+        
+        var map = Map(expandedMapString)
+        
+        let instructionString =
+        """
+        <vv>^<v^>v>^vv^v>v<>v^v<v<^vv<<<^><<><>>v<vvv<>^v^>^<<<><<v<<<v^vv^v>^
+        vvv<<^>^v^^><<>>><>^<<><^vv^^<>vvv<>><^^v>^>vv<>v<<<<v<^v>^<^^>>>^<v<v
+        ><>vv>v^v^<>><>>>><^^>vv>v<^^^>>v^v^<^^>v^^>v^<^v>v<>>v^v^<v>v^^<^^vv<
+        <<v<^>>^^^^>>>v^<>vvv^><v<<<>^^^vv^<vvv>^>v<^^^^v<>^>vvvv><>>v^<<^^^^^
+        ^><^><>>><>^^<<^^v>>><^<v>^<vv>>v>>>^v><>^v><<<<v>>v<v<v>vvv>^<><<>^><
+        ^>><>^v<><^vvv<^^<><v<<<<<><^v<<<><<<^^<v<^^^><^>>^<v^><<<^>>^v<v^v<v^
+        >^>>^v>vv>^<<^v<>><<><<v<<v><>v<^vv<<<>^^v^>^^>>><<^v>>v^v><^^>>^<>vv^
+        <><^^>^^^<><vvvvv^v<v<<>^v<v>v<<^><<><<><<<^^<<<^<<>><<><^^^>^^<>^>v<>
+        ^^>vv<^v^v<vv>^<><v<^v>^^^>>>^^vvv^>vvv<>>>^<^>>>>>^<<^v>^vvv<>^<><<v>
+        v^^>>><<^^<>>^v^<v^vv<>v^<<>^<^v^v><^<<<><<^<v><v<>vv>>v><v^<vv<>v^<<^
+        """
+        let instructions: [Character] = instructionString.map { $0 }
+        
+        for instruction in instructions {
+            map = map.applyStep(instruction: instruction)
+            print(map.toString)
+        }
+        
+        #expect(map.toString == expectedMapString)
+    }
+    
+    @Test("The sum of all the boxes' GPS coordinates in the larger example should be 9021") func sumOfAllBoxesInExpandedLargerExample() {
+        let largerExampe =
+        """
+        ##########
+        #..O..O.O#
+        #......O.#
+        #.OO..O.O#
+        #..O@..O.#
+        #O#..O...#
+        #O..O..O.#
+        #.OO.O.OO#
+        #....O...#
+        ##########
+
+        <vv>^<v^>v>^vv^v>v<>v^v<v<^vv<<<^><<><>>v<vvv<>^v^>^<<<><<v<<<v^vv^v>^
+        vvv<<^>^v^^><<>>><>^<<><^vv^^<>vvv<>><^^v>^>vv<>v<<<<v<^v>^<^^>>>^<v<v
+        ><>vv>v^v^<>><>>>><^^>vv>v<^^^>>v^v^<^^>v^^>v^<^v>v<>>v^v^<v>v^^<^^vv<
+        <<v<^>>^^^^>>>v^<>vvv^><v<<<>^^^vv^<vvv>^>v<^^^^v<>^>vvvv><>>v^<<^^^^^
+        ^><^><>>><>^^<<^^v>>><^<v>^<vv>>v>>>^v><>^v><<<<v>>v<v<v>vvv>^<><<>^><
+        ^>><>^v<><^vvv<^^<><v<<<<<><^v<<<><<<^^<v<^^^><^>>^<v^><<<^>>^v<v^v<v^
+        >^>>^v>vv>^<<^v<>><<><<v<<v><>v<^vv<<<>^^v^>^^>>><<^v>>v^v><^^>>^<>vv^
+        <><^^>^^^<><vvvvv^v<v<<>^v<v>v<<^><<><<><<<^^<<<^<<>><<><^^^>^^<>^>v<>
+        ^^>vv<^v^v<vv>^<><v<^v>^^^>>>^^vvv^>vvv<>>>^<^>>>>>^<<^v>^vvv<>^<><<v>
+        v^^>>><<^^<>>^v^<v^vv<>v^<<>^<^v^v><^<<<><<^<v><v<>vv>>v><v^<vv<>v^<<^
+        """
+        
+        #expect(sumOfAllBoxesApplying(largerExampe, expand: true) == 9021)
+    }
+    
+    @Test("The sum of all the boxes' GPS coordinates in the expanded input should be 1519991") func sumOfAllBoxesExpandedActualInput() {
+        #expect(sumOfAllBoxesApplying(input, expand: true) == 1519991)
     }
 }

@@ -1,6 +1,14 @@
 import Shared
 
-func sumOfAllBoxesApplying(_ input: String) -> Int {
+func sumOfAllBoxesApplying(_ input: String, expand: Bool = false) -> Int {
+    var input = input
+    if expand {
+        input = input.replacingOccurrences(of: "#", with: "##")
+        input = input.replacingOccurrences(of: "O", with: "[]")
+        input = input.replacingOccurrences(of: ".", with: "..")
+        input = input.replacingOccurrences(of: "@", with: "@.")
+    }
+    
     var map = Map(input)
     
     let instructionString = input.split(separator: "\n")
@@ -13,7 +21,7 @@ func sumOfAllBoxesApplying(_ input: String) -> Int {
         map = map.applyStep(instruction: instruction)
     }
     
-    let obstacles = map.obstacles
+    let obstacles = map.obstacles.filter { $0.value == "O" || $0.value == "[" }
     
     let coordinates = obstacles.map { $0.key.x + 100 * $0.key.y }
     
@@ -115,15 +123,38 @@ struct Map {
         
         var testPosition = playerPosition + direction
         
-        var coordsToCheck = Set<Vector>()
         var canComplete = true
-        while obstacles[testPosition] == "O" && canComplete {
-            boxesToShift[testPosition] = obstacles[testPosition]
-            testPosition += direction
-            if walls.contains(testPosition) {
-                canComplete = false
+        var boxesToCheck = Set([testPosition])
+        var visited = Set<Vector>()
+        
+        while boxesToCheck.isEmpty == false && canComplete {
+            testPosition = boxesToCheck.removeFirst()
+            visited.insert(testPosition)
+            
+            while let obstacle = obstacles[testPosition], canComplete {
+                boxesToShift[testPosition] = obstacles[testPosition]
+                
+                if (obstacle == "[" || obstacle == "]") && (direction == .down || direction == .up) {
+                    // first shift left or right pair as well
+                    if obstacle == "[" {
+                        if visited.contains(testPosition + .right) == false {
+                            boxesToCheck.insert(testPosition + .right)
+                        }
+                    } else {
+                        //boxesToShift[testPosition + .left] = "["
+                        if visited.contains(testPosition + .left) == false {
+                            boxesToCheck.insert(testPosition + .left)
+                        }
+                    }
+                }
+                
+                testPosition += direction
+                if walls.contains(testPosition) {
+                    canComplete = false
+                }
             }
         }
+        
         
         
         
@@ -135,6 +166,10 @@ struct Map {
         let newPlayerPosition = self.playerPosition + direction
         var obstaclesCopy = obstacles
         obstaclesCopy.removeValue(forKey: newPlayerPosition)
+
+        for boxToShift in boxesToShift {
+            obstaclesCopy.removeValue(forKey: boxToShift.key)
+        }
         
         // shift boxes
         for boxToShift in boxesToShift {
