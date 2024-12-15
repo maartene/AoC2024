@@ -74,7 +74,9 @@ let smallExample =
         
         let map = Map(smallExample)
         
-        let result = stateToString(obstacles: applyStep(obstacles: map.obstacles, instruction: ">"), mapSize: Vector(x: 8, y: 8), walls: map.walls, playerPosition: map.playerPosition)
+        let result = map.applyStep(instruction: ">").toString
+        print(result)
+        print(expectedState)
         #expect(result == expectedState)
     }
 }
