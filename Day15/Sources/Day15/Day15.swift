@@ -143,22 +143,11 @@ struct Map {
             while let obstacle = obstacles[testPosition], canComplete {
                 boxesToShift[testPosition] = obstacles[testPosition]
                 
-                if (obstacle == "[" || obstacle == "]") && (direction == .down || direction == .up) {
-                    var newTestPosition = testPosition
-                    
-                    if obstacle == "[" {
-                        newTestPosition = testPosition + .right
-                    } else {
-                        newTestPosition = testPosition + .left
-                    }
-                    
-                    if visited.contains(newTestPosition) == false {
-                        boxesToCheck.insert(newTestPosition)
-                    }
+                if let additionalTestPosition = additionalTestPositionWhenMovingWideBoxesInUpAndDown(obstacle: obstacle, testPosition: testPosition, direction: direction, visited: visited) {
+                    boxesToCheck.insert(additionalTestPosition)
                 }
                 
                 testPosition += direction
-                
                 canComplete = canComplete && walls.contains(testPosition) == false
             }
         }
@@ -181,6 +170,26 @@ struct Map {
         }
 
         return Map(walls: walls, obstacles: obstaclesCopy, playerPosition: newPlayerPosition, mapSize: mapSize)
+    }
+    
+    func additionalTestPositionWhenMovingWideBoxesInUpAndDown(obstacle: Character, testPosition: Vector, direction: Vector, visited: Set<Vector>) -> Vector? {
+        guard (obstacle == "[" || obstacle == "]") && (direction == .down || direction == .up) else {
+            return nil
+        }
+        
+        var newTestPosition = testPosition
+        
+        if obstacle == "[" {
+            newTestPosition = testPosition + .right
+        } else {
+            newTestPosition = testPosition + .left
+        }
+        
+        if visited.contains(newTestPosition) == false {
+            return newTestPosition
+        }
+        
+        return nil
     }
 }
 
