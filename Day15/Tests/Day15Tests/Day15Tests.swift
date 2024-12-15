@@ -297,4 +297,28 @@ let smallExample =
         
         #expect(map.applyStep(instruction: "<").toString == expectedMapString)
     }
+    
+    @Test("For the expanded example map, after applying '<v<<^' this should be the position") func applyLongerInstruction() {
+        let expectedMapString =
+        """
+        ##############
+        ##......##..##
+        ##...[][]...##
+        ##....[]....##
+        ##.....@....##
+        ##..........##
+        ##############
+        """
+        
+        var map = Map(expandedExampleMap)
+        
+        let instructionString = "<v<<^"
+        let instructions: [Character] = instructionString.map { $0 }
+        
+        for instruction in instructions {
+            map = map.applyStep(instruction: instruction)
+        }
+        
+        #expect(map.toString == expectedMapString)
+    }
 }

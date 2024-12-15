@@ -104,27 +104,32 @@ struct Map {
         if walls.contains(newPlayerPosition) {
             return self
         } else if obstacles.keys.contains(newPlayerPosition) {
-            return tryMoveObstacle(direction: direction)
+            return tryMoveObstacle(direction: direction) ?? self
         } else {
             return Map(walls: walls, obstacles: obstacles, playerPosition: newPlayerPosition, mapSize: mapSize)
         }
     }
     
-    func tryMoveObstacle(direction: Vector) -> Map {
-        var freePosition: Vector?
+    func tryMoveObstacle(direction: Vector) -> Map? {
         var boxesToShift = [Vector: Character]()
         
         var testPosition = playerPosition + direction
-        while walls.contains(testPosition) == false && freePosition == nil {
-            if obstacles.keys.contains(testPosition) == false {
-                freePosition = testPosition
-            }
+        
+        var coordsToCheck = Set<Vector>()
+        var canComplete = true
+        while obstacles[testPosition] == "O" && canComplete {
             boxesToShift[testPosition] = obstacles[testPosition]
             testPosition += direction
+            if walls.contains(testPosition) {
+                canComplete = false
+            }
         }
         
-        guard freePosition != nil else {
-            return self
+        
+        
+        
+        guard canComplete else {
+            return nil
         }
         
         let newPlayerPosition = self.playerPosition + direction
