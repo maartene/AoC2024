@@ -71,23 +71,29 @@ struct Map {
     }
     
     func applyStep(instruction: Character) -> Map {
-        var newPlayerPosition = self.playerPosition
-        
+        var direction = Vector.zero
         switch instruction {
         case "<":
-            newPlayerPosition.x -= 1
+            direction.x -= 1
         case ">":
-            newPlayerPosition.x += 1
+            direction.x += 1
         case "^":
-            newPlayerPosition.y -= 1
+            direction.y -= 1
         case "v":
-            newPlayerPosition.y += 1
+            direction.y += 1
         default:
             break
         }
         
+        let newPlayerPosition = self.playerPosition + direction
+        
         if walls.contains(newPlayerPosition) {
             return self
+        } else if obstacles.contains(newPlayerPosition) {
+            var obstaclesCopy = obstacles
+            obstaclesCopy.remove(newPlayerPosition)
+            obstaclesCopy.insert(newPlayerPosition + direction)
+            return Map(walls: walls, obstacles: obstaclesCopy, playerPosition: newPlayerPosition, mapSize: mapSize)
         } else {
             return Map(walls: walls, obstacles: obstacles, playerPosition: newPlayerPosition, mapSize: mapSize)
         }

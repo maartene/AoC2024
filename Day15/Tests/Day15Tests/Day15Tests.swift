@@ -60,7 +60,7 @@ let smallExample =
     }
     
     @Test("After applying the first N step for the smaller example, the correct state should be shown", arguments: [
-        ("<",
+        ("<",           // bump into wall
             """
             ########
             #..O.O.#
@@ -71,7 +71,7 @@ let smallExample =
             #......#
             ########
             """),
-        ("<^",
+        ("<^",          // move up
             """
             ########
             #.@O.O.#
@@ -81,7 +81,29 @@ let smallExample =
             #...O..#
             #......#
             ########
-            """)
+            """),
+        ("<^^",         // bump into wall
+            """
+            ########
+            #.@O.O.#
+            ##..O..#
+            #...O..#
+            #.#.O..#
+            #...O..#
+            #......#
+            ########
+            """),
+        ("<^^>",        // shift an obstacle
+            """
+            ########
+            #..@OO.#
+            ##..O..#
+            #...O..#
+            #.#.O..#
+            #...O..#
+            #......#
+            ########
+            """),
     ]) func firstStepForSmallExample(testcase: (instructionString: String, expectedState: String)) {
         var map = Map(smallExample)
         
