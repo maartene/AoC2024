@@ -90,12 +90,31 @@ struct Map {
         if walls.contains(newPlayerPosition) {
             return self
         } else if obstacles.contains(newPlayerPosition) {
-            var obstaclesCopy = obstacles
-            obstaclesCopy.remove(newPlayerPosition)
-            obstaclesCopy.insert(newPlayerPosition + direction)
-            return Map(walls: walls, obstacles: obstaclesCopy, playerPosition: newPlayerPosition, mapSize: mapSize)
+            return tryMoveObstacle(direction: direction)
         } else {
             return Map(walls: walls, obstacles: obstacles, playerPosition: newPlayerPosition, mapSize: mapSize)
         }
+    }
+    
+    func tryMoveObstacle(direction: Vector) -> Map {
+        var freePosition: Vector?
+        
+        var testPosition = playerPosition + direction
+        while walls.contains(testPosition) == false && freePosition == nil {
+            if obstacles.contains(testPosition) == false {
+                freePosition = testPosition
+            }
+            testPosition += direction
+        }
+        
+        guard let freePosition else {
+            return self
+        }
+        
+        let newPlayerPosition = self.playerPosition + direction
+        var obstaclesCopy = obstacles
+        obstaclesCopy.remove(newPlayerPosition)
+        obstaclesCopy.insert(freePosition)
+        return Map(walls: walls, obstacles: obstaclesCopy, playerPosition: newPlayerPosition, mapSize: mapSize)
     }
 }
