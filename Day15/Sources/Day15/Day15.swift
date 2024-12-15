@@ -158,9 +158,8 @@ struct Map {
                 }
                 
                 testPosition += direction
-                if walls.contains(testPosition) {
-                    canComplete = false
-                }
+                
+                canComplete = canComplete && walls.contains(testPosition) == false
             }
         }
         
