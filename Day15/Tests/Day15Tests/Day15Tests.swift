@@ -20,6 +20,31 @@ let smallExample =
     <^^>>>vv<v>>v<<
     """
 
+let largerExample =
+"""
+##########
+#..O..O.O#
+#......O.#
+#.OO..O.O#
+#..O@..O.#
+#O#..O...#
+#O..O..O.#
+#.OO.O.OO#
+#....O...#
+##########
+
+<vv>^<v^>v>^vv^v>v<>v^v<v<^vv<<<^><<><>>v<vvv<>^v^>^<<<><<v<<<v^vv^v>^
+vvv<<^>^v^^><<>>><>^<<><^vv^^<>vvv<>><^^v>^>vv<>v<<<<v<^v>^<^^>>>^<v<v
+><>vv>v^v^<>><>>>><^^>vv>v<^^^>>v^v^<^^>v^^>v^<^v>v<>>v^v^<v>v^^<^^vv<
+<<v<^>>^^^^>>>v^<>vvv^><v<<<>^^^vv^<vvv>^>v<^^^^v<>^>vvvv><>>v^<<^^^^^
+^><^><>>><>^^<<^^v>>><^<v>^<vv>>v>>>^v><>^v><<<<v>>v<v<v>vvv>^<><<>^><
+^>><>^v<><^vvv<^^<><v<<<<<><^v<<<><<<^^<v<^^^><^>>^<v^><<<^>>^v<v^v<v^
+>^>>^v>vv>^<<^v<>><<><<v<<v><>v<^vv<<<>^^v^>^^>>><<^v>>v^v><^^>>^<>vv^
+<><^^>^^^<><vvvvv^v<v<<>^v<v>v<<^><<><<><<<^^<<<^<<>><<><^^^>^^<>^>v<>
+^^>vv<^v^v<vv>^<><v<^v>^^^>>>^^vvv^>vvv<>>>^<^>>>>>^<<^v>^vvv<>^<><<v>
+v^^>>><<^^<>>^v^<v^vv<>v^<<>^<^v^v><^<<<><<^<v><v<>vv>>v><v^<vv<>v^<<^
+"""
+
 @Suite("To get the first star on day 15") struct Day15StarOneTests {
     @Test("The sum of all the boxes' GPS coordinates in the small example should be 2028") func sumOfAllBoxesInSmallExample() {
         #expect(sumOfAllBoxesApplying(smallExample) == 2028)
@@ -140,43 +165,13 @@ let smallExample =
     ]) func firstStepForSmallExample(testcase: (instructionString: String, expectedState: String)) {
         var map = Map(smallExample)
         
-        let instructions: [Character] = testcase.instructionString.map { $0 }
-        for instruction in instructions {
-            map = map.applyStep(instruction: instruction)
-        }
+        let instructions: [Character] = convertStringToInstructions(testcase.instructionString)
+        map = map.applyInstructions(instructions)
         
         #expect(map.toString == testcase.expectedState)
     }
     
     @Test("When applying all the instructions in the larger example, the correct state should be shown") func largerExampleAllInstructions() {
-        let largerExample =
-        """
-        ##########
-        #..O..O.O#
-        #......O.#
-        #.OO..O.O#
-        #..O@..O.#
-        #O#..O...#
-        #O..O..O.#
-        #.OO.O.OO#
-        #....O...#
-        ##########
-        """
-            
-        let instructionString =
-        """
-        <vv>^<v^>v>^vv^v>v<>v^v<v<^vv<<<^><<><>>v<vvv<>^v^>^<<<><<v<<<v^vv^v>^
-        vvv<<^>^v^^><<>>><>^<<><^vv^^<>vvv<>><^^v>^>vv<>v<<<<v<^v>^<^^>>>^<v<v
-        ><>vv>v^v^<>><>>>><^^>vv>v<^^^>>v^v^<^^>v^^>v^<^v>v<>>v^v^<v>v^^<^^vv<
-        <<v<^>>^^^^>>>v^<>vvv^><v<<<>^^^vv^<vvv>^>v<^^^^v<>^>vvvv><>>v^<<^^^^^
-        ^><^><>>><>^^<<^^v>>><^<v>^<vv>>v>>>^v><>^v><<<<v>>v<v<v>vvv>^<><<>^><
-        ^>><>^v<><^vvv<^^<><v<<<<<><^v<<<><<<^^<v<^^^><^>>^<v^><<<^>>^v<v^v<v^
-        >^>>^v>vv>^<<^v<>><<><<v<<v><>v<^vv<<<>^^v^>^^>>><<^v>>v^v><^^>>^<>vv^
-        <><^^>^^^<><vvvvv^v<v<<>^v<v>v<<^><<><<><<<^^<<<^<<>><<><^^^>^^<>^>v<>
-        ^^>vv<^v^v<vv>^<><v<^v>^^^>>>^^vvv^>vvv<>>>^<^>>>>>^<<^v>^vvv<>^<><<v>
-        v^^>>><<^^<>>^v^<v^vv<>v^<<>^<^v^v><^<<<><<^<v><v<>vv>>v><v^<vv<>v^<<^
-        """
-        
         let endState =
         """
         ##########
@@ -193,41 +188,14 @@ let smallExample =
         
         var map = Map(largerExample)
         
-        let instructions: [Character] = instructionString.map { $0 }.filter { ["^", "<", ">", "v"].contains($0) }
-        for instruction in instructions {
-            map = map.applyStep(instruction: instruction)
-        }
+        let instructions: [Character] = convertStringToInstructions(largerExample)
+        map = map.applyInstructions(instructions)
         
         #expect(map.toString == endState)
     }
     
     @Test("The sum of all the boxes' GPS coordinates in the larger example should be 10092") func sumOfAllBoxesInLargerExample() {
-        let largerExampe =
-        """
-        ##########
-        #..O..O.O#
-        #......O.#
-        #.OO..O.O#
-        #..O@..O.#
-        #O#..O...#
-        #O..O..O.#
-        #.OO.O.OO#
-        #....O...#
-        ##########
-
-        <vv>^<v^>v>^vv^v>v<>v^v<v<^vv<<<^><<><>>v<vvv<>^v^>^<<<><<v<<<v^vv^v>^
-        vvv<<^>^v^^><<>>><>^<<><^vv^^<>vvv<>><^^v>^>vv<>v<<<<v<^v>^<^^>>>^<v<v
-        ><>vv>v^v^<>><>>>><^^>vv>v<^^^>>v^v^<^^>v^^>v^<^v>v<>>v^v^<v>v^^<^^vv<
-        <<v<^>>^^^^>>>v^<>vvv^><v<<<>^^^vv^<vvv>^>v<^^^^v<>^>vvvv><>>v^<<^^^^^
-        ^><^><>>><>^^<<^^v>>><^<v>^<vv>>v>>>^v><>^v><<<<v>>v<v<v>vvv>^<><<>^><
-        ^>><>^v<><^vvv<^^<><v<<<<<><^v<<<><<<^^<v<^^^><^>>^<v^><<<^>>^v<v^v<v^
-        >^>>^v>vv>^<<^v<>><<><<v<<v><>v<^vv<<<>^^v^>^^>>><<^v>>v^v><^^>>^<>vv^
-        <><^^>^^^<><vvvvv^v<v<<>^v<v>v<<^><<><<><<<^^<<<^<<>><<><^^^>^^<>^>v<>
-        ^^>vv<^v^v<vv>^<><v<^v>^^^>>>^^vvv^>vvv<>>>^<^>>>>>^<<^v>^vvv<>^<><<v>
-        v^^>>><<^^<>>^v^<v^vv<>v^<<>^<^v^v><^<<<><<^<v><v<>vv>>v><v^<vv<>v^<<^
-        """
-        
-        #expect(sumOfAllBoxesApplying(largerExampe) == 10092)
+        #expect(sumOfAllBoxesApplying(largerExample) == 10092)
     }
     
     @Test("The sum of all the boxes' GPS coordinates in the actual input should be 1511865") func sumOfAllBoxesInActualInput() {
@@ -312,13 +280,9 @@ let smallExample =
         
         var map = Map(expandedExampleMap)
         
-        let instructionString = "<vv<<^"
-        let instructions: [Character] = instructionString.map { $0 }
+        let instructions: [Character] = convertStringToInstructions("<vv<<^")
         
-        for instruction in instructions {
-            map = map.applyStep(instruction: instruction)
-            print(map.toString)
-        }
+        map = map.applyInstructions(instructions)
         
         #expect(map.toString == expectedMapString)
     }
@@ -421,56 +385,15 @@ let smallExample =
         
         var map = Map(expandedMapString)
         
-        let instructionString =
-        """
-        <vv>^<v^>v>^vv^v>v<>v^v<v<^vv<<<^><<><>>v<vvv<>^v^>^<<<><<v<<<v^vv^v>^
-        vvv<<^>^v^^><<>>><>^<<><^vv^^<>vvv<>><^^v>^>vv<>v<<<<v<^v>^<^^>>>^<v<v
-        ><>vv>v^v^<>><>>>><^^>vv>v<^^^>>v^v^<^^>v^^>v^<^v>v<>>v^v^<v>v^^<^^vv<
-        <<v<^>>^^^^>>>v^<>vvv^><v<<<>^^^vv^<vvv>^>v<^^^^v<>^>vvvv><>>v^<<^^^^^
-        ^><^><>>><>^^<<^^v>>><^<v>^<vv>>v>>>^v><>^v><<<<v>>v<v<v>vvv>^<><<>^><
-        ^>><>^v<><^vvv<^^<><v<<<<<><^v<<<><<<^^<v<^^^><^>>^<v^><<<^>>^v<v^v<v^
-        >^>>^v>vv>^<<^v<>><<><<v<<v><>v<^vv<<<>^^v^>^^>>><<^v>>v^v><^^>>^<>vv^
-        <><^^>^^^<><vvvvv^v<v<<>^v<v>v<<^><<><<><<<^^<<<^<<>><<><^^^>^^<>^>v<>
-        ^^>vv<^v^v<vv>^<><v<^v>^^^>>>^^vvv^>vvv<>>>^<^>>>>>^<<^v>^vvv<>^<><<v>
-        v^^>>><<^^<>>^v^<v^vv<>v^<<>^<^v^v><^<<<><<^<v><v<>vv>>v><v^<vv<>v^<<^
-        """
-        let instructions: [Character] = instructionString.map { $0 }
+        let instructions: [Character] = convertStringToInstructions(largerExample)
         
-        for instruction in instructions {
-            map = map.applyStep(instruction: instruction)
-            print(map.toString)
-        }
+        map = map.applyInstructions(instructions)
         
         #expect(map.toString == expectedMapString)
     }
     
     @Test("The sum of all the boxes' GPS coordinates in the larger example should be 9021") func sumOfAllBoxesInExpandedLargerExample() {
-        let largerExampe =
-        """
-        ##########
-        #..O..O.O#
-        #......O.#
-        #.OO..O.O#
-        #..O@..O.#
-        #O#..O...#
-        #O..O..O.#
-        #.OO.O.OO#
-        #....O...#
-        ##########
-
-        <vv>^<v^>v>^vv^v>v<>v^v<v<^vv<<<^><<><>>v<vvv<>^v^>^<<<><<v<<<v^vv^v>^
-        vvv<<^>^v^^><<>>><>^<<><^vv^^<>vvv<>><^^v>^>vv<>v<<<<v<^v>^<^^>>>^<v<v
-        ><>vv>v^v^<>><>>>><^^>vv>v<^^^>>v^v^<^^>v^^>v^<^v>v<>>v^v^<v>v^^<^^vv<
-        <<v<^>>^^^^>>>v^<>vvv^><v<<<>^^^vv^<vvv>^>v<^^^^v<>^>vvvv><>>v^<<^^^^^
-        ^><^><>>><>^^<<^^v>>><^<v>^<vv>>v>>>^v><>^v><<<<v>>v<v<v>vvv>^<><<>^><
-        ^>><>^v<><^vvv<^^<><v<<<<<><^v<<<><<<^^<v<^^^><^>>^<v^><<<^>>^v<v^v<v^
-        >^>>^v>vv>^<<^v<>><<><<v<<v><>v<^vv<<<>^^v^>^^>>><<^v>>v^v><^^>>^<>vv^
-        <><^^>^^^<><vvvvv^v<v<<>^v<v>v<<^><<><<><<<^^<<<^<<>><<><^^^>^^<>^>v<>
-        ^^>vv<^v^v<vv>^<><v<^v>^^^>>>^^vvv^>vvv<>>>^<^>>>>>^<<^v>^vvv<>^<><<v>
-        v^^>>><<^^<>>^v^<v^vv<>v^<<>^<^v^v><^<<<><<^<v><v<>vv>>v><v^<vv<>v^<<^
-        """
-        
-        #expect(sumOfAllBoxesApplying(largerExampe, expand: true) == 9021)
+        #expect(sumOfAllBoxesApplying(largerExample, expand: true) == 9021)
     }
     
     @Test("The sum of all the boxes' GPS coordinates in the expanded input should be 1519991") func sumOfAllBoxesExpandedActualInput() {

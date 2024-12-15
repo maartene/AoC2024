@@ -16,10 +16,8 @@ func sumOfAllBoxesApplying(_ input: String, expand: Bool = false) -> Int {
         .filter { $0.first != "#" }
         .joined()
     
-    let instructions: [Character] = instructionString.map { $0 }.filter { ["^", "<", ">", "v"].contains($0) }
-    for instruction in instructions {
-        map = map.applyStep(instruction: instruction)
-    }
+    let instructions: [Character] = convertStringToInstructions(instructionString)
+    map = map.applyInstructions(instructions)
     
     let obstacles = map.obstacles.filter { $0.value == "O" || $0.value == "[" }
     
@@ -91,6 +89,17 @@ struct Map {
         
         return result.trimmingCharacters(in: .whitespacesAndNewlines)
     }
+    
+    func applyInstructions(_ instructions: [Character]) -> Map {
+        var updatedMap = self
+        
+        for instruction in instructions {
+            updatedMap = updatedMap.applyStep(instruction: instruction)
+        }
+        
+        return updatedMap
+    }
+    
     
     func applyStep(instruction: Character) -> Map {
         var direction = Vector.zero
@@ -178,4 +187,9 @@ struct Map {
 
         return Map(walls: walls, obstacles: obstaclesCopy, playerPosition: newPlayerPosition, mapSize: mapSize)
     }
+}
+
+func convertStringToInstructions(_ instructionString: String) -> [Character] {
+    let instructions: [Character] = instructionString.map { $0 }.filter { ["^", "<", ">", "v"].contains($0) }
+    return instructions
 }
