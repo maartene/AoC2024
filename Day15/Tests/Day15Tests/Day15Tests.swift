@@ -229,4 +229,8 @@ let smallExample =
         
         #expect(sumOfAllBoxesApplying(largerExampe) == 10092)
     }
+    
+    @Test("The sum of all the boxes' GPS coordinates in the actual input should be 1511865") func sumOfAllBoxesInActualInput() {
+        #expect(sumOfAllBoxesApplying(input) == 1511865)
+    }
 }
