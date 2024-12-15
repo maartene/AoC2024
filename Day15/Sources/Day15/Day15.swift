@@ -32,7 +32,7 @@ struct Map {
     let playerPosition: Vector
     let mapSize: Vector
     
-    init(walls: Set<Vector>, obstacles: [Vector: Character], playerPosition: Vector, mapSize: Vector) {
+    private init(walls: Set<Vector>, obstacles: [Vector: Character], playerPosition: Vector, mapSize: Vector) {
         self.walls = walls
         self.obstacles = obstacles
         self.playerPosition = playerPosition
@@ -127,7 +127,7 @@ struct Map {
         }
     }
     
-    func tryMoveObstacle(direction: Vector) -> Map? {
+    private func tryMoveObstacle(direction: Vector) -> Map? {
         guard let boxesToShift = findBoxesToShift(direction: direction) else {
             return nil
         }
@@ -138,7 +138,7 @@ struct Map {
         return Map(walls: walls, obstacles: movedBoxes, playerPosition: newPlayerPosition, mapSize: mapSize)
     }
     
-    func findBoxesToShift(direction: Vector) -> [Vector: Character]? {
+    private func findBoxesToShift(direction: Vector) -> [Vector: Character]? {
         var boxesToShift = [Vector: Character]()
         
         var testPosition = playerPosition + direction
@@ -167,7 +167,7 @@ struct Map {
         return boxesToShift
     }
     
-    func createNewObstaclesSet(direction: Vector, boxesToShift: [Vector: Character]) -> [Vector: Character] {
+    private func createNewObstaclesSet(direction: Vector, boxesToShift: [Vector: Character]) -> [Vector: Character] {
         var obstaclesCopy = obstacles
         obstaclesCopy.removeValue(forKey: playerPosition + direction)
 
@@ -182,7 +182,7 @@ struct Map {
         return obstaclesCopy
     }
     
-    func additionalTestPositionWhenMovingWideBoxesInUpAndDown(obstacle: Character, testPosition: Vector, direction: Vector, visited: Set<Vector>) -> Vector? {
+    private func additionalTestPositionWhenMovingWideBoxesInUpAndDown(obstacle: Character, testPosition: Vector, direction: Vector, visited: Set<Vector>) -> Vector? {
         guard (obstacle == "[" || obstacle == "]") && (direction == .down || direction == .up) else {
             return nil
         }
