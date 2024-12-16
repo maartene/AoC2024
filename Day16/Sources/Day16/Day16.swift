@@ -40,5 +40,22 @@ func lowestPossibleScore(in mapString: String) -> Int {
 
 
 func numberOfBestPaths(through mapString: String) -> Int {
-    45
+    let map = convertInputToMatrixOfCharacters(mapString)
+
+    var targetPosition = Vector.zero
+    var startPosition = Vector.zero
+    for y in 0 ..< map.count {
+        for x in 0 ..< map[y].count {
+            if map[y][x] == "S" {
+                startPosition = Vector(x: x, y: y)
+            }
+            if map[y][x] == "E" {
+                targetPosition = Vector(x: x, y: y)
+            }
+        }
+    }
+
+    let dijkstra = dijkstra(target: startPosition, in: map)
+
+    return getPath(from: startPosition, to: targetPosition, in: dijkstra).count
 }

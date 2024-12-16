@@ -62,7 +62,24 @@ let secondExampleMap =
 }
 
 @Suite("To get the second star in day 16") struct Day16StarTwoTests {
-    @Test("For the first example, 45 tiles are part of one of the best paths through the first example maze") func numberOfBestSpotsInFirstExampleMaze() {
+    @Test("For the first example, 45 tiles are part of one of the best paths") func numberOfBestSpotsInFirstExampleMaze() {
         #expect(numberOfBestPaths(through: firstExampleMap) == 45)
+    }
+
+    @Test("For the second example, 64 tiles are part of one of the best paths") func numberOfBestSpotsInSecondExampleMaze() {
+        #expect(numberOfBestPaths(through: secondExampleMap) == 64)
+    }
+
+    @Test("For this symmetric map, 8 tiles are part of one of the best paths") func symmetricSmallMap() {
+        let map = 
+        """
+        #####
+        #...#
+        #S#E#
+        #...#
+        #####
+        """
+
+        #expect(numberOfBestPaths(through: map) == 8)
     }
 }

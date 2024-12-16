@@ -97,3 +97,28 @@ func turnCCW(_ v: Vector) -> Vector {
         return .zero
     }
 }
+
+func getPath(from: Vector, to: Vector, in dijkstraMap: [NavigationStep: Int]) -> Set<Vector> {
+    var path = Set<Vector>()
+
+    guard from != to  else {
+        return []
+    }
+
+    path.insert(from)
+    path.insert(to)
+
+    let neighbours = to.neighbours.flatMap { neighbour in 
+        dijkstraMap.filter { $0.key.position == neighbour }
+    }
+
+    let lowestValueInNeighbours = neighbours.map { $0.value }.min()!
+
+    let neighboursWithSameValue = neighbours
+        .filter { $0.value == lowestValueInNeighbours }
+
+    for neighbour in neighboursWithSameValue {
+        path.formUnion(getPath(from: from, to: neighbour.key.position, in: dijkstraMap))
+    }
+    return path
+}
