@@ -49,6 +49,10 @@ let secondExampleMap =
         #expect(lowestPossibleScore(in: testcase.mapString) == testcase.expectedLowestScore) 
     }
 
+    // @Test("The lowest score on the actual map should be 85420") func lowestScoreActualMap() {
+    //     #expect(lowestPossibleScore(in: input) == 85420)
+    // }
+
     @Test("The path with the lowest score in the example mazes should be as expected", arguments: [
         (firstExampleMap, (36, 7)),
         (secondExampleMap, (48, 11))
