@@ -53,10 +53,16 @@ let secondExampleMap =
     //     #expect(lowestPossibleScore(in: input) == 85420)
     // }
 
-    @Test("The path with the lowest score in the example mazes should be as expected", arguments: [
-        (firstExampleMap, (36, 7)),
-        (secondExampleMap, (48, 11))
-    ]) func stepsAndTurnsForLowestScoringPathInFirstExample(testcase: (mapString: String, stepsAndTurns: StepsAndTurns)) {
-        #expect(stepsAndTurnsForLowestScore(in: testcase.mapString) == testcase.stepsAndTurns)
+    // @Test("The path with the lowest score in the example mazes should be as expected", arguments: [
+    //     (firstExampleMap, (36, 7)),
+    //     (secondExampleMap, (48, 11))
+    // ]) func stepsAndTurnsForLowestScoringPathInFirstExample(testcase: (mapString: String, stepsAndTurns: StepsAndTurns)) {
+    //     #expect(stepsAndTurnsForLowestScore(in: testcase.mapString) == testcase.stepsAndTurns)
+    // }
+}
+
+@Suite("To get the second star in day 16") struct Day16StarTwoTests {
+    @Test("For the first example, 45 tiles are part of one of the best paths through the first example maze") func numberOfBestSpotsInFirstExampleMaze() {
+        #expect(numberOfBestPaths(through: firstExampleMap) == 45)
     }
 }

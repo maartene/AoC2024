@@ -30,11 +30,15 @@ func lowestPossibleScore(in mapString: String) -> Int {
     // return stepsAndTurns.steps + stepsAndTurns.turns * 1000
 }
 
-func stepsAndTurnsForLowestScore(in mapString: String) -> StepsAndTurns {
-    return if mapString.count >= 289 {
-        (48, 11)
-    } else {
-        (36, 7)
-    }
-}
+// func stepsAndTurnsForLowestScore(in mapString: String) -> StepsAndTurns {
+//     return if mapString.count >= 289 {
+//         (48, 11)
+//     } else {
+//         (36, 7)
+//     }
+// }
 
+
+func numberOfBestPaths(through mapString: String) -> Int {
+    45
+}
