@@ -1,0 +1,22 @@
+{
+  "configurations": [
+    {
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "${workspaceFolder:AoC2024}/Day14",
+      "name": "Debug Day14 (Day14)",
+      "program": "${workspaceFolder:AoC2024}/Day14/.build/debug/Day14",
+      "preLaunchTask": "swift: Build Debug Day14 (Day14)"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "${workspaceFolder:AoC2024}/Day14",
+      "name": "Release Day14 (Day14)",
+      "program": "${workspaceFolder:AoC2024}/Day14/.build/release/Day14",
+      "preLaunchTask": "swift: Build Release Day14 (Day14)"
+    }
+  ]
+}
