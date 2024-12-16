@@ -2,23 +2,23 @@ import Testing
 @testable import Day16
 
 let firstExampleMap = 
-        """
-        ###############
-        #.......#....E#
-        #.#.###.#.###.#
-        #.....#.#...#.#
-        #.###.#####.#.#
-        #.#.#.......#.#
-        #.#.#####.###.#
-        #...........#.#
-        ###.#.#####.#.#
-        #...#.....#.#.#
-        #.#.#.###.#.#.#
-        #.....#...#.#.#
-        #.###.#.#.#.#.#
-        #S..#.....#...#
-        ###############
-        """
+    """
+    ###############
+    #.......#....E#
+    #.#.###.#.###.#
+    #.....#.#...#.#
+    #.###.#####.#.#
+    #.#.#.......#.#
+    #.#.#####.###.#
+    #...........#.#
+    ###.#.#####.#.#
+    #...#.....#.#.#
+    #.#.#.###.#.#.#
+    #.....#...#.#.#
+    #.###.#.#.#.#.#
+    #S..#.....#...#
+    ###############
+    """
 
 let secondExampleMap = 
     """
@@ -52,13 +52,6 @@ let secondExampleMap =
     // @Test("The lowest score on the actual map should be 85420") func lowestScoreActualMap() {
     //     #expect(lowestPossibleScore(in: input) == 85420)
     // }
-
-    // @Test("The path with the lowest score in the example mazes should be as expected", arguments: [
-    //     (firstExampleMap, (36, 7)),
-    //     (secondExampleMap, (48, 11))
-    // ]) func stepsAndTurnsForLowestScoringPathInFirstExample(testcase: (mapString: String, stepsAndTurns: StepsAndTurns)) {
-    //     #expect(stepsAndTurnsForLowestScore(in: testcase.mapString) == testcase.stepsAndTurns)
-    // }
 }
 
 @Suite("To get the second star in day 16") struct Day16StarTwoTests {
@@ -81,5 +74,9 @@ let secondExampleMap =
         """
 
         #expect(numberOfBestPaths(through: map) == 8)
+    }
+
+    @Test("For the actual input, the number of optimal seats should be 492") func optimalSeatsActualInput() {
+        #expect(numberOfBestPaths(through: input) == 492)
     }
 }
