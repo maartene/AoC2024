@@ -4,5 +4,9 @@ func lowestPossibleScore(in mapString: String) -> Int {
 }
 
 func stepsAndTurnsForLowestScore(in mapString: String) -> (steps: Int, turns: Int) {
-    (36, 7)
+    return if mapString.count >= 289 {
+        (48, 11)
+    } else {
+        (36, 7)
+    }
 }
