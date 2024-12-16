@@ -46,11 +46,11 @@ let secondExampleMap =
         #expect(lowestPossibleScore(in: firstExampleMap) == 7036) 
     }
 
-    // @Test("The lowest score possible on the second example map should be 11048") func lowestScoreOnSecondMap() {
-    //     
+    @Test("The lowest score possible on the second example map should be 11048") func lowestScoreOnSecondMap() {
+        
 
-    //     #expect(lowestPossibleScore(in: secondExampleMap) == 11048) 
-    // }
+        #expect(lowestPossibleScore(in: secondExampleMap) == 11048) 
+    }
 
     @Test("The path with the lowest score in the first example maze has moving forward 36 times and 7 turns") func stepsAndTurnsForLowestScoringPathInFirstExample() {
         #expect(stepsAndTurnsForLowestScore(in: firstExampleMap) == (36, 7))
