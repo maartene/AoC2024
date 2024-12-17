@@ -50,5 +50,14 @@ import Testing
         #expect(vm.registerB == 26)
     } 
 
-    
+    @Test("Instruction bst calculates modulo 8", arguments: [
+        (2, 2),
+        (5, 3)
+    ]) func bst(testcase: (operant: Int, expectedValue: Int)) {
+        let vm = VM(registerA: 21,  registerB: 19, registerC: 0, program: [2,testcase.operant])
+        
+        vm.run()
+
+        #expect(vm.registerB == testcase.expectedValue)
+    } 
 }
