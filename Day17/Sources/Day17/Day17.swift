@@ -1,7 +1,11 @@
 func run(_ program: String) -> String {
-    let programOutput = [4,6,3,5,6,3,5,2,1,0].map(String.init)
+    let vm = VM(registerA: 729, registerB: 0, registerC: 0, program: [0,1,5,4,3,0])
+    
+    vm.run()
 
-    return programOutput.joined(separator: ",")
+    let output = vm.output.map { String($0) }
+
+    return output.joined(separator: ",")
 }
 
 class VM {
