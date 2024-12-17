@@ -17,5 +17,6 @@
 
 ## 🍅 Pomodoro 3
 - ✅ Implement out, bdv and cdv
-- ⚠️ Add small example programs to verify results
-- ⚠️ Make the example input pass
+- ✅ Add small example programs to verify results
+- ✅ Make the example input pass
+- ⚠️ Lets get that first star

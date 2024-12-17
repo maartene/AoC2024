@@ -124,4 +124,8 @@ import Testing
 
         #expect(vm.registerC == testcase.expectedValue)
     } 
+
+    @Test("The output when running the actual program should be '1,5,0,5,2,0,1,3,5'") func outputWhenRunningActualProgram() {
+        #expect(run(input) == "1,5,0,5,2,0,1,3,5")
+    }
 }
