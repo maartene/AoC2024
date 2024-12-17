@@ -30,4 +30,15 @@ import Testing
 
         #expect(vm.output == [0,1,2])
     }
+
+    @Test("Instruction adv performs division", arguments: [
+        (2, 5),
+        (3, 2)
+    ]) func adv(testcase: (operant: Int, expectedValue: Int)) {
+        let vm = VM(registerA: 21, registerC: 0, program: [0,testcase.operant])
+        
+        vm.run()
+
+        #expect(vm.registerA == testcase.expectedValue)
+    } 
 }
