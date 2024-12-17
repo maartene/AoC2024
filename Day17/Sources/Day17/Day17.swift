@@ -9,7 +9,7 @@ class VM {
     var registerB: Int
     let registerC: Int 
 
-    let output = [0,1,2]
+    var output: [Int] = []
     let program: [Int]
 
     var pc = 0
@@ -22,17 +22,33 @@ class VM {
     }
 
     func run() {
-        switch program[0] {
-        case 0:
-            registerA = registerA >> combo(program[1])
-        case 1:
-            registerB = registerB ^ program[1]
-        case 2:
-            registerB = combo(program[1]) % 8
-        case 3:
-            pc = registerA == 0 ? 2 : program[1]
-        default:
-            registerB = 1
+        while pc < program.count - 1 {
+            let instruction = program[pc]
+            let operant = program[pc + 1]
+
+            switch instruction {
+                case 0:
+                    registerA = registerA >> combo(operant)
+                    pc += 2
+                case 1:
+                    registerB = registerB ^ operant
+                    pc += 2
+                case 2:
+                    registerB = combo(operant) % 8
+                    pc += 2
+                case 3:
+                    pc = registerA == 0 ? pc + 2 : operant
+                case 4:
+                    registerB = registerB ^ registerC
+                    pc += 2
+                case 5:
+                    output.append(combo(operant) % 8)
+                    pc += 2
+                default:
+                    registerB = 1
+                    output = [0,1,2]
+                    pc += 2
+            }
         }
     }
 

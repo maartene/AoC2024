@@ -73,5 +73,23 @@ import Testing
         #expect(vm.pc == testcase.expectedProgramCount)
     }
 
+    @Test("Instruction bxc calculates bitwise XOR of register B and register C") func bxc() {
+        let vm = VM(registerA: 0, registerB: 2024, registerC: 43690, program: [4,0])
+        
+        vm.run()
+
+        #expect(vm.registerB == 44354)
+    } 
+
+    @Test("Instruction out calculates the value of its combo operant module 8 and outputs the value", arguments: [
+        (2, 2), 
+        (4, 3)
+        ]) func out(testcase: (operant: Int, expectedOutputValue: Int)) {
+        let vm = VM(registerA: 987, registerB: 0, registerC: 0, program: [5, testcase.operant])
+
+        vm.run()
+
+        #expect(vm.output == [testcase.expectedOutputValue])
+    }
     
 }
