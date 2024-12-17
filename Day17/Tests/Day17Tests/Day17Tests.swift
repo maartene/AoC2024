@@ -102,5 +102,17 @@ import Testing
         vm.run()
 
         #expect(vm.registerB == testcase.expectedValue)
+    }
+
+    @Test("Instruction cdv performs division and stores the result in the C register", arguments: [
+        (2, 5),
+        (3, 2),
+        (6, 1)
+    ]) func cdv(testcase: (operant: Int, expectedValue: Int)) {
+        let vm = VM(registerA: 21,  registerB: 0, registerC: 4, program: [7,testcase.operant])
+        
+        vm.run()
+
+        #expect(vm.registerC == testcase.expectedValue)
     } 
 }

@@ -7,7 +7,7 @@ func run(_ program: String) -> String {
 class VM {
     var registerA: Int
     var registerB: Int
-    let registerC: Int 
+    var registerC: Int 
 
     var output: [Int] = []
     let program: [Int]
@@ -46,6 +46,9 @@ class VM {
                     pc += 2
                 case 6:
                     registerB = registerA >> combo(operant)
+                    pc += 2
+                case 7:
+                    registerC = registerA >> combo(operant)
                     pc += 2
                 default:
                     registerB = 1
