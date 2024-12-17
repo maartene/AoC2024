@@ -16,22 +16,48 @@ func run(_ program: String) -> String {
 }
 
 func findARegister(_ program: String) -> Int {
+    func pow(_ x: Int, _ p: Int) -> Int {
+        var result = x 
+        for _ in 0 ..< p {
+            result *= x
+        }
+        return result 
+    }
+
     let lines = program.split(separator: "\n").map(String.init)
-    var registerA = -1
+    var registerA = 0
     let registerB = Int(lines[1].matches(of: /\d+/)[0].0)!
     let registerC = Int(lines[2].matches(of: /\d+/)[0].0)!
 
     let program = lines[3].matches(of: /\d/).compactMap { Int(String($0.0)) }
 
-    var output = [Int]()
-    while output != program {
-        registerA += 1
-        let vm = VM(registerA: registerA, registerB: registerB, registerC: registerC, program: program)
-        vm.run()
-        output = vm.output
+    // Finds what value of register A will output a copy of the program.
+    // When the output has N digits, register A will be at most 8^N.
+    // Found a pattern: when the last X digits match for a certain regA value, last X digits will occur again for the first time
+    // in an output of (X + 1) digits, when regA is set to regA * 8.
+    var regA: Int = 1
+    var runCount: Int = 0
+    while regA < pow(8, program.count) {
+        let vm = VM(registerA: regA, registerB: registerB, registerC: registerC, program: program)
+        vm.run() 
+        let output = vm.output
+
+        let matchLastDigits = zip(program.reversed(), output.reversed())
+            .allSatisfy { $0 == $1 } 
+
+        // Check whether the output of size N matches with the last N digits of program
+        if matchLastDigits {
+            print(regA, runCount, output)
+            // Found the value if all digits match, and output is same size as program.
+            if output.count == program.count { return regA }
+            regA = regA * 8 - 1
+        }                 
+
+        regA += 1     
+        runCount += 1
     }
 
-    return registerA
+    return 0
 }
 
 class VM {
