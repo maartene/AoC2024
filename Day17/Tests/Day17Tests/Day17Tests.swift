@@ -33,9 +33,10 @@ import Testing
 
     @Test("Instruction adv performs division", arguments: [
         (2, 5),
-        (3, 2)
+        (3, 2),
+        (6, 1)
     ]) func adv(testcase: (operant: Int, expectedValue: Int)) {
-        let vm = VM(registerA: 21,  registerB: 0, registerC: 0, program: [0,testcase.operant])
+        let vm = VM(registerA: 21,  registerB: 0, registerC: 4, program: [0,testcase.operant])
         
         vm.run()
 

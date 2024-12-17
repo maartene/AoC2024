@@ -22,7 +22,7 @@ class VM {
     func run() {
         switch program[0] {
         case 0:
-            registerA = registerA >> program[1]
+            registerA = registerA >> combo(program[1])
         case 1:
             registerB = registerB ^ program[1]
         case 2:
