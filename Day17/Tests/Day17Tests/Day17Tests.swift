@@ -16,7 +16,7 @@ import Testing
     }
 
     @Test("If register C contains 9, the program 2,6 would set register B to 1") func c9_26() {
-        let vm = VM(registerA: 0, registerC: 9, program: [2,6])
+        let vm = VM(registerA: 0,  registerB: 0, registerC: 9, program: [2,6])
         
         vm.run()
 
@@ -24,7 +24,7 @@ import Testing
     }
 
     @Test("If register A contains 10, the program 5,0,5,1,5,4 would output 0,1,2.") func a10_505154() {
-        let vm = VM(registerA: 10, registerC: 0, program: [5,0,5,1,5,4])
+        let vm = VM(registerA: 10,  registerB: 0, registerC: 0, program: [5,0,5,1,5,4])
         
         vm.run()
 
@@ -35,10 +35,20 @@ import Testing
         (2, 5),
         (3, 2)
     ]) func adv(testcase: (operant: Int, expectedValue: Int)) {
-        let vm = VM(registerA: 21, registerC: 0, program: [0,testcase.operant])
+        let vm = VM(registerA: 21,  registerB: 0, registerC: 0, program: [0,testcase.operant])
         
         vm.run()
 
         #expect(vm.registerA == testcase.expectedValue)
     } 
+
+    @Test("Instruction bxl calculates bitwise XOR of register B and operant") func bxl() {
+        let vm = VM(registerA: 0, registerB: 29, registerC: 0, program: [1,7])
+        
+        vm.run()
+
+        #expect(vm.registerB == 26)
+    } 
+
+    
 }

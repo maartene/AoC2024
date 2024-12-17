@@ -6,13 +6,14 @@ func run(_ program: String) -> String {
 
 class VM {
     var registerA = 2
-    let registerB = 1
+    var registerB: Int = 1
 
     let output = [0,1,2]
     let program: [Int]
 
-    init(registerA: Int, registerC: Int, program: [Int]) { 
+    init(registerA: Int, registerB: Int, registerC: Int, program: [Int]) { 
         self.registerA = registerA
+        self.registerB = registerB
         self.program = program
     }
 
@@ -20,8 +21,10 @@ class VM {
         switch program[0] {
         case 0:
             registerA = registerA >> program[1]
+        case 1:
+            registerB = registerB ^ program[1]
         default:
-            break
+            registerB = 1
         }
     }
 }
