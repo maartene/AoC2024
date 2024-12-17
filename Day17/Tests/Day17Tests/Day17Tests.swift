@@ -61,4 +61,17 @@ import Testing
 
         #expect(vm.registerB == testcase.expectedValue)
     } 
+
+    @Test("Instruction jnz performs Jump in case of non zero", arguments: [
+        (0, 2), 
+        (5, 4)
+        ]) func jnz(testcase: (aRegisterValue: Int, expectedProgramCount: Int)) {
+        let vm = VM(registerA: testcase.aRegisterValue,  registerB: 19, registerC: 0, program: [3,4])
+        
+        vm.run()
+
+        #expect(vm.pc == testcase.expectedProgramCount)
+    }
+
+    
 }

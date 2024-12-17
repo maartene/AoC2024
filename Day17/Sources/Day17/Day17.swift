@@ -12,6 +12,8 @@ class VM {
     let output = [0,1,2]
     let program: [Int]
 
+    var pc = 0
+
     init(registerA: Int, registerB: Int, registerC: Int, program: [Int]) { 
         self.registerA = registerA
         self.registerB = registerB
@@ -27,6 +29,8 @@ class VM {
             registerB = registerB ^ program[1]
         case 2:
             registerB = combo(program[1]) % 8
+        case 3:
+            pc = registerA == 0 ? 2 : program[1]
         default:
             registerB = 1
         }
