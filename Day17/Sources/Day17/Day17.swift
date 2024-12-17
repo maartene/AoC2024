@@ -3,3 +3,13 @@ func run(_ program: String) -> String {
 
     return programOutput.joined(separator: ",")
 }
+
+struct VM {
+    let registerB = 1
+
+    init(registerC: Int, program: [Int]) { }
+
+    func run() {
+
+    }
+}

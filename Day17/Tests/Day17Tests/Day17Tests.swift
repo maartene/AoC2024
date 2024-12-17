@@ -14,4 +14,13 @@ import Testing
 
         #expect(run(exampleProgram) == "4,6,3,5,6,3,5,2,1,0")
     }
+
+    @Test("If register C contains 9, the program 2,6 would set register B to 1") func c9_26() {
+        let vm = VM(registerC: 9, program: [2,6])
+        
+        vm.run()
+
+        #expect(vm.registerB == 1)
+        
+    }
 }
