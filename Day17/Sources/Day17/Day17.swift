@@ -12,15 +12,16 @@ class VM {
     let program: [Int]
 
     init(registerA: Int, registerC: Int, program: [Int]) { 
+        self.registerA = registerA
         self.program = program
     }
 
     func run() {
         switch program {
         case [0,2]:
-            registerA = 5
+            registerA = registerA >> 2
         case [0,3]:
-            registerA = 2
+            registerA = registerA >> 3
         default:
             break
         }
