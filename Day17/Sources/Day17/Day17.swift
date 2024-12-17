@@ -1,5 +1,12 @@
 func run(_ program: String) -> String {
-    let vm = VM(registerA: 729, registerB: 0, registerC: 0, program: [0,1,5,4,3,0])
+    let lines = program.split(separator: "\n").map(String.init)
+    let registerA = Int(lines[0].matches(of: /\d+/)[0].0)!
+    let registerB = Int(lines[1].matches(of: /\d+/)[0].0)!
+    let registerC = Int(lines[2].matches(of: /\d+/)[0].0)!
+
+    let program = lines[3].matches(of: /\d/).compactMap { Int(String($0.0)) }
+
+    let vm = VM(registerA: registerA, registerB: registerB, registerC: registerC, program: program)
     
     vm.run()
 
