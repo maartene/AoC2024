@@ -17,11 +17,9 @@ class VM {
     }
 
     func run() {
-        switch program {
-        case [0,2]:
-            registerA = registerA >> 2
-        case [0,3]:
-            registerA = registerA >> 3
+        switch program[0] {
+        case 0:
+            registerA = registerA >> program[1]
         default:
             break
         }
