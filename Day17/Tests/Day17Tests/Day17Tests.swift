@@ -143,4 +143,9 @@ import Testing
 
         #expect(findARegister(exampleProgram) == 117440)
     }
+    
+    // Be careful! This runs for 105s (M2 Pro)
+    @Test("Initiazing a VM with 236581108670061 in the A register, produces a copy of the program itself.") func findARegisterInActualProgram() {
+        #expect(findARegister(input) == 236581108670061)
+    }
 }
