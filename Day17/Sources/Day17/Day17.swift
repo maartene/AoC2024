@@ -7,7 +7,9 @@ func run(_ program: String) -> String {
 struct VM {
     let registerB = 1
 
-    init(registerC: Int, program: [Int]) { }
+    let output = [0,1,2]
+
+    init(registerA: Int, registerC: Int, program: [Int]) { }
 
     func run() {
 

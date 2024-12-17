@@ -16,11 +16,18 @@ import Testing
     }
 
     @Test("If register C contains 9, the program 2,6 would set register B to 1") func c9_26() {
-        let vm = VM(registerC: 9, program: [2,6])
+        let vm = VM(registerA: 0, registerC: 9, program: [2,6])
         
         vm.run()
 
         #expect(vm.registerB == 1)
+    }
+
+    @Test("If register A contains 10, the program 5,0,5,1,5,4 would output 0,1,2.") func a10_505154() {
+        let vm = VM(registerA: 10, registerC: 0, program: [5,0,5,1,5,4])
         
+        vm.run()
+
+        #expect(vm.output == [0,1,2])
     }
 }
