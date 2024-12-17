@@ -9,5 +9,5 @@
 
 ## 🍅 Pomodoro 1
 - ⚠️ Read the description
-- ⚠️ Import the input data
+- ✅ Import the input data
 - ⚠️ Make the example input pass
