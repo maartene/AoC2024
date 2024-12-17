@@ -1,10 +1,6 @@
 import Testing
 @testable import Day17
 
-@Test func example() async throws {
-    // Write your test here and use APIs like `#expect(...)` to check expected conditions.
-}
-
 @Suite("To get the first star on day 17") struct Day17StarOne {
     @Test("The output when running the example program should be '4,6,3,5,6,3,5,2,1,0'") func outputWhenRunningExampleProgram() {
         let exampleProgram = 
