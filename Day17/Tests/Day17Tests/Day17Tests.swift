@@ -31,7 +31,7 @@ import Testing
         #expect(vm.output == [0,1,2])
     }
 
-    @Test("Instruction adv performs division", arguments: [
+    @Test("Instruction adv performs division and stores the result in the A register", arguments: [
         (2, 5),
         (3, 2),
         (6, 1)
@@ -92,4 +92,15 @@ import Testing
         #expect(vm.output == [testcase.expectedOutputValue])
     }
     
+    @Test("Instruction bdv performs division and stores the result in the B register", arguments: [
+        (2, 5),
+        (3, 2),
+        (6, 1)
+    ]) func bdv(testcase: (operant: Int, expectedValue: Int)) {
+        let vm = VM(registerA: 21,  registerB: 0, registerC: 4, program: [6,testcase.operant])
+        
+        vm.run()
+
+        #expect(vm.registerB == testcase.expectedValue)
+    } 
 }

@@ -44,6 +44,9 @@ class VM {
                 case 5:
                     output.append(combo(operant) % 8)
                     pc += 2
+                case 6:
+                    registerB = registerA >> combo(operant)
+                    pc += 2
                 default:
                     registerB = 1
                     output = [0,1,2]
