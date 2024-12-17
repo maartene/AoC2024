@@ -31,6 +31,15 @@ import Testing
         #expect(vm.output == [0,1,2])
     }
 
+    @Test("If register A contains 2024, the program 0,1,5,4,3,0 would output 4,2,5,6,7,7,7,7,3,1,0 and leave 0 in register A.") func a2024_015430() {
+        let vm = VM(registerA: 2024,  registerB: 0, registerC: 0, program: [0,1,5,4,3,0])
+        
+        vm.run()
+
+        #expect(vm.output == [4,2,5,6,7,7,7,7,3,1,0])
+        #expect(vm.registerA == 0)
+    }
+
     @Test("Instruction adv performs division and stores the result in the A register", arguments: [
         (2, 5),
         (3, 2),
