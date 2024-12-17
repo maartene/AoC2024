@@ -15,6 +15,25 @@ func run(_ program: String) -> String {
     return output.joined(separator: ",")
 }
 
+func findARegister(_ program: String) -> Int {
+    let lines = program.split(separator: "\n").map(String.init)
+    var registerA = -1
+    let registerB = Int(lines[1].matches(of: /\d+/)[0].0)!
+    let registerC = Int(lines[2].matches(of: /\d+/)[0].0)!
+
+    let program = lines[3].matches(of: /\d/).compactMap { Int(String($0.0)) }
+
+    var output = [Int]()
+    while output != program {
+        registerA += 1
+        let vm = VM(registerA: registerA, registerB: registerB, registerC: registerC, program: program)
+        vm.run()
+        output = vm.output
+    }
+
+    return registerA
+}
+
 class VM {
     var registerA: Int
     var registerB: Int

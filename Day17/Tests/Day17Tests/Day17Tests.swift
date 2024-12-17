@@ -129,3 +129,18 @@ import Testing
         #expect(run(input) == "1,5,0,5,2,0,1,3,5")
     }
 }
+
+@Suite("To get the second star on day 17") struct Day17StarTwoTests {
+    @Test("Initiazing a VM with 117440 in the A register, produces a copy of the program itself.") func findARegisterInExampleProgram() {
+        let exampleProgram = 
+        """
+        Register A: 2024
+        Register B: 0
+        Register C: 0
+
+        Program: 0,3,5,4,3,0
+        """
+
+        #expect(findARegister(exampleProgram) == 117440)
+    }
+}
