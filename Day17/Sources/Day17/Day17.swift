@@ -51,9 +51,7 @@ class VM {
                     registerC = registerA >> combo(operant)
                     pc += 2
                 default:
-                    registerB = 1
-                    output = [0,1,2]
-                    pc += 2
+                    break
             }
         }
     }
