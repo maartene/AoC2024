@@ -44,7 +44,7 @@ extension Vector {
     }
 }
 
-public func BFS(start: Vector, destination: Vector, in unsafeSpots: Set<Vector>, mapSize: Vector) -> Int? {
+public func BFS(start: Vector, destination: Vector, unsafeSpots: Set<Vector>, mapSize: Vector) -> Int? {
     // Queue for BFS and a set to keep track of visited points
     var queue: [(Vector, Int)] = [(start, 0)]  // (current point, distance)
     var visited: Set<Vector> = [start]

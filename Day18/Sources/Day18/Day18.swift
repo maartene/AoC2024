@@ -11,7 +11,7 @@ func shortestPath(through input: String, simulateUntilByte: Int = Int.max, mapSi
         } 
         .map { $0.element }
     
-    return BFS(start: .zero, destination: mapSize - .one, in: Set(memory), mapSize: mapSize) ?? -1
+    return BFS(start: .zero, destination: mapSize - .one, unsafeSpots: Set(memory), mapSize: mapSize) ?? -1
 }
 
 func findFirstBlockingByte(input: String, startingAt: Int, mapSize: Vector) -> String {
@@ -27,7 +27,7 @@ func findFirstBlockingByte(input: String, startingAt: Int, mapSize: Vector) -> S
         } 
         .map { $0.element }
 
-        if BFS(start: .zero, destination: mapSize - .one, in: Set(memory), mapSize: mapSize) == nil {
+        if BFS(start: .zero, destination: mapSize - .one, unsafeSpots: Set(memory), mapSize: mapSize) == nil {
             let coord = memory[simulateUntilByte - 1]
             return "\(coord.x),\(coord.y)"
         }
