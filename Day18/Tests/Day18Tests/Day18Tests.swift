@@ -1,4 +1,6 @@
 import Testing
+import Shared
+
 @testable import Day18
 
 @Suite("To get the first star on day 18") struct Day18StarOneTests {
@@ -32,6 +34,6 @@ import Testing
         2,0
         """
 
-        #expect(shortestPath(through: exampleInput, simulateUntilByte: 12) == 22)
+        #expect(shortestPath(through: exampleInput, simulateUntilByte: 12, mapSize: Vector(x:7, y: 7)) == 22)
     }
 }
