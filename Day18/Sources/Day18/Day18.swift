@@ -19,7 +19,11 @@ func findFirstBlockingByte(input: String, startingAt: Int, mapSize: Vector) -> S
     let entiryMemory = lines
         .map { Vector(from: $0) }
 
-    for simulateUntilByte in startingAt ..< lines.count {
+    var lower = startingAt
+    var upper = lines.count 
+    var simulateUntilByte = (lower + upper) / 2
+    while lower < upper {
+        simulateUntilByte = (lower + upper) / 2
         print("Testing until byte: \(simulateUntilByte) of \(lines.count)")
         let memory = entiryMemory.enumerated()
         .filter { (offset, vector) in
@@ -28,10 +32,12 @@ func findFirstBlockingByte(input: String, startingAt: Int, mapSize: Vector) -> S
         .map { $0.element }
 
         if BFS(start: .zero, destination: mapSize - .one, unsafeSpots: Set(memory), mapSize: mapSize) == nil {
-            let coord = memory[simulateUntilByte - 1]
-            return "\(coord.x),\(coord.y)"
+            upper = simulateUntilByte
+        } else {
+            lower = simulateUntilByte + 1
         }
     }
-    
-    return ""
+
+    let coord = entiryMemory[lower - 1]
+    return "\(coord.x),\(coord.y)"
 }
