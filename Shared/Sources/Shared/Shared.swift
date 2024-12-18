@@ -34,14 +34,10 @@ public func memoize<In: Hashable, Out>(_ f: @escaping (In) -> Out) -> (In) -> Ou
 }
 
 extension Vector {
-    public init?(from string: String) {
+    public init(from string: String) {
         let numbers = string.matches(of: /-*\d+/)
             .map { String($0.0) }
-            .compactMap(Int.init)
-
-        guard numbers.count >= 2 else {
-            return nil
-        }    
+            .map { Int($0)! }
 
         x = numbers[0]
         y = numbers[1]
