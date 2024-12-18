@@ -1,10 +1,6 @@
 import Testing
 @testable import Day18
 
-@Test func example() async throws {
-    // Write your test here and use APIs like `#expect(...)` to check expected conditions.
-}
-
 @Suite("To get the first star on day 18") struct Day18StarOneTests {
     @Test("The shortest safe path through the first 12 bytes in the example input is 22 steps") func shortestPathLengthInFirst12bytesOfExampleInput() {
         let exampleInput = 
