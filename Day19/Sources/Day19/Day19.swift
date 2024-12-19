@@ -13,10 +13,18 @@ func possibleDesigns(in input: String) -> Int {
 }
 
 func isPossibleDesign(design: String, towelTypes: [String]) -> Bool {
-    switch design {
-    case "ubwu": false
-    case "bbrgwb": false
-    default:
-        true
+    print("Testing: \(design)")
+    if towelTypes.contains(design) {
+        return true
     }
+    
+    for towelType in towelTypes {
+        if design.hasPrefix(towelType) {
+            if isPossibleDesign(design: String(design.dropFirst(towelType.count)), towelTypes: towelTypes) {
+                return true
+            }
+        }
+    }
+    
+    return false
 }

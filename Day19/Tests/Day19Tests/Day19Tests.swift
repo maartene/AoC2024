@@ -38,6 +38,10 @@ import Testing
         #expect(isPossibleDesign(design: design, towelTypes: towelTypes) == false)
     }
     
+    @Test("'bwurrg' can be made using towels 'r, wr, b, g, bwu, rb, gb, br'") func bwurrgIsPossible() {
+        let towelTypes = ["r", "wr", "b", "g", "bwu", "rb", "gb", "br"]
+        #expect(isPossibleDesign(design: "bwurrg", towelTypes: towelTypes))
+    }
 }
 
 
