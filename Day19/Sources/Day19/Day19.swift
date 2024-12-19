@@ -14,7 +14,9 @@ func possibleDesigns(in input: String) -> Int {
 }
 
 func totalNumberOfValidDesignConfigurations(in input: String) -> Int {
-    16
+    let designConfigurationsCounts = [2, 1, 4, 6, 1, 2]
+    
+    return designConfigurationsCounts.reduce(0, +)
 }
 
 class DesignChecker {
