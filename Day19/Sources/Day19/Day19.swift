@@ -4,7 +4,7 @@ func possibleDesigns(in input: String) -> Int {
     let designChecker = DesignChecker(input)
 
     return designChecker.designs.filter {
-        designChecker.isPossibleDesign(design: $0, towelTypes: designChecker.towelTypes)
+        designChecker.isPossibleDesign(design: $0)
     }.count
 }
 
@@ -14,7 +14,7 @@ func totalNumberOfValidDesignConfigurations(in input: String) -> Int {
     var designConfigurationsCounts = [Int]()
     for i in 0 ..< designChecker.designs.count {
         print("Working on design: \(i)")
-        designConfigurationsCounts.append(designChecker.numberOfValidDesignConfigurations(design: designChecker.designs[i], towelTypes: designChecker.towelTypes))
+        designConfigurationsCounts.append(designChecker.numberOfValidDesignConfigurations(design: designChecker.designs[i]))
     }
     
     return designConfigurationsCounts
@@ -35,11 +35,11 @@ class DesignChecker {
     
     private var cache: [String: Int] = ["":1]
     
-    func isPossibleDesign(design: String, towelTypes: [String]) -> Bool {
-        numberOfValidDesignConfigurations(design: design, towelTypes: towelTypes) > 0
+    func isPossibleDesign(design: String) -> Bool {
+        numberOfValidDesignConfigurations(design: design) > 0
     }
     
-    func numberOfValidDesignConfigurations(design: String, towelTypes: [String], runningCount: Int = 0) -> Int {
+    func numberOfValidDesignConfigurations(design: String, runningCount: Int = 0) -> Int {
         var runningCount = 0
         
         if let cachedValue = cache[design] {
@@ -48,7 +48,7 @@ class DesignChecker {
                 
         for towelType in towelTypes {
             if design.hasPrefix(towelType) {
-                runningCount += numberOfValidDesignConfigurations(design: String(design.dropFirst(towelType.count)), towelTypes: towelTypes, runningCount: runningCount)
+                runningCount += numberOfValidDesignConfigurations(design: String(design.dropFirst(towelType.count)), runningCount: runningCount)
             }
         }
         

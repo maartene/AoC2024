@@ -25,20 +25,17 @@ let exampleInput =
     @Test("The following designs are possible using towels: 'r, wr, b, g, bwu, rb, gb, br'", arguments: [
         "brwrr", "bggr", "gbbr", "rrbgbr", "bwurrg", "brgr"
     ]) func designIsPossibleUsingTowels(design: String) {
-        let towelTypes = ["r", "wr", "b", "g", "bwu", "rb", "gb", "br"]
-        #expect(designChecker.isPossibleDesign(design: design, towelTypes: towelTypes))
+        #expect(designChecker.isPossibleDesign(design: design))
     }
     
     @Test("The following designs are not possible using towels: 'r, wr, b, g, bwu, rb, gb, br'", arguments: [
         "ubwu", "bbrgwb"
     ]) func designIsNotPossibleUsingTowels(design: String) {
-        let towelTypes = ["r", "wr", "b", "g", "bwu", "rb", "gb", "br"]
-        #expect(designChecker.isPossibleDesign(design: design, towelTypes: towelTypes) == false)
+        #expect(designChecker.isPossibleDesign(design: design) == false)
     }
     
     @Test("'bwurrg' can be made using towels 'r, wr, b, g, bwu, rb, gb, br'") func bwurrgIsPossible() {
-        let towelTypes = ["r", "wr", "b", "g", "bwu", "rb", "gb", "br"]
-        #expect(designChecker.isPossibleDesign(design: "bwurrg", towelTypes: towelTypes))
+        #expect(designChecker.isPossibleDesign(design: "bwurrg"))
     }
     
     @Test("Only 298 of 400 designs can be made using towels in the example input") func possibleDesignsInActualInput() {
@@ -62,8 +59,7 @@ let exampleInput =
         ("bwurrg", 1),
         ("brgr", 2),
     ]) func numberOfConfigurationsForExample(testcase: (design: String, expectedConfigurationCount: Int)) {
-        let towelTypes = ["r", "wr", "b", "g", "bwu", "rb", "gb", "br"]
-        #expect(designChecker.numberOfValidDesignConfigurations(design: testcase.design, towelTypes: towelTypes) == testcase.expectedConfigurationCount)
+        #expect(designChecker.numberOfValidDesignConfigurations(design: testcase.design) == testcase.expectedConfigurationCount)
     }
     
     @Test("There are a total of 572248688842069 ways that the towels can be arranged into the valid design configurations in the actual input") func totalNumberOfValidDesignConfigurationsInActualInput() {
