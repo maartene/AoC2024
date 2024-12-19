@@ -53,8 +53,10 @@ let exampleInput =
         #expect(totalNumberOfValidDesignConfigurations(in: exampleInput) == 16)
     }
     
-    @Test("There are a total of 2 ways that the towels can be arranged into 'brwrr'") func numberOfConfigurationsForExample() {
+    @Test("Number of configurations that the towels can be arranged into designs", arguments: [
+        ("brwrr", 2)
+    ]) func numberOfConfigurationsForExample(testcase: (design: String, expectedConfigurationCount: Int)) {
         let towelTypes = ["r", "wr", "b", "g", "bwu", "rb", "gb", "br"]
-        #expect(designChecker.numberOfValidDesignConfigurations(design: "brwrr", towelTypes: towelTypes) == 2)
+        #expect(designChecker.numberOfValidDesignConfigurations(design: testcase.design, towelTypes: towelTypes) == testcase.expectedConfigurationCount)
     }
 }
