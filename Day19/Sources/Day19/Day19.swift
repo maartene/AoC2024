@@ -9,7 +9,7 @@ func possibleDesigns(in input: String) -> Int {
     let designChecker = DesignChecker()
 
     return designs.filter {
-        return designChecker.isPossibleDesign(design: $0, towelTypes: towelTypes)
+        designChecker.isPossibleDesign(design: $0, towelTypes: towelTypes)
     }.count
 }
 
@@ -18,10 +18,8 @@ func totalNumberOfValidDesignConfigurations(in input: String) -> Int {
     let towelTypes = lines[0].split(separator: ",").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
     lines.removeFirst()
     
-    var designs = lines.map(String.init)
+    let designs = lines.map(String.init)
     let designChecker = DesignChecker()
-    
-    designs = designs.filter { designChecker.isPossibleDesign(design: $0, towelTypes: towelTypes) }
     
     var designConfigurationsCounts = [Int]()
     for i in 0 ..< designs.count {
@@ -39,26 +37,7 @@ class DesignChecker {
     private var cache2: [String: Int] = ["":1]
     
     func isPossibleDesign(design: String, towelTypes: [String]) -> Bool {
-        if let cachedResult = cache[design] {
-            return cachedResult
-        }
-        
-        if towelTypes.contains(design) {
-            cache[design] = true
-            return true
-        }
-        
-        for towelType in towelTypes {
-            if design.hasPrefix(towelType) {
-                if isPossibleDesign(design: String(design.dropFirst(towelType.count)), towelTypes: towelTypes) {
-                    cache[design] = true
-                    return true
-                }
-            }
-        }
-        
-        cache[design] = false
-        return false
+        numberOfValidDesignConfigurations(design: design, towelTypes: towelTypes) > 0
     }
     
     func numberOfValidDesignConfigurations(design: String, towelTypes: [String], runningCount: Int = 0) -> Int {
