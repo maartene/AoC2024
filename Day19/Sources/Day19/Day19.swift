@@ -7,24 +7,38 @@ func possibleDesigns(in input: String) -> Int {
     
     let designs = lines.map(String.init)
     
+    let designChecker = DesignChecker()
+    
     return designs.filter {
-        isPossibleDesign(design: $0, towelTypes: towelTypes)
+        print("Testing design: \($0)")
+        return designChecker.isPossibleDesign(design: $0, towelTypes: towelTypes)
     }.count
 }
 
-func isPossibleDesign(design: String, towelTypes: [String]) -> Bool {
-    print("Testing: \(design)")
-    if towelTypes.contains(design) {
-        return true
-    }
+class DesignChecker {
+    private var cache: [String: Bool] = [:]
     
-    for towelType in towelTypes {
-        if design.hasPrefix(towelType) {
-            if isPossibleDesign(design: String(design.dropFirst(towelType.count)), towelTypes: towelTypes) {
-                return true
+    func isPossibleDesign(design: String, towelTypes: [String]) -> Bool {
+        if let cachedResult = cache[design] {
+            return cachedResult
+        }
+        
+        if towelTypes.contains(design) {
+            cache[design] = true
+            return true
+        }
+        
+        for towelType in towelTypes {
+            if design.hasPrefix(towelType) {
+                if isPossibleDesign(design: String(design.dropFirst(towelType.count)), towelTypes: towelTypes) {
+                    cache[design] = true
+                    return true
+                }
             }
         }
+        
+        cache[design] = false
+        return false
     }
-    
-    return false
+
 }

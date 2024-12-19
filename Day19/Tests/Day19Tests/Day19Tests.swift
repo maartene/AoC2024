@@ -2,6 +2,8 @@ import Testing
 @testable import Day19
 
 @Suite("To get the first star on day 19") struct Day19StarOneTests {
+    let designChecker = DesignChecker()
+    
     @Test("Only 6 of 8 designs can be made using towels in the example input") func possibleDesignsInExampleInput() {
         let exampleInput =
         """
@@ -24,19 +26,23 @@ import Testing
         "brwrr", "bggr", "gbbr", "rrbgbr", "bwurrg", "brgr"
     ]) func designIsPossibleUsingTowels(design: String) {
         let towelTypes = ["r", "wr", "b", "g", "bwu", "rb", "gb", "br"]
-        #expect(isPossibleDesign(design: design, towelTypes: towelTypes))
+        #expect(designChecker.isPossibleDesign(design: design, towelTypes: towelTypes))
     }
     
     @Test("The following designs are not possible using towels: 'r, wr, b, g, bwu, rb, gb, br'", arguments: [
         "ubwu", "bbrgwb"
     ]) func designIsNotPossibleUsingTowels(design: String) {
         let towelTypes = ["r", "wr", "b", "g", "bwu", "rb", "gb", "br"]
-        #expect(isPossibleDesign(design: design, towelTypes: towelTypes) == false)
+        #expect(designChecker.isPossibleDesign(design: design, towelTypes: towelTypes) == false)
     }
     
     @Test("'bwurrg' can be made using towels 'r, wr, b, g, bwu, rb, gb, br'") func bwurrgIsPossible() {
         let towelTypes = ["r", "wr", "b", "g", "bwu", "rb", "gb", "br"]
-        #expect(isPossibleDesign(design: "bwurrg", towelTypes: towelTypes))
+        #expect(designChecker.isPossibleDesign(design: "bwurrg", towelTypes: towelTypes))
+    }
+    
+    @Test("Only ? of ? designs can be made using towels in the example input") func possibleDesignsInActualInput() {
+        #expect(possibleDesigns(in: input) == 6)
     }
 }
 
