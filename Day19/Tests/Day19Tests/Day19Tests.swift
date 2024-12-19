@@ -41,8 +41,8 @@ import Testing
         #expect(designChecker.isPossibleDesign(design: "bwurrg", towelTypes: towelTypes))
     }
     
-    @Test("Only ? of ? designs can be made using towels in the example input") func possibleDesignsInActualInput() {
-        #expect(possibleDesigns(in: input) == 6)
+    @Test("Only 298 of 400 designs can be made using towels in the example input") func possibleDesignsInActualInput() {
+        #expect(possibleDesigns(in: input) == 298)
     }
 }
 

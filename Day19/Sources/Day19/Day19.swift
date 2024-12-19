@@ -6,9 +6,8 @@ func possibleDesigns(in input: String) -> Int {
     lines.removeFirst()
     
     let designs = lines.map(String.init)
-    
     let designChecker = DesignChecker()
-    
+
     return designs.filter {
         print("Testing design: \($0)")
         return designChecker.isPossibleDesign(design: $0, towelTypes: towelTypes)
