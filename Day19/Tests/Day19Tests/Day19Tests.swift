@@ -24,4 +24,17 @@ import Testing
         #expect(possibleDesigns(in: exampleInput) == 6)
     }
     
+    @Test("The design 'brwwr' is possible using towels: 'r, wr, b, g, bwu, rb, gb, br'") func designIsPossibleUsingTowels() {
+        let towelTypes = ["r", "wr", "b", "g", "bwu", "rb", "gb", "br"]
+        #expect(isPossibleDesign(design: "brwwr", towelTypes: towelTypes))
+    }
+    
+    @Test("The design 'ubwu' is not possible using towels: 'r, wr, b, g, bwu, rb, gb, br'") func designIsNotPossibleUsingTowels() {
+        let towelTypes = ["r", "wr", "b", "g", "bwu", "rb", "gb", "br"]
+        #expect(isPossibleDesign(design: "ubwu", towelTypes: towelTypes) == false)
+    }
+    
 }
+
+
+
