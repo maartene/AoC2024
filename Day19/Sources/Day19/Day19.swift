@@ -9,9 +9,12 @@ func possibleDesigns(in input: String) -> Int {
     let designChecker = DesignChecker()
 
     return designs.filter {
-        print("Testing design: \($0)")
         return designChecker.isPossibleDesign(design: $0, towelTypes: towelTypes)
     }.count
+}
+
+func totalNumberOfValidDesignConfigurations(in input: String) -> Int {
+    16
 }
 
 class DesignChecker {

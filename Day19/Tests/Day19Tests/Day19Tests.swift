@@ -1,24 +1,24 @@
 import Testing
 @testable import Day19
 
+let exampleInput =
+    """
+    r, wr, b, g, bwu, rb, gb, br
+
+    brwrr
+    bggr
+    gbbr
+    rrbgbr
+    ubwu
+    bwurrg
+    brgr
+    bbrgwb
+    """
+
 @Suite("To get the first star on day 19") struct Day19StarOneTests {
     let designChecker = DesignChecker()
     
     @Test("Only 6 of 8 designs can be made using towels in the example input") func possibleDesignsInExampleInput() {
-        let exampleInput =
-        """
-        r, wr, b, g, bwu, rb, gb, br
-
-        brwrr
-        bggr
-        gbbr
-        rrbgbr
-        ubwu
-        bwurrg
-        brgr
-        bbrgwb
-        """
-        
         #expect(possibleDesigns(in: exampleInput) == 6)
     }
     
@@ -46,5 +46,8 @@ import Testing
     }
 }
 
-
-
+@Suite("To get the second star on day 19") struct Day19StarTwoTests {
+    @Test("There are a total of 16 ways that the towels can be arranged into the valid design configurations in the example input") func totalNumberOfValidDesignConfigurationsInExampleInput() {
+        #expect(totalNumberOfValidDesignConfigurations(in: exampleInput) == 16)
+    }
+}
