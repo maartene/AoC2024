@@ -46,5 +46,9 @@ class DesignChecker {
         cache[design] = false
         return false
     }
+    
+    func numberOfValidDesignConfigurations(design: String, towelTypes: [String]) -> Int? {
+        2
+    }
 
 }

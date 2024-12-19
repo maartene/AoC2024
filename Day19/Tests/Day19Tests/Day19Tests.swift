@@ -47,7 +47,14 @@ let exampleInput =
 }
 
 @Suite("To get the second star on day 19") struct Day19StarTwoTests {
+    let designChecker = DesignChecker()
+    
     @Test("There are a total of 16 ways that the towels can be arranged into the valid design configurations in the example input") func totalNumberOfValidDesignConfigurationsInExampleInput() {
         #expect(totalNumberOfValidDesignConfigurations(in: exampleInput) == 16)
+    }
+    
+    @Test("There are a total of 2 ways that the towels can be arranged into 'brwrr'") func numberOfConfigurationsForExample() {
+        let towelTypes = ["r", "wr", "b", "g", "bwu", "rb", "gb", "br"]
+        #expect(designChecker.numberOfValidDesignConfigurations(design: "brwrr", towelTypes: towelTypes) == 2)
     }
 }
