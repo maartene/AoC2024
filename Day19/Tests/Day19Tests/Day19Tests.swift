@@ -25,7 +25,7 @@ import Testing
     }
     
     @Test("The following designs are possible using towels: 'r, wr, b, g, bwu, rb, gb, br'", arguments: [
-        "brwrr"
+        "brwrr", "bggr", "gbbr", "rrbgbr", "bwurrg", "brgr"
     ]) func designIsPossibleUsingTowels(design: String) {
         let towelTypes = ["r", "wr", "b", "g", "bwu", "rb", "gb", "br"]
         #expect(isPossibleDesign(design: design, towelTypes: towelTypes))
