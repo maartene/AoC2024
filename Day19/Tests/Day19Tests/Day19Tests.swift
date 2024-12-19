@@ -16,7 +16,7 @@ let exampleInput =
     """
 
 @Suite("To get the first star on day 19") struct Day19StarOneTests {
-    let designChecker = DesignChecker()
+    let designChecker = DesignChecker(exampleInput)
     
     @Test("Only 6 of 8 designs can be made using towels in the example input") func possibleDesignsInExampleInput() {
         #expect(possibleDesigns(in: exampleInput) == 6)
@@ -47,7 +47,7 @@ let exampleInput =
 }
 
 @Suite("To get the second star on day 19") struct Day19StarTwoTests {
-    let designChecker = DesignChecker()
+    let designChecker = DesignChecker(exampleInput)
     
     @Test("There are a total of 16 ways that the towels can be arranged into the valid design configurations in the example input") func totalNumberOfValidDesignConfigurationsInExampleInput() {
         #expect(totalNumberOfValidDesignConfigurations(in: exampleInput) == 16)

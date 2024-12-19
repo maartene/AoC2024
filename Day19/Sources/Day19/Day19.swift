@@ -1,30 +1,20 @@
 import Foundation
 
 func possibleDesigns(in input: String) -> Int {
-    var lines = input.split(separator: "\n")
-    let towelTypes = lines[0].split(separator: ",").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
-    lines.removeFirst()
-    
-    let designs = lines.map(String.init)
-    let designChecker = DesignChecker()
+    let designChecker = DesignChecker(input)
 
-    return designs.filter {
-        designChecker.isPossibleDesign(design: $0, towelTypes: towelTypes)
+    return designChecker.designs.filter {
+        designChecker.isPossibleDesign(design: $0, towelTypes: designChecker.towelTypes)
     }.count
 }
 
 func totalNumberOfValidDesignConfigurations(in input: String) -> Int {
-    var lines = input.split(separator: "\n")
-    let towelTypes = lines[0].split(separator: ",").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
-    lines.removeFirst()
-    
-    let designs = lines.map(String.init)
-    let designChecker = DesignChecker()
+    let designChecker = DesignChecker(input)
     
     var designConfigurationsCounts = [Int]()
-    for i in 0 ..< designs.count {
+    for i in 0 ..< designChecker.designs.count {
         print("Working on design: \(i)")
-        designConfigurationsCounts.append(designChecker.numberOfValidDesignConfigurations(design: designs[i], towelTypes: towelTypes))
+        designConfigurationsCounts.append(designChecker.numberOfValidDesignConfigurations(design: designChecker.designs[i], towelTypes: designChecker.towelTypes))
     }
     
     return designConfigurationsCounts
@@ -32,6 +22,17 @@ func totalNumberOfValidDesignConfigurations(in input: String) -> Int {
 }
 
 class DesignChecker {
+    let towelTypes: [String]
+    let designs: [String]
+    
+    init(_ input: String) {
+        var lines = input.split(separator: "\n")
+        towelTypes = lines[0].split(separator: ",").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
+        lines.removeFirst()
+        
+        designs = lines.map(String.init)
+    }
+    
     private var cache: [String: Bool] = [:]
     
     private var cache2: [String: Int] = ["":1]
