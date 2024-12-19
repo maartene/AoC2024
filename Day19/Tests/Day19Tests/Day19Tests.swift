@@ -54,7 +54,13 @@ let exampleInput =
     }
     
     @Test("Number of configurations that the towels can be arranged into designs", arguments: [
-        ("brwrr", 2)
+        ("brwrr", 2),
+        ("bggr", 1),
+        ("gbgb", 4),  // g b g g,  gb g b, gb gb, g b gb
+        ("gbbr", 4),
+        ("rrbgbr", 6),
+        ("bwurrg", 1),
+        ("brgr", 2),
     ]) func numberOfConfigurationsForExample(testcase: (design: String, expectedConfigurationCount: Int)) {
         let towelTypes = ["r", "wr", "b", "g", "bwu", "rb", "gb", "br"]
         #expect(designChecker.numberOfValidDesignConfigurations(design: testcase.design, towelTypes: towelTypes) == testcase.expectedConfigurationCount)

@@ -14,15 +14,22 @@ func possibleDesigns(in input: String) -> Int {
 }
 
 func totalNumberOfValidDesignConfigurations(in input: String) -> Int {
-    let designConfigurationsCounts = [2, 1, 4, 6, nil, 1, 2, nil]
+    var lines = input.split(separator: "\n")
+    let towelTypes = lines[0].split(separator: ",").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
+    lines.removeFirst()
+    
+    let designs = lines.map(String.init)
+    let designChecker = DesignChecker()
+    
+    let designConfigurationsCounts = designs.map { designChecker.numberOfValidDesignConfigurations(design: $0, towelTypes: towelTypes) }
     
     return designConfigurationsCounts
-        .compactMap { $0 }
         .reduce(0, +)
 }
 
 class DesignChecker {
     private var cache: [String: Bool] = [:]
+    private var cache2: [String: Int] = [:]
     
     func isPossibleDesign(design: String, towelTypes: [String]) -> Bool {
         if let cachedResult = cache[design] {
@@ -47,8 +54,28 @@ class DesignChecker {
         return false
     }
     
-    func numberOfValidDesignConfigurations(design: String, towelTypes: [String]) -> Int? {
-        2
+    func numberOfValidDesignConfigurations(design: String, towelTypes: [String], runningCount: Int = 0, stringBuild: [String] = []) -> Int {
+//        if let cachedResult = cache2[design] {
+//            return cachedResult
+//        }
+        
+        var runningCount = runningCount
+        
+        if towelTypes.contains(design) {
+            runningCount += 1
+            cache2[design, default: 0] += runningCount
+            print("DONE: \(stringBuild.joined(separator: ",")),\(design)  runningCount: \(runningCount)")
+        }
+        
+        for towelType in towelTypes {
+            var stringBuildCopy = stringBuild
+            if design.hasPrefix(towelType) {
+                stringBuildCopy.append(towelType)
+                runningCount = numberOfValidDesignConfigurations(design: String(design.dropFirst(towelType.count)), towelTypes: towelTypes, runningCount: runningCount, stringBuild: stringBuildCopy)
+            }
+        }
+        
+        return runningCount
     }
 
 }
