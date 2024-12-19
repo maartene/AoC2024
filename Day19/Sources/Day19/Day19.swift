@@ -18,10 +18,16 @@ func totalNumberOfValidDesignConfigurations(in input: String) -> Int {
     let towelTypes = lines[0].split(separator: ",").map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
     lines.removeFirst()
     
-    let designs = lines.map(String.init)
+    var designs = lines.map(String.init)
     let designChecker = DesignChecker()
     
-    let designConfigurationsCounts = designs.map { designChecker.numberOfValidDesignConfigurations(design: $0, towelTypes: towelTypes) }
+    designs = designs.filter { designChecker.isPossibleDesign(design: $0, towelTypes: towelTypes) }
+    
+    var designConfigurationsCounts = [Int]()
+    for i in 0 ..< designs.count {
+        print("Working on design: \(i)")
+        designConfigurationsCounts.append(designChecker.numberOfValidDesignConfigurations(design: designs[i], towelTypes: towelTypes))
+    }
     
     return designConfigurationsCounts
         .reduce(0, +)
@@ -29,7 +35,8 @@ func totalNumberOfValidDesignConfigurations(in input: String) -> Int {
 
 class DesignChecker {
     private var cache: [String: Bool] = [:]
-    private var cache2: [String: Int] = [:]
+    
+    private var cache2: [String: Int] = ["":1]
     
     func isPossibleDesign(design: String, towelTypes: [String]) -> Bool {
         if let cachedResult = cache[design] {
@@ -54,28 +61,21 @@ class DesignChecker {
         return false
     }
     
-    func numberOfValidDesignConfigurations(design: String, towelTypes: [String], runningCount: Int = 0, stringBuild: [String] = []) -> Int {
-//        if let cachedResult = cache2[design] {
-//            return cachedResult
-//        }
+    func numberOfValidDesignConfigurations(design: String, towelTypes: [String], runningCount: Int = 0) -> Int {
+        var runningCount = 0
         
-        var runningCount = runningCount
-        
-        if towelTypes.contains(design) {
-            runningCount += 1
-            cache2[design, default: 0] += runningCount
-            print("DONE: \(stringBuild.joined(separator: ",")),\(design)  runningCount: \(runningCount)")
+        if let cachedValue = cache2[design] {
+            return cachedValue
         }
-        
+                
         for towelType in towelTypes {
-            var stringBuildCopy = stringBuild
             if design.hasPrefix(towelType) {
-                stringBuildCopy.append(towelType)
-                runningCount = numberOfValidDesignConfigurations(design: String(design.dropFirst(towelType.count)), towelTypes: towelTypes, runningCount: runningCount, stringBuild: stringBuildCopy)
+                runningCount += numberOfValidDesignConfigurations(design: String(design.dropFirst(towelType.count)), towelTypes: towelTypes, runningCount: runningCount)
             }
         }
         
+        cache2[design] = runningCount
+        
         return runningCount
     }
-
 }

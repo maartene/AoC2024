@@ -65,4 +65,8 @@ let exampleInput =
         let towelTypes = ["r", "wr", "b", "g", "bwu", "rb", "gb", "br"]
         #expect(designChecker.numberOfValidDesignConfigurations(design: testcase.design, towelTypes: towelTypes) == testcase.expectedConfigurationCount)
     }
+    
+    @Test("There are a total of 572248688842069 ways that the towels can be arranged into the valid design configurations in the actual input") func totalNumberOfValidDesignConfigurationsInActualInput() {
+        #expect(totalNumberOfValidDesignConfigurations(in: input) == 572248688842069)
+    }
 }
