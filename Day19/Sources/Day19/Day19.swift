@@ -33,9 +33,7 @@ class DesignChecker {
         designs = lines.map(String.init)
     }
     
-    private var cache: [String: Bool] = [:]
-    
-    private var cache2: [String: Int] = ["":1]
+    private var cache: [String: Int] = ["":1]
     
     func isPossibleDesign(design: String, towelTypes: [String]) -> Bool {
         numberOfValidDesignConfigurations(design: design, towelTypes: towelTypes) > 0
@@ -44,7 +42,7 @@ class DesignChecker {
     func numberOfValidDesignConfigurations(design: String, towelTypes: [String], runningCount: Int = 0) -> Int {
         var runningCount = 0
         
-        if let cachedValue = cache2[design] {
+        if let cachedValue = cache[design] {
             return cachedValue
         }
                 
@@ -54,7 +52,7 @@ class DesignChecker {
             }
         }
         
-        cache2[design] = runningCount
+        cache[design] = runningCount
         
         return runningCount
     }
