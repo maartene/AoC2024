@@ -39,7 +39,7 @@ class DesignChecker {
         numberOfValidDesignConfigurations(design: design) > 0
     }
     
-    func numberOfValidDesignConfigurations(design: String, runningCount: Int = 0) -> Int {
+    func numberOfValidDesignConfigurations(design: String) -> Int {
         var runningCount = 0
         
         if let cachedValue = cache[design] {
@@ -48,7 +48,7 @@ class DesignChecker {
                 
         for towelType in towelTypes {
             if design.hasPrefix(towelType) {
-                runningCount += numberOfValidDesignConfigurations(design: String(design.dropFirst(towelType.count)), runningCount: runningCount)
+                runningCount += numberOfValidDesignConfigurations(design: String(design.dropFirst(towelType.count)))
             }
         }
         
