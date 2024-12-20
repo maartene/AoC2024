@@ -6,7 +6,9 @@ import Testing
 }
 
 @Suite("To get the first star on day 20") struct Day20StarOneTests {
-    @Test("There is one cheat in the example input that saves 64 picoseconds") func picoSecondsSavedInTheExampleInput() {
+    @Test("There are a number of cheats in the example input that saves at least certain picoseconds", arguments: [
+        (64, 1)
+    ]) func picoSecondsSavedInTheExampleInput(testCase: (minimumPicoSecondsSaved: Int, expectedNumberOfCheats: Int)) {
         let exampleInput =
         """
         ###############
@@ -26,6 +28,6 @@ import Testing
         ###############
         """
         
-        #expect(numberOfCheatsThatSaveAtLeast(picoSeconds: 64, in: exampleInput) == 1)
+        #expect(numberOfCheatsThatSaveAtLeast(picoSeconds: testCase.minimumPicoSecondsSaved, in: exampleInput) == testCase.expectedNumberOfCheats)
     }
 }
