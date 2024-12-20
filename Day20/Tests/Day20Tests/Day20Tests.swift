@@ -1,4 +1,5 @@
 import Testing
+import Shared
 @testable import Day20
 
 @Test func example() async throws {
@@ -34,5 +35,30 @@ import Testing
         """
         
         #expect(numberOfCheatsThatSaveAtLeast(picoSeconds: testCase.minimumPicoSecondsSaved, in: exampleInput) == testCase.expectedNumberOfCheats)
+    }
+    
+    @Test("Cheating at positions 1 and 2 saves 12 picosecond") func picoSecondsSavedInCheatedInput() {
+        let cheatedInput =
+        """
+        ###############
+        #...#...12....#
+        #.#.#.#.#.###.#
+        #S#...#.#.#...#
+        #######.#.#.###
+        #######.#.#...#
+        #######.#.###.#
+        ###..E#...#...#
+        ###.#######.###
+        #...###...#...#
+        #.#####.#.###.#
+        #.#...#.#.#...#
+        #.#.#.#.#.#.###
+        #...#...#...###
+        ###############
+        """
+        
+        let map = convertInputToMatrixOfCharacters(cheatedInput)
+        
+        #expect(BFS(start: Vector(x: 1, y: 3), destination: Vector(x: 5, y: 7), map: map) == 72)
     }
 }
