@@ -56,8 +56,8 @@ let exampleInput =
         
         let map = convertInputToMatrixOfCharacters(exampleInput)
         
-        let cheatTimes = calculateCheatTimes(startPosition: Vector(x: 1, y: 3), destination: Vector(x: 5, y: 7), in: map, maxTime: 84)
-        
+        let cheatTimes = calculateCheatTimes(startPosition: Vector(x: 1, y: 3), destination: Vector(x: 5, y: 7), in: map)
+        print(cheatTimes)
         for expectedCheatTime in expectedCheatTimes {
             #expect(cheatTimes[expectedCheatTime.key] == expectedCheatTime.value)
         }
@@ -113,6 +113,6 @@ let exampleInput =
     }
     
     @Test("There are 1490 number of cheats in the actual input that saves at least 100 picoseconds") func picoSecondsSavedInActualInput() {
-        //#expect(numberOfCheatsThatSaveAtLeast(picoSeconds: 100, in: input) == 1490)
+        #expect(numberOfCheatsThatSaveAtLeast(picoSeconds: 100, in: input) == 1490)
     }
 }

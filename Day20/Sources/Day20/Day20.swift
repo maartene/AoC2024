@@ -3,11 +3,11 @@ import Shared
 func numberOfCheatsThatSaveAtLeast(picoSeconds: Int, in mapString: String) -> Int {
     let numberOfCheatsThatSaveSpecificNumberOfPicoSeconds = numberOfCheatsThatSaveSpecificNumberOfPicoSeconds(in: mapString, minimumSavings: picoSeconds)
     
-//    let numberOfCheatsWithAtLeastSaving = numberOfCheatsThatSaveSpecificNumberOfPicoSeconds.filter {
-//        $0.key >= picoSeconds
-//    }
+    let numberOfCheatsWithAtLeastSaving = numberOfCheatsThatSaveSpecificNumberOfPicoSeconds.filter {
+        $0.key >= picoSeconds
+    }
     
-    return numberOfCheatsThatSaveSpecificNumberOfPicoSeconds.values.reduce(0, +)
+    return numberOfCheatsWithAtLeastSaving.values.reduce(0, +)
 }
 
 func numberOfCheatsThatSaveSpecificNumberOfPicoSeconds(in mapString: String, minimumSavings: Int = 0) -> [Int: Int] {
@@ -31,74 +31,34 @@ func numberOfCheatsThatSaveSpecificNumberOfPicoSeconds(in mapString: String, min
         fatalError("Was not able to read destination in map")
     }
 
-    let cheatTimes = calculateCheatTimes(startPosition: startPosition, destination: destination, in: map, maxTime: nonCheatTime - minimumSavings)
-    
-//    let cheatTimes =
-//    [
-//        82: 14,
-//        80: 14,
-//        78: 2,
-//        76: 4,
-//        74: 2,
-//        72: 3,
-//        64: 1,
-//        48: 1,
-//        46: 1,
-//        44: 1,
-//        20: 1
-//    ]
+    let cheatTimes = calculateCheatTimes(startPosition: startPosition, destination: destination, in: map)
     
     return cheatTimes.reduce(into: [Int : Int]()) { partialResult, cheatTime in
         partialResult[nonCheatTime - cheatTime.key] = cheatTime.value
     }
 }
 
-func calculateCheatTimes(startPosition: Vector, destination: Vector, in map: [[Character]], maxTime: Int) -> [Int: Int] {
-    var cheatMap = map
-    
+func calculateCheatTimes(startPosition: Vector, destination: Vector, in map: [[Character]]) -> [Int: Int] {
     var result = [Int : Int]()
     
-    let shortestPath = BFSToPath(start: startPosition, destination: destination, map: cheatMap)
+    let shortestPath: [(coord: Vector, cost: Int)] = BFSToPath(start: startPosition, destination: destination, map: map)
+        .enumerated()
+        .map { ($0.element, $0.offset) }
+    let shortestPathLength = shortestPath.count - 1
     
-    var paths = Set<[Vector]>()
-    
-    for (index, position) in shortestPath.enumerated() {
-        print("Checking position \(index) of \(shortestPath.count)")
-        let otherPositions = shortestPath.filter { $0 != position }
-        
-        for otherPosition in otherPositions {
-            if Vector.manhattenDistance(v1: position, v2: otherPosition) == 2 {
-                let intermediatePoint = position + ((otherPosition - position) / 2)
-                if map[intermediatePoint.y][intermediatePoint.x] == "#" {
-                    cheatMap[intermediatePoint.y][intermediatePoint.x] = "."
-                    //if let count = BFS(start: startPosition, destination: destination, map: cheatMap) {
-                    let path = BFSToPath(start: startPosition, destination: destination, map: cheatMap)
-                    if path.count <= maxTime && paths.contains(path) == false {
-                        result[path.count, default: 0] += 1
-                        paths.insert(path)
-                        }
-                    //}
-                    cheatMap[intermediatePoint.y][intermediatePoint.x] = "#"
-                }
-            }
+    for (coord, cost) in shortestPath {
+        print("checking coord \(cost) of \(shortestPathLength)")
+        let otherCoords = shortestPath.filter { $0.cost > cost }
+        for otherCoord in otherCoords {
+            let dist = Vector.manhattenDistance(v1: coord, v2: otherCoord.coord)
             
-            if Vector.manhattenDistance(v1: position, v2: otherPosition) == 3 {
-                let intermediatePoint = position + ((otherPosition - position) * 2 / 3)
-                if map[intermediatePoint.y][intermediatePoint.x] == "#" {
-                    cheatMap[intermediatePoint.y][intermediatePoint.x] = "."
-                    //if let count = BFS(start: startPosition, destination: destination, map: cheatMap) {
-                    let path = BFSToPath(start: startPosition, destination: destination, map: cheatMap)
-                    if path.count <= maxTime && paths.contains(path) == false {
-                        print("Three skip!")
-                        result[path.count, default: 0] += 1
-                        paths.insert(path)
-                    }
-                    //}
-                    cheatMap[intermediatePoint.y][intermediatePoint.x] = "#"
+            if dist <= 2 {
+                let shortCut = otherCoord.cost - cost - dist
+                if shortCut > 0 {
+                    result[shortestPathLength - shortCut, default: 0] += 1
                 }
             }
         }
-        
     }
     
     return result
@@ -109,7 +69,7 @@ public func BFSToPath(start: Vector, destination: Vector, map: [[Character]]) ->
     let mapSize = Vector(x: map[0].count, y: map.count)
 
     // Queue for BFS and a set to keep track of visited points
-    var queue: [(Vector, [Vector])] = [(start, [])]  // (current point, distance)
+    var queue: [(Vector, [Vector])] = [(start, [start])]  // (current point, distance)
     var visited: Set<Vector> = [start]
 
     while queue.isEmpty == false {
