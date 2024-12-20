@@ -28,9 +28,40 @@ let exampleInput =
         (38, 3),
         (36, 4),
         (20, 5),
-        (12, 8)
+        (12, 8),
+        (10, 10),
+        (8, 14),
+        (6, 16),
+        (4, 30),
+        (2, 44)
     ]) func picoSecondsSavedInTheExampleInput(testCase: (minimumPicoSecondsSaved: Int, expectedNumberOfCheats: Int)) {
         #expect(numberOfCheatsThatSaveAtLeast(picoSeconds: testCase.minimumPicoSecondsSaved, in: exampleInput) == testCase.expectedNumberOfCheats)
+    }
+    
+    @Test("There are a number of cheats in the example input that saves exactly these many picoseconds") func expectedCheatedPathLengthsInExampleInput() {
+        let expectedCheatTimes =
+            [
+                82: 14,
+                80: 14,
+                78: 2,
+                76: 4,
+                74: 2,
+                72: 3,
+                64: 1,
+                48: 1,
+                46: 1,
+                44: 1,
+                20: 1
+            ]
+        
+        let map = convertInputToMatrixOfCharacters(exampleInput)
+        
+        let cheatTimes = calculateCheatTimes(startPosition: Vector(x: 1, y: 3), destination: Vector(x: 5, y: 7), in: map, maxTime: 84)
+        
+        for expectedCheatTime in expectedCheatTimes {
+            #expect(cheatTimes[expectedCheatTime.key] == expectedCheatTime.value)
+        }
+        
     }
     
     @Test("Cheating at positions 1 and 2 saves 12 picosecond") func picoSecondsSavedInCheatedInput() {
@@ -79,5 +110,9 @@ let exampleInput =
             cheatMap[startCheat.y][startCheat.x] = map[startCheat.y][startCheat.x]
             cheatMap[neighbour.y][neighbour.x] = map[neighbour.y][neighbour.x]
         }
+    }
+    
+    @Test("There are ? number of cheats in the actual input that saves at least 100 picoseconds") func picoSecondsSavedInActualInput() {
+        #expect(numberOfCheatsThatSaveAtLeast(picoSeconds: 100, in: input) == 0)
     }
 }

@@ -1,16 +1,16 @@
 import Shared
 
 func numberOfCheatsThatSaveAtLeast(picoSeconds: Int, in mapString: String) -> Int {
-    let numberOfCheatsThatSaveSpecificNumberOfPicoSeconds = numberOfCheatsThatSaveSpecificNumberOfPicoSeconds(in: mapString)
+    let numberOfCheatsThatSaveSpecificNumberOfPicoSeconds = numberOfCheatsThatSaveSpecificNumberOfPicoSeconds(in: mapString, minimumSavings: picoSeconds)
     
-    let numberOfCheatsWithAtLeastSaving = numberOfCheatsThatSaveSpecificNumberOfPicoSeconds.filter {
-        $0.key >= picoSeconds
-    }
+//    let numberOfCheatsWithAtLeastSaving = numberOfCheatsThatSaveSpecificNumberOfPicoSeconds.filter {
+//        $0.key >= picoSeconds
+//    }
     
-    return numberOfCheatsWithAtLeastSaving.values.reduce(0, +)
+    return numberOfCheatsThatSaveSpecificNumberOfPicoSeconds.values.reduce(0, +)
 }
 
-func numberOfCheatsThatSaveSpecificNumberOfPicoSeconds(in mapString: String) -> [Int: Int] {
+func numberOfCheatsThatSaveSpecificNumberOfPicoSeconds(in mapString: String, minimumSavings: Int = 0) -> [Int: Int] {
     let map = convertInputToMatrixOfCharacters(mapString)
     
     // find stand and end position
@@ -31,7 +31,7 @@ func numberOfCheatsThatSaveSpecificNumberOfPicoSeconds(in mapString: String) -> 
         fatalError("Was not able to read destination in map")
     }
 
-    let cheatTimes = calculateCheatTimes(startPosition: startPosition, destination: destination, in: map, maxTime: nonCheatTime)
+    let cheatTimes = calculateCheatTimes(startPosition: startPosition, destination: destination, in: map, maxTime: nonCheatTime - minimumSavings)
     
 //    let cheatTimes =
 //    [
@@ -62,7 +62,8 @@ func calculateCheatTimes(startPosition: Vector, destination: Vector, in map: [[C
     
     var paths = Set<[Vector]>()
     
-    for position in shortestPath {
+    for (index, position) in shortestPath.enumerated() {
+        print("Checking position \(index) of \(shortestPath.count)")
         let otherPositions = shortestPath.filter { $0 != position }
         
         for otherPosition in otherPositions {
@@ -72,11 +73,26 @@ func calculateCheatTimes(startPosition: Vector, destination: Vector, in map: [[C
                     cheatMap[intermediatePoint.y][intermediatePoint.x] = "."
                     //if let count = BFS(start: startPosition, destination: destination, map: cheatMap) {
                     let path = BFSToPath(start: startPosition, destination: destination, map: cheatMap)
-                    if path.count == 20 { print(path) }
-                    if path.count < maxTime && paths.contains(path) == false {
+                    if path.count <= maxTime && paths.contains(path) == false {
                         result[path.count, default: 0] += 1
                         paths.insert(path)
                         }
+                    //}
+                    cheatMap[intermediatePoint.y][intermediatePoint.x] = "#"
+                }
+            }
+            
+            if Vector.manhattenDistance(v1: position, v2: otherPosition) == 3 {
+                let intermediatePoint = position + ((otherPosition - position) * 2 / 3)
+                if map[intermediatePoint.y][intermediatePoint.x] == "#" {
+                    cheatMap[intermediatePoint.y][intermediatePoint.x] = "."
+                    //if let count = BFS(start: startPosition, destination: destination, map: cheatMap) {
+                    let path = BFSToPath(start: startPosition, destination: destination, map: cheatMap)
+                    if path.count <= maxTime && paths.contains(path) == false {
+                        print("Three skip!")
+                        result[path.count, default: 0] += 1
+                        paths.insert(path)
+                    }
                     //}
                     cheatMap[intermediatePoint.y][intermediatePoint.x] = "#"
                 }
