@@ -1,7 +1,7 @@
 import Shared
 
-func numberOfCheatsThatSaveAtLeast(picoSeconds: Int, in mapString: String) -> Int {
-    let numberOfCheatsThatSaveSpecificNumberOfPicoSeconds = numberOfCheatsThatSaveSpecificNumberOfPicoSeconds(in: mapString, minimumSavings: picoSeconds)
+func numberOfCheatsThatSaveAtLeast(picoSeconds: Int, in mapString: String, maxCheats: Int = 2) -> Int {
+    let numberOfCheatsThatSaveSpecificNumberOfPicoSeconds = numberOfCheatsThatSaveSpecificNumberOfPicoSeconds(in: mapString, minimumSavings: picoSeconds, maxCheats: maxCheats)
     
     let numberOfCheatsWithAtLeastSaving = numberOfCheatsThatSaveSpecificNumberOfPicoSeconds.filter {
         $0.key >= picoSeconds
@@ -10,7 +10,7 @@ func numberOfCheatsThatSaveAtLeast(picoSeconds: Int, in mapString: String) -> In
     return numberOfCheatsWithAtLeastSaving.values.reduce(0, +)
 }
 
-func numberOfCheatsThatSaveSpecificNumberOfPicoSeconds(in mapString: String, minimumSavings: Int = 0) -> [Int: Int] {
+func numberOfCheatsThatSaveSpecificNumberOfPicoSeconds(in mapString: String, minimumSavings: Int = 0, maxCheats: Int) -> [Int: Int] {
     let map = convertInputToMatrixOfCharacters(mapString)
     
     // find stand and end position
@@ -31,14 +31,14 @@ func numberOfCheatsThatSaveSpecificNumberOfPicoSeconds(in mapString: String, min
         fatalError("Was not able to read destination in map")
     }
 
-    let cheatTimes = calculateCheatTimes(startPosition: startPosition, destination: destination, in: map)
+    let cheatTimes = calculateCheatTimes(startPosition: startPosition, destination: destination, in: map, maxCheats: maxCheats)
     
     return cheatTimes.reduce(into: [Int : Int]()) { partialResult, cheatTime in
         partialResult[nonCheatTime - cheatTime.key] = cheatTime.value
     }
 }
 
-func calculateCheatTimes(startPosition: Vector, destination: Vector, in map: [[Character]]) -> [Int: Int] {
+func calculateCheatTimes(startPosition: Vector, destination: Vector, in map: [[Character]], maxCheats: Int) -> [Int: Int] {
     var result = [Int : Int]()
     
     let shortestPath: [(coord: Vector, cost: Int)] = BFSToPath(start: startPosition, destination: destination, map: map)
@@ -52,7 +52,7 @@ func calculateCheatTimes(startPosition: Vector, destination: Vector, in map: [[C
         for otherCoord in otherCoords {
             let dist = Vector.manhattenDistance(v1: coord, v2: otherCoord.coord)
             
-            if dist <= 2 {
+            if dist <= maxCheats {
                 let shortCut = otherCoord.cost - cost - dist
                 if shortCut > 0 {
                     result[shortestPathLength - shortCut, default: 0] += 1

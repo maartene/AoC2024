@@ -56,7 +56,7 @@ let exampleInput =
         
         let map = convertInputToMatrixOfCharacters(exampleInput)
         
-        let cheatTimes = calculateCheatTimes(startPosition: Vector(x: 1, y: 3), destination: Vector(x: 5, y: 7), in: map)
+        let cheatTimes = calculateCheatTimes(startPosition: Vector(x: 1, y: 3), destination: Vector(x: 5, y: 7), in: map, maxCheats: 2)
         print(cheatTimes)
         for expectedCheatTime in expectedCheatTimes {
             #expect(cheatTimes[expectedCheatTime.key] == expectedCheatTime.value)
@@ -114,5 +114,11 @@ let exampleInput =
     
     @Test("There are 1490 number of cheats in the actual input that saves at least 100 picoseconds") func picoSecondsSavedInActualInput() {
         #expect(numberOfCheatsThatSaveAtLeast(picoSeconds: 100, in: input) == 1490)
+    }
+}
+
+@Suite("To get the second star on day 20") struct Day20StarTwoTests {
+    @Test("There are 1011325 number of cheats in the actual input that saves at least 100 picoseconds") func picoSecondsSavedInActualInput() {
+        #expect(numberOfCheatsThatSaveAtLeast(picoSeconds: 100, in: input, maxCheats: 20) == 1011325)
     }
 }
