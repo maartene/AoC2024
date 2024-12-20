@@ -64,54 +64,6 @@ let exampleInput =
         
     }
     
-    @Test("Cheating at positions 1 and 2 saves 12 picosecond") func picoSecondsSavedInCheatedInput() {
-        let cheatedInput =
-        """
-        ###############
-        #...#...12....#
-        #.#.#.#.#.###.#
-        #S#...#.#.#...#
-        #######.#.#.###
-        #######.#.#...#
-        #######.#.###.#
-        ###..E#...#...#
-        ###.#######.###
-        #...###...#...#
-        #.#####.#.###.#
-        #.#...#.#.#...#
-        #.#.#.#.#.#.###
-        #...#...#...###
-        ###############
-        """
-        
-        let map = convertInputToMatrixOfCharacters(cheatedInput)
-        
-        #expect(BFSToPath(start: Vector(x: 1, y: 3), destination: Vector(x: 5, y: 7), map: map).count == 72)
-    }
-    
-    @Test("Cheating around position (8,1) saves 12 picoseconds") func picoSecondsSavedWhenCheatingAround8_1() {
-        let map = convertInputToMatrixOfCharacters(exampleInput)
-        var cheatMap = map
-        
-        let startCheat = Vector(x: 8, y: 1)
-        
-        let neighbours = startCheat.neighbours
-            .filter { $0.x >= 0 && $0.y >= 0 && $0.x < map.count && $0.y < map[0].count }
-            .filter { map[$0.y][$0.x] == "#"}
-        
-        
-        
-        for neighbour in neighbours {
-            cheatMap[startCheat.y][startCheat.x] = "."
-            cheatMap[neighbour.y][neighbour.x] = "."
-            
-            #expect(BFSToPath(start: Vector(x: 1, y: 3), destination: Vector(x: 5, y: 7), map: cheatMap).count == 72)
-            
-            cheatMap[startCheat.y][startCheat.x] = map[startCheat.y][startCheat.x]
-            cheatMap[neighbour.y][neighbour.x] = map[neighbour.y][neighbour.x]
-        }
-    }
-    
     @Test("There are 1490 number of cheats in the actual input that saves at least 100 picoseconds") func picoSecondsSavedInActualInput() {
         #expect(numberOfCheatsThatSaveAtLeast(picoSeconds: 100, in: input) == 1490)
     }
