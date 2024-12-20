@@ -1,2 +1,5 @@
-// The Swift Programming Language
-// https://docs.swift.org/swift-book
+import Shared
+
+func numberOfCheatsThatSaveAtLeast(picoSeconds: Int, in mapString: String) -> Int {
+    1
+}
