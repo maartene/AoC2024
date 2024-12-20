@@ -38,6 +38,22 @@ let exampleInput =
         #expect(numberOfCheatsThatSaveAtLeast(picoSeconds: testCase.minimumPicoSecondsSaved, in: exampleInput) == testCase.expectedNumberOfCheats)
     }
     
+    @Test("There are a number of cheats in the example input that save exactly certain picoseconds", arguments: [
+          (64, 1),
+          (40, 1),
+          (38, 1),
+          (36, 1),
+          (20, 1),
+          (12, 3),
+          (10, 2),
+          (8, 4),
+          (6, 2),
+          (4, 14),
+          (2, 14),
+      ]) func picoSecondsSavedInTheExampleInput(testCase: (numberOfSecondsSaved: Int, expectedNumberOfCheats: Int)) {
+          #expect(numberOfCheatsThatSaveSpecificNumberOfPicoSeconds(in: exampleInput, maxCheats: 2)[testCase.numberOfSecondsSaved] == testCase.expectedNumberOfCheats)
+      }
+    
     @Test("There are 1490 number of cheats in the actual input that saves at least 100 picoseconds") func picoSecondsSavedInActualInput() {
         #expect(numberOfCheatsThatSaveAtLeast(picoSeconds: 100, in: input) == 1490)
     }
