@@ -27,18 +27,14 @@ func numberOfCheatsThatSaveSpecificNumberOfPicoSeconds(in mapString: String, min
         }
     }
     
-    guard let nonCheatTime = BFS(start: startPosition, destination: destination, map: map) else {
-        fatalError("Was not able to read destination in map")
-    }
-
-    let cheatTimes = calculateCheatTimes(startPosition: startPosition, destination: destination, in: map, maxCheats: maxCheats)
+    let shortCutTimes = calculateShortCutTimes(startPosition: startPosition, destination: destination, in: map, maxCheats: maxCheats)
     
-    return cheatTimes.reduce(into: [Int : Int]()) { partialResult, cheatTime in
-        partialResult[nonCheatTime - cheatTime.key] = cheatTime.value
+    return shortCutTimes.reduce(into: [Int : Int]()) { partialResult, shortcutTime in
+        partialResult[shortcutTime.key] = shortcutTime.value
     }
 }
 
-func calculateCheatTimes(startPosition: Vector, destination: Vector, in map: [[Character]], maxCheats: Int) -> [Int: Int] {
+func calculateShortCutTimes(startPosition: Vector, destination: Vector, in map: [[Character]], maxCheats: Int) -> [Int: Int] {
     var result = [Int : Int]()
     
     let shortestPath: [(coord: Vector, cost: Int)] = BFSToPath(start: startPosition, destination: destination, map: map)
@@ -55,7 +51,7 @@ func calculateCheatTimes(startPosition: Vector, destination: Vector, in map: [[C
             if dist <= maxCheats {
                 let shortCut = otherCoord.cost - cost - dist
                 if shortCut > 0 {
-                    result[shortestPathLength - shortCut, default: 0] += 1
+                    result[shortCut, default: 0] += 1
                 }
             }
         }
