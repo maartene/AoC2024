@@ -12,11 +12,11 @@ public func convertStringToIntMatrix(_ input: String) -> [[Int]] {
 
 public func convertInputToMatrixOfCharacters(_ input: String) -> [[Character]] {
     let lines = input.split(separator: "\n").map(String.init)
-    
+
     let characters: [[Character]] = lines.map { line in
-        line.map { $0 } 
+        line.map { $0 }
     }
-    
+
     return characters
 }
 
@@ -44,7 +44,9 @@ extension Vector {
     }
 }
 
-public func BFS(start: Vector, destination: Vector, unsafeSpots: Set<Vector>, mapSize: Vector) -> Int? {
+public func BFS(start: Vector, destination: Vector, unsafeSpots: Set<Vector>, mapSize: Vector)
+    -> Int?
+{
     // Queue for BFS and a set to keep track of visited points
     var queue: [(Vector, Int)] = [(start, 0)]  // (current point, distance)
     var visited: Set<Vector> = [start]
@@ -61,7 +63,38 @@ public func BFS(start: Vector, destination: Vector, unsafeSpots: Set<Vector>, ma
         for neighbour in current.neighbours {
             // Check if its within grid and not an occupied location
             if neighbour.x >= 0, neighbour.y >= 0, neighbour.x < mapSize.y, neighbour.y < mapSize.x,
-               unsafeSpots.contains(neighbour) == false, visited.contains(neighbour) == false {
+                unsafeSpots.contains(neighbour) == false, visited.contains(neighbour) == false
+            {
+                queue.append((neighbour, distance + 1))
+                visited.insert(neighbour)
+            }
+        }
+    }
+
+    return nil
+}
+
+public func BFS(start: Vector, destination: Vector, map: [[Character]]) -> Int? {
+    let mapSize = Vector(x: map[0].count, y: map.count)
+
+    // Queue for BFS and a set to keep track of visited points
+    var queue: [(Vector, Int)] = [(start, 0)]  // (current point, distance)
+    var visited: Set<Vector> = [start]
+
+    while queue.isEmpty == false {
+        let (current, distance) = queue.removeFirst()
+
+        // Check if current point is the destination
+        if current == destination {
+            return distance
+        }
+
+        // Try to move in all directions
+        for neighbour in current.neighbours {
+            // Check if its within grid and not an occupied location
+            if neighbour.x >= 0, neighbour.y >= 0, neighbour.x < mapSize.y, neighbour.y < mapSize.x,
+                map[neighbour.y][neighbour.x] != "#", visited.contains(neighbour) == false
+            {
                 queue.append((neighbour, distance + 1))
                 visited.insert(neighbour)
             }

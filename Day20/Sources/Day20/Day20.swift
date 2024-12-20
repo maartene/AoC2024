@@ -11,21 +11,39 @@ func numberOfCheatsThatSaveAtLeast(picoSeconds: Int, in mapString: String) -> In
 }
 
 func numberOfCheatsThatSaveSpecificNumberOfPicoSeconds(in mapString: String) -> [Int: Int] {
-    let nonCheatTime = 72
+    let map = convertInputToMatrixOfCharacters(mapString)
+    
+    // find stand and end position
+    var startPosition = Vector.zero
+    var destination = Vector.zero
+    for y in 0 ..< map.count {
+        for x in 0 ..< map[y].count {
+            if map[y][x] == "S" {
+                startPosition = Vector(x: x, y: y)
+            }
+            if map[y][x] == "E" {
+                destination = Vector(x: x, y: y)
+            }
+        }
+    }
+    
+    guard let nonCheatTime = BFS(start: startPosition, destination: destination, map: map) else {
+        fatalError("Was not able to read destination in map")
+    }
 
     let cheatTimes =
     [
-        70: 14,
-        68: 14,
-        66: 2,
-        64: 4,
-        62: 2,
-        60: 3,
-        52: 1,
-        36: 1,
-        34: 1,
-        32: 1,
-        8: 1
+        82: 14,
+        80: 14,
+        78: 2,
+        76: 4,
+        74: 2,
+        72: 3,
+        64: 1,
+        48: 1,
+        46: 1,
+        44: 1,
+        20: 1
     ]
     
     return cheatTimes.reduce(into: [Int : Int]()) { partialResult, cheatTime in
