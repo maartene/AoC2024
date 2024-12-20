@@ -2,9 +2,24 @@ import Testing
 import Shared
 @testable import Day20
 
-@Test func example() async throws {
-    // Write your test here and use APIs like `#expect(...)` to check expected conditions.
-}
+let exampleInput =
+    """
+    ###############
+    #...#...#.....#
+    #.#.#.#.#.###.#
+    #S#...#.#.#...#
+    #######.#.#.###
+    #######.#.#...#
+    #######.#.###.#
+    ###..E#...#...#
+    ###.#######.###
+    #...###...#...#
+    #.#####.#.###.#
+    #.#...#.#.#...#
+    #.#.#.#.#.#.###
+    #...#...#...###
+    ###############
+    """
 
 @Suite("To get the first star on day 20") struct Day20StarOneTests {
     @Test("There are a number of cheats in the example input that saves at least certain picoseconds", arguments: [
@@ -15,25 +30,6 @@ import Shared
         (20, 5),
         (12, 8)
     ]) func picoSecondsSavedInTheExampleInput(testCase: (minimumPicoSecondsSaved: Int, expectedNumberOfCheats: Int)) {
-        let exampleInput =
-        """
-        ###############
-        #...#...#.....#
-        #.#.#.#.#.###.#
-        #S#...#.#.#...#
-        #######.#.#.###
-        #######.#.#...#
-        #######.#.###.#
-        ###..E#...#...#
-        ###.#######.###
-        #...###...#...#
-        #.#####.#.###.#
-        #.#...#.#.#...#
-        #.#.#.#.#.#.###
-        #...#...#...###
-        ###############
-        """
-        
         #expect(numberOfCheatsThatSaveAtLeast(picoSeconds: testCase.minimumPicoSecondsSaved, in: exampleInput) == testCase.expectedNumberOfCheats)
     }
     
@@ -59,6 +55,29 @@ import Shared
         
         let map = convertInputToMatrixOfCharacters(cheatedInput)
         
-        #expect(BFS(start: Vector(x: 1, y: 3), destination: Vector(x: 5, y: 7), map: map) == 72)
+        #expect(BFSToPath(start: Vector(x: 1, y: 3), destination: Vector(x: 5, y: 7), map: map).count == 72)
+    }
+    
+    @Test("Cheating around position (8,1) saves 12 picoseconds") func picoSecondsSavedWhenCheatingAround8_1() {
+        let map = convertInputToMatrixOfCharacters(exampleInput)
+        var cheatMap = map
+        
+        let startCheat = Vector(x: 8, y: 1)
+        
+        let neighbours = startCheat.neighbours
+            .filter { $0.x >= 0 && $0.y >= 0 && $0.x < map.count && $0.y < map[0].count }
+            .filter { map[$0.y][$0.x] == "#"}
+        
+        
+        
+        for neighbour in neighbours {
+            cheatMap[startCheat.y][startCheat.x] = "."
+            cheatMap[neighbour.y][neighbour.x] = "."
+            
+            #expect(BFSToPath(start: Vector(x: 1, y: 3), destination: Vector(x: 5, y: 7), map: cheatMap).count == 72)
+            
+            cheatMap[startCheat.y][startCheat.x] = map[startCheat.y][startCheat.x]
+            cheatMap[neighbour.y][neighbour.x] = map[neighbour.y][neighbour.x]
+        }
     }
 }
