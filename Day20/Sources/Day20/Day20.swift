@@ -29,9 +29,7 @@ func numberOfCheatsThatSaveSpecificNumberOfPicoSeconds(in mapString: String, min
     
     let shortCutTimes = calculateShortCutTimes(startPosition: startPosition, destination: destination, in: map, maxCheats: maxCheats)
     
-    return shortCutTimes.reduce(into: [Int : Int]()) { partialResult, shortcutTime in
-        partialResult[shortcutTime.key] = shortcutTime.value
-    }
+    return shortCutTimes
 }
 
 func calculateShortCutTimes(startPosition: Vector, destination: Vector, in map: [[Character]], maxCheats: Int) -> [Int: Int] {
