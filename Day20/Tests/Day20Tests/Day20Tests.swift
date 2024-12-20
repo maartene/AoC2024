@@ -10,6 +10,9 @@ import Testing
         (64, 1),
         (40, 2),
         (38, 3),
+        (36, 4),
+        (20, 5),
+        (12, 8)
     ]) func picoSecondsSavedInTheExampleInput(testCase: (minimumPicoSecondsSaved: Int, expectedNumberOfCheats: Int)) {
         let exampleInput =
         """

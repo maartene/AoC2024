@@ -11,17 +11,24 @@ func numberOfCheatsThatSaveAtLeast(picoSeconds: Int, in mapString: String) -> In
 }
 
 func numberOfCheatsThatSaveSpecificNumberOfPicoSeconds(in mapString: String) -> [Int: Int] {
+    let nonCheatTime = 72
+
+    let cheatTimes =
     [
-        2: 14,
-        4: 14,
-        6: 2,
-        8: 4,
-        10: 2,
-        12: 3,
-        20: 1,
+        70: 14,
+        68: 14,
+        66: 2,
+        64: 4,
+        62: 2,
+        60: 3,
+        52: 1,
         36: 1,
-        38: 1,
-        40: 1,
-        65: 1
+        34: 1,
+        32: 1,
+        8: 1
     ]
+    
+    return cheatTimes.reduce(into: [Int : Int]()) { partialResult, cheatTime in
+        partialResult[nonCheatTime - cheatTime.key] = cheatTime.value
+    }
 }
