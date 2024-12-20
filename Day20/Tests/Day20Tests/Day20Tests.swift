@@ -7,7 +7,8 @@ import Testing
 
 @Suite("To get the first star on day 20") struct Day20StarOneTests {
     @Test("There are a number of cheats in the example input that saves at least certain picoseconds", arguments: [
-        (64, 1)
+        (64, 1),
+        (40, 2),
     ]) func picoSecondsSavedInTheExampleInput(testCase: (minimumPicoSecondsSaved: Int, expectedNumberOfCheats: Int)) {
         let exampleInput =
         """
