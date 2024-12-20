@@ -9,6 +9,7 @@ import Testing
     @Test("There are a number of cheats in the example input that saves at least certain picoseconds", arguments: [
         (64, 1),
         (40, 2),
+        (38, 3),
     ]) func picoSecondsSavedInTheExampleInput(testCase: (minimumPicoSecondsSaved: Int, expectedNumberOfCheats: Int)) {
         let exampleInput =
         """
