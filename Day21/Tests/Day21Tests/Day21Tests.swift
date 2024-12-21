@@ -16,13 +16,17 @@ let exampleInput =
     }
     
     @Test("The complexity factor of the actual input is 162740") func complexityFactorOfActualInput() {
-        #expect(complexityFactor(of: input) == 162740)
+       #expect(complexityFactor(of: input) == 162740)
     }
 }
 
-//@Suite("To get the second star on day 21") struct Day21StarTwoTests {
+@Suite("To get the second star on day 21") struct Day21StarTwoTests {
 //    @Test("The complexity factor of the example input is 126384") func complexityFactorOfExampleInput() {
 //        #expect(complexityFactor(of: exampleInput) == 126384)
 //    }
-//}
+    
+//    @Test("The complexity factor of 029A is ?") func complexityFactorOfZeroTwoNine() {
+//        #expect(get_code_cost("029A", depth: 2) == 0)
+//    }
+}
 
