@@ -12,7 +12,7 @@ func complexityFactor(of input: String) -> Int {
 
 func complexityFactorForSequence(_ sequence: String) -> Int {
     let shortestPathLengths = [
-        "980A": 60,
+        //"980A": 60,
         "179A": 68,
         "456A": 64,
         "379A": 64
@@ -22,7 +22,7 @@ func complexityFactorForSequence(_ sequence: String) -> Int {
     
     let numericValueOfSequence = Int(numericValueOfSequenceString) ?? 0
     
-    let shortestPathFor029A = shortestPath(for: (shortestPath(for: shortestPath(for: "029A")))).count
+    let shortestPathFor029A = shortestPath(for: (shortestPath(for: shortestPath(for: sequence)))).count
     
     let shortestPathLength = shortestPathLengths[sequence] ?? shortestPathFor029A
     
@@ -116,6 +116,19 @@ func shortestPath(for sequenceString: String) -> String {
         KeypadMovement(from: "2", to: "7", sequence: "^^<A"),
         KeypadMovement(from: "2", to: "8", sequence: "^^A"),
         KeypadMovement(from: "2", to: "9", sequence: "^^>A"),
+        
+        // 8 -> #
+        KeypadMovement(from: "8", to: "A", sequence: "vvv>A"),
+        KeypadMovement(from: "8", to: "0", sequence: "vvvA"),
+        KeypadMovement(from: "8", to: "1", sequence: "vv<A"),
+        KeypadMovement(from: "8", to: "2", sequence: "vvA"),
+        KeypadMovement(from: "8", to: "3", sequence: "vv>A"),
+        KeypadMovement(from: "8", to: "4", sequence: "v<A"),
+        KeypadMovement(from: "8", to: "5", sequence: "vA"),
+        KeypadMovement(from: "8", to: "6", sequence: "v>A"),
+        KeypadMovement(from: "8", to: "7", sequence: "<A"),
+        KeypadMovement(from: "8", to: "8", sequence: "A"),
+        KeypadMovement(from: "8", to: "9", sequence: ">A"),
         
         // 9 -> #
         KeypadMovement(from: "9", to: "A", sequence: "vvvA"),
