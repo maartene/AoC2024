@@ -23,3 +23,9 @@ func complexityFactorForSequence(_ sequence: String) -> Int {
     
     return shortestPathLengths[sequence, default: 0] * numericValueOfSequence
 }
+
+func shortestPath(for sequence: String) -> [Character] {
+    let result = "<vA<AA>>^AvAA<^A>A<v<A>>^AvA^A<vA>^A<v<A>^A>AAvA^A<v<A>A>^AAAvA<^A>A".map(Character.init)
+    return result
+}
+
