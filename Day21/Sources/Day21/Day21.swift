@@ -13,7 +13,7 @@ func complexityFactor(of input: String) -> Int {
 func complexityFactorForSequence(_ sequence: String) -> Int {
     let shortestPathLengths = [
         //"980A": 60,
-        "179A": 68,
+        //"179A": 68,
         "456A": 64,
         "379A": 64
     ]
@@ -104,6 +104,19 @@ func shortestPath(for sequenceString: String) -> String {
         KeypadMovement(from: "0", to: "8", sequence: "^^^A"),
         KeypadMovement(from: "0", to: "9", sequence: "^^^>A"),
         
+        // 1 -> #
+        KeypadMovement(from: "1", to: "A", sequence: ">>vA"),
+        KeypadMovement(from: "1", to: "0", sequence: ">vA"),
+        KeypadMovement(from: "1", to: "1", sequence: "A"),
+        KeypadMovement(from: "1", to: "2", sequence: ">A"),
+        KeypadMovement(from: "1", to: "3", sequence: ">>A"),
+        KeypadMovement(from: "1", to: "4", sequence: "^A"),
+        KeypadMovement(from: "1", to: "5", sequence: "^>A"),
+        KeypadMovement(from: "1", to: "6", sequence: "^>>A"),
+        KeypadMovement(from: "1", to: "7", sequence: "^^A"),
+        KeypadMovement(from: "1", to: "8", sequence: "^^>A"),
+        KeypadMovement(from: "1", to: "9", sequence: "^^>>A"),
+        
         // 2 -> #
         KeypadMovement(from: "2", to: "A", sequence: ">vA"),
         KeypadMovement(from: "2", to: "0", sequence: "vA"),
@@ -116,6 +129,19 @@ func shortestPath(for sequenceString: String) -> String {
         KeypadMovement(from: "2", to: "7", sequence: "^^<A"),
         KeypadMovement(from: "2", to: "8", sequence: "^^A"),
         KeypadMovement(from: "2", to: "9", sequence: "^^>A"),
+        
+        // 7 -> #
+        KeypadMovement(from: "7", to: "A", sequence: ">>vvvA"),
+        KeypadMovement(from: "7", to: "0", sequence: ">vvvA"),
+        KeypadMovement(from: "7", to: "1", sequence: "vvA"),
+        KeypadMovement(from: "7", to: "2", sequence: "vv>A"),
+        KeypadMovement(from: "7", to: "3", sequence: "vv>>A"),
+        KeypadMovement(from: "7", to: "4", sequence: "vA"),
+        KeypadMovement(from: "7", to: "5", sequence: "v>A"),
+        KeypadMovement(from: "7", to: "6", sequence: "v>>A"),
+        KeypadMovement(from: "7", to: "7", sequence: "A"),
+        KeypadMovement(from: "7", to: "8", sequence: ">A"),
+        KeypadMovement(from: "7", to: "9", sequence: ">>A"),
         
         // 8 -> #
         KeypadMovement(from: "8", to: "A", sequence: "vvv>A"),
