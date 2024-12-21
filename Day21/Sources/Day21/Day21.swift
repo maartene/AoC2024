@@ -91,7 +91,7 @@ func ways(_ code: String, keyPad: [Character: Vector]) -> [String] {
     }
 }
 
-func shortest3(_ code: String) -> String {
+func shortest3(_ code: String) -> Int {
     let ways1 = ways(code, keyPad: numeric_keys)
     var ways2: [String] = []
     for way in ways1 {
@@ -102,7 +102,7 @@ func shortest3(_ code: String) -> String {
         ways3.append(contentsOf: ways(way, keyPad: directions_keys))
     }
     
-    return ways3.min(by: { $0.count < $1.count }) ?? ""
+    return ways3.min(by: { $0.count < $1.count })?.count ?? 0
     
 }
 
@@ -132,7 +132,7 @@ func complexityFactorForSequence(_ sequence: String) -> Int {
     
     let numericValueOfSequence = Int(numericValueOfSequenceString) ?? 0
     
-    let shortestPathLength = shortest3(sequence).count
+    let shortestPathLength = shortest3(sequence)
         
     return shortestPathLength * numericValueOfSequence
 }
