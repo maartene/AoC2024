@@ -12,20 +12,17 @@ import Testing
     """
     
     @Test("The complexity factor of the example input is 126384") func complexityFactorOfExampleInput() {
-        
-        
         #expect(complexityFactor(of: exampleInput) == 126384)
+        
+        let ways = ways("029A", keyPad: numeric_keys)
+        print(ways)
+        
+        let shortest3 = shortest3("029A")
+        print(shortest3.count)
     }
-        
-    @Test("Have a robot enter a sequence and validate resulting path length") func validatePathLengthOfExampleInput() {
-        //#expect(shortestPath(for: "029A").count == 13)
-        
-        #expect(shortestPath(for: "A") == "A")
-        #expect(shortestPath(for: ">") == "vA")
-        #expect(shortestPath(for: ">>") == "vAA")
-        
-        #expect(shortestPath(for: "029A").count == 12)
-        #expect(shortestPath(for: "<A^A>^^AvvvA").count == 28)
-        #expect(shortestPath(for: "v<<A>>^A<A>AvA<^AA>A<vAAA>^A").count == 68)
+    
+    @Test("The complexity factor of the actual input is ?") func complexityFactorOfActualInput() {
+        #expect(complexityFactor(of: input) == 0)
     }
 }
+
