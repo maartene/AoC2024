@@ -8,6 +8,7 @@
 - ⚠️ TODO
 
 ## 🍅 Pomodoro 1
-- ⚠️ Read the description
-- ⚠️ Import the input data
+- ✅ Read the description
+- ✅ Import the input data
+- 🚧 Triangulate outside in
 - ⚠️ Make the example input pass
