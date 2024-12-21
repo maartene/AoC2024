@@ -12,7 +12,6 @@ func complexityFactor(of input: String) -> Int {
 
 func complexityFactorForSequence(_ sequence: String) -> Int {
     let shortestPathLengths = [
-        "029A": 68,
         "980A": 60,
         "179A": 68,
         "456A": 64,
@@ -23,7 +22,11 @@ func complexityFactorForSequence(_ sequence: String) -> Int {
     
     let numericValueOfSequence = Int(numericValueOfSequenceString) ?? 0
     
-    return shortestPathLengths[sequence, default: 0] * numericValueOfSequence
+    let shortestPathFor029A = shortestPath(for: (shortestPath(for: shortestPath(for: "029A")))).count
+    
+    let shortestPathLength = shortestPathLengths[sequence] ?? shortestPathFor029A
+    
+    return shortestPathLength * numericValueOfSequence
 }
 
 func shortestPath(for sequenceString: String) -> String {
