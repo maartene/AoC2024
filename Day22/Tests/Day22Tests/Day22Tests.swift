@@ -40,4 +40,9 @@ import Testing
     func maximumNumberOfBananas_forExampleInput() {
         #expect(maximumNumberOfBananas(for: exampleInput) == 23)
     }
+    
+    @Test("The maximum number of bananas you can get paid for the actual input should be 1667")
+    func maximumNumberOfBananas_forActualInput() {
+        #expect(maximumNumberOfBananas(for: input) == 1667)
+    }
 }

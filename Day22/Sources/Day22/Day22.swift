@@ -70,39 +70,48 @@ func prune(_ secretNumber: Int) -> Int {
 func maximumNumberOfBananas(for input: String) -> Int {
     let numbers = convertStringToIntMatrix(input).flatMap { $0 }
 
-    var sequences = Set<[Int8]>()
-
     let secretNumberLists = numbers.map {
         calculateSecretNumbers(seed: $0, times: 2000)
             .map { secretNumber in secretNumber % 10 }
             .map { Int8($0) }
     }
-    let differencesLists = secretNumberLists.map { createDifferences($0) }
-
-    print("Creating sequences to test")
+    
+    var numbersAndSequences = [[Int8]: [[Int8]: Int]]()
+    
+    
     for secretNumbers in secretNumberLists {
-        for i in 1..<secretNumbers.count - 4 {
+        var sequencesAndCounts = [[Int8]: Int]()
+        
+        for i in 1 ..< secretNumbers.count - 4 {
             var sequence = [Int8]()
             for di in 0..<4 {
                 sequence.append(secretNumbers[i + di] - secretNumbers[i + di - 1])
             }
+            
+            if sequencesAndCounts[sequence] == nil {
+                sequencesAndCounts[sequence] = Int(secretNumbers[i + 3])
+            }
+        }
+        numbersAndSequences[secretNumbers] = sequencesAndCounts
+    }
+
+    var sequences = Set<[Int8]>()
+    for numberSequence in numbersAndSequences {
+        for sequence in numberSequence.value.keys {
             sequences.insert(sequence)
         }
     }
-
+    
     print("Testing sequences")
     var maximum = 0
     var sequenceCount = 0
     for sequence in sequences {
         sequenceCount += 1
-        print("Testing sequence \(sequenceCount) of \(sequences.count)")
         var maximumForSequence = 0
-        for i in 0..<secretNumberLists.count {
-            let secretNumbers = secretNumberLists[i]
-            let differences = differencesLists[i]
-            maximumForSequence += numberOfBananasIn(
-                secretNumbers: secretNumbers, differences: differences, sequence: sequence)
+        for numberSequence in numbersAndSequences {
+            maximumForSequence += numberSequence.value[sequence, default: 0]
         }
+        
         if maximumForSequence > maximum {
             print("Found new better sequence: \(sequence) with new maximum \(maximumForSequence)")
             maximum = maximumForSequence
