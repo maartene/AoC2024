@@ -4,7 +4,8 @@ import Shared
 @main
 struct Day22 {
     static func main() {
-        print(maximumNumberOfBananas(for: input))
+        let bananas = maximumNumberOfBananas(for: input)
+        print("Maximum number of bananas: \(bananas)")
     }
 }
 
@@ -20,7 +21,7 @@ func sumOfSecretNumbers(for input: String) -> Int {
 
 func calculateSecretNumbers(seed: Int, times: Int) -> [Int] {
     var secretNumbers = [seed]
-    for i in 0..<times {
+    for _ in 0..<times {
         secretNumbers.append(calculateNextSecretNumber(seed: secretNumbers.last!))
     }
     return secretNumbers
@@ -56,11 +57,11 @@ func calculateNextSecretNumber(seed: Int) -> Int {
     return secretNumber
 }
 
-func mix(_ number: Int, into secretNumber: Int) -> Int {
+private func mix(_ number: Int, into secretNumber: Int) -> Int {
     return number ^ secretNumber
 }
 
-func prune(_ secretNumber: Int) -> Int {
+private func prune(_ secretNumber: Int) -> Int {
     // To prune the secret number, calculate the value of the secret number modulo 16777216.
     // Then, the secret number becomes the result of that operation.
     // (If the secret number is 100000000 and you were to prune the secret number, the secret number would become 16113920.)
@@ -76,8 +77,18 @@ func maximumNumberOfBananas(for input: String) -> Int {
             .map { Int8($0) }
     }
     
-    var numbersAndSequences = [[Int8]: [[Int8]: Int]]()
+    let numbersAndSequences = createNumberSequencesAndBananasDictionary(secretNumberLists: secretNumberLists)
+
+    print("Extracting sequences")
+    let sequences = extractSequences(from: numbersAndSequences)
     
+    print("Testing sequences")
+    return maximumNumberOfBananas(numberSequenceBananasDict: numbersAndSequences, sequences: sequences)
+}
+
+private func createNumberSequencesAndBananasDictionary(secretNumberLists: [[Int8]]) -> [[Int8]: [[Int8]: Int]] {
+    var numbersAndSequences = [[Int8]: [[Int8]: Int]]()
+
     for secretNumbers in secretNumberLists {
         var sequencesAndCounts = [[Int8]: Int]()
         
@@ -93,19 +104,27 @@ func maximumNumberOfBananas(for input: String) -> Int {
         }
         numbersAndSequences[secretNumbers] = sequencesAndCounts
     }
+    
+    return numbersAndSequences
+}
 
+private func extractSequences(from numberSequenceBananasDict: [[Int8]: [[Int8]: Int]]) -> Set<[Int8]> {
     var sequences = Set<[Int8]>()
-    for numberSequence in numbersAndSequences {
+    for numberSequence in numberSequenceBananasDict {
         for sequence in numberSequence.value.keys {
             sequences.insert(sequence)
         }
     }
     
-    print("Testing sequences")
+    return sequences
+}
+
+
+private func maximumNumberOfBananas(numberSequenceBananasDict: [[Int8]: [[Int8]: Int]], sequences: Set<[Int8]>) -> Int {
     var maximum = 0
     for sequence in sequences {
         var maximumForSequence = 0
-        for numberSequence in numbersAndSequences {
+        for numberSequence in numberSequenceBananasDict {
             maximumForSequence += numberSequence.value[sequence, default: 0]
         }
         
@@ -114,6 +133,6 @@ func maximumNumberOfBananas(for input: String) -> Int {
             maximum = maximumForSequence
         }
     }
-
+    
     return maximum
 }
