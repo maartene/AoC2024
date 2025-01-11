@@ -78,7 +78,6 @@ func maximumNumberOfBananas(for input: String) -> Int {
     
     var numbersAndSequences = [[Int8]: [[Int8]: Int]]()
     
-    
     for secretNumbers in secretNumberLists {
         var sequencesAndCounts = [[Int8]: Int]()
         
@@ -104,9 +103,7 @@ func maximumNumberOfBananas(for input: String) -> Int {
     
     print("Testing sequences")
     var maximum = 0
-    var sequenceCount = 0
     for sequence in sequences {
-        sequenceCount += 1
         var maximumForSequence = 0
         for numberSequence in numbersAndSequences {
             maximumForSequence += numberSequence.value[sequence, default: 0]
@@ -119,25 +116,4 @@ func maximumNumberOfBananas(for input: String) -> Int {
     }
 
     return maximum
-}
-
-func createDifferences(_ secretNumbers: [Int8]) -> [Int8] {
-    var differences: [Int8] = [0]
-    for i in 1..<secretNumbers.count {
-        let difference = secretNumbers[i] - secretNumbers[i - 1]
-        differences.append(difference)
-    }
-    return differences
-}
-
-func numberOfBananasIn(secretNumbers: [Int8], differences: [Int8], sequence: [Int8]) -> Int {
-    for i in 0..<secretNumbers.count - 4 {
-        if differences[i] == sequence[0] && differences[i + 1] == sequence[1]
-            && differences[i + 2] == sequence[2] && differences[i + 3] == sequence[3]
-        {
-            return Int(secretNumbers[i + 3])
-        }
-    }
-
-    return 0
 }
