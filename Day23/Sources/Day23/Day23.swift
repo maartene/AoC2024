@@ -6,7 +6,7 @@ func numberOfSetsOfThreeInterconnectedComputersWithAT(_ input: String) -> Int {
     
     var setsOfThreeInterconnectedComputers = Set<Set<String>>()
     
-    let connectionsWithT = connections.filter { $0.key.contains("t") }
+    let connectionsWithT = connections.filter { $0.key.starts(with: "t") }
     
     for connectionWithT in connectionsWithT {
         for connectedComputer1 in connectionWithT.value {
@@ -26,8 +26,14 @@ func numberOfSetsOfThreeInterconnectedComputersWithAT(_ input: String) -> Int {
         }
     }
         
-    return setsOfThreeInterconnectedComputers
-        .filter { $0.contains(where: { $0.contains("t") }) }
+    let setsOfThreeInterconnectedComputersWithT = setsOfThreeInterconnectedComputers
+        .filter { $0.contains(where: { $0.starts(with: "t") }) }
+    
+    for setOfThreeInterconnectedComputersWithT in setsOfThreeInterconnectedComputersWithT {
+        print(setOfThreeInterconnectedComputersWithT)
+    }
+    
+    return setsOfThreeInterconnectedComputersWithT
         .count
 }
 
@@ -46,8 +52,6 @@ private func extractConnectionsFrom(_ input: String) -> [String: Set<String>] {
         let existingTo = connections[to] ?? []
         connections[to] = existingTo.union([from])
     }
-    
-    print(connections.count)
     
     return connections
 }

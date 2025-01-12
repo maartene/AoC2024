@@ -44,4 +44,8 @@ import Testing
         """
         #expect(numberOfSetsOfThreeInterconnectedComputersWithAT(exampleInput) == 7)
     }
+    
+    @Test("The number of sets of interconnected computers with at least one computer with a 't' in the name in the actual input should be 1337") func numberOfSetsOfThreeInterconnectedComputersWithATc_inActualInput() throws {
+        #expect(numberOfSetsOfThreeInterconnectedComputersWithAT(input) == 1337)
+    }
 }
