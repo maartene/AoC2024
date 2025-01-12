@@ -9,6 +9,6 @@
 
 ## 🍅 Pomodoro 1
 
-- ⚠️ Read the description
+- ✅ Read the description
 - ✅ Import the input data
-- ⚠️ Make the example input pass
+- 🚧 Work through the example input from result back, until the example input passes without faking the response
