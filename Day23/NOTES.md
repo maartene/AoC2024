@@ -15,3 +15,4 @@
 - ✅ First star! ⭐️
 
 ## 🍅 Pomodoro 2
+- ✅ That was actually remarkebly easy ⭐️⭐️

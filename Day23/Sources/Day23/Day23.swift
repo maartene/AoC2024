@@ -15,11 +15,9 @@ func numberOfSetsOfThreeInterconnectedComputersWithAT(_ input: String) -> Int {
 func password(for input: String) -> String {
     let connections = extractConnectionsFrom(input)
 
-    let setsOfThreeInterconnectedComputers = setsOfThreeInterconnectedComputers(searchSet: connections, connections: connections)
-    
-    
-    var checkSet = setsOfThreeInterconnectedComputers
+    var checkSet = setsOfThreeInterconnectedComputers(searchSet: connections, connections: connections)
     var checkNumber = 3
+
     while checkSet.count > 1 {
         print("We're at check number \(checkNumber), checkset is \(checkSet.count)")
         let previousSet = checkSet
