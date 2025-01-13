@@ -25,6 +25,8 @@ func numberValueResultingFromCircuit(_ input: String) -> Int {
     // get the state from the input
     var state = getStateFromInput(input)
     
+    // get instructions from input
+    
     // apply instructions to determine the end state
     state["z00"] = AND("x00", "y00")
     state["z01"] = XOR("x01", "y01")
