@@ -1,6 +1,14 @@
 // The Swift Programming Language
 // https://docs.swift.org/swift-book
 func numberValueResultingFromCircuit(_ input: String) -> Int {
+    func AND(_ stateKey1: String, _ stateKey2: String) -> Int {
+        if state[stateKey1] == 1 && state[stateKey2] == 1 {
+            return 1
+        }
+        return 0
+    }
+
+    
     var state = [
         "x00": 1,
         "x01": 1,
@@ -13,7 +21,7 @@ func numberValueResultingFromCircuit(_ input: String) -> Int {
     ]
     
     // apply instructions to determine the end state
-    state["z00"] = state["x00"] == 1 && state["y00"] == 1 ? 1 : 0
+    state["z00"] = AND("x00", "y00")
     
     // Construct the resulting number
     let zKeys = state.keys.filter( { $0.hasPrefix("z") })
@@ -25,3 +33,4 @@ func numberValueResultingFromCircuit(_ input: String) -> Int {
     
     return number
 }
+
