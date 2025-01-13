@@ -22,15 +22,8 @@ func numberValueResultingFromCircuit(_ input: String) -> Int {
         return 0
     }
 
-    
-    var state = [
-        "x00": 1,
-        "x01": 1,
-        "x02": 1,
-        "y00": 0,
-        "y01": 1,
-        "y02": 0,
-    ]
+    // get the state from the input
+    var state = getStateFromInput(input)
     
     // apply instructions to determine the end state
     state["z00"] = AND("x00", "y00")
@@ -48,3 +41,16 @@ func numberValueResultingFromCircuit(_ input: String) -> Int {
     return number
 }
 
+func getStateFromInput(_ input: String) -> [String: Int] {
+    let lines = input.split(separator: "\n").map { String($0) }
+    let stateLines = lines.filter { $0.contains(":") }
+    let state: [String: Int] = stateLines
+        .reduce(into: [String: Int]()) { result, string in
+            let parts = string.split(separator: ":")
+            let stateKey = String(parts[0])
+            let stateValue = Int(parts[1].trimmingPrefix(" "))
+            result[stateKey] = stateValue
+        }
+    
+    return state
+}
