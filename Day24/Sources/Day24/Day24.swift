@@ -8,6 +8,13 @@ func numberValueResultingFromCircuit(_ input: String) -> Int {
         return 0
     }
     
+    func XOR(_ stateKey1: String, _ stateKey2: String) -> Int {
+        if state[stateKey1] != state[stateKey2] {
+            return 1
+        }
+        return 0
+    }
+    
     func OR(_ stateKey1: String, _ stateKey2: String) -> Int {
         if state[stateKey1] == 1 || state[stateKey2] == 1 {
             return 1
@@ -23,11 +30,11 @@ func numberValueResultingFromCircuit(_ input: String) -> Int {
         "y00": 0,
         "y01": 1,
         "y02": 0,
-        "z01": 0,
     ]
     
     // apply instructions to determine the end state
     state["z00"] = AND("x00", "y00")
+    state["z01"] = XOR("x01", "y01")
     state["z02"] = OR("x02", "y02")
     
     // Construct the resulting number
