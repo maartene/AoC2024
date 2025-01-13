@@ -68,9 +68,8 @@ class Circuit {
     }
 }
 
-func getNumberFromState(_ state: [String: Int]) -> Int {
-    let zKeys = state.keys.filter( { $0.hasPrefix("z") })
-    
+func getNumberFromState(_ state: [String: Int], prefix: String = "z") -> Int {
+    let zKeys = state.keys.filter( { $0.hasPrefix(prefix) })
     var number = 0
     for stateKey in zKeys.sorted(by: >) {
         number = number << 1

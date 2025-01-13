@@ -83,3 +83,12 @@ import Testing
         #expect(numberValueResultingFromCircuit(input) == 69201640933606)
     }
 }
+
+@Suite("To get the second star on day 24") struct Day24StarTwoTests {
+    @Test("Explore the data a bit") func exploreData() {
+        let state = getStateFromInput(input)
+        let num1 = getNumberFromState(state, prefix: "x")
+        let num2 = getNumberFromState(state, prefix: "y")
+        print(num1, num2, num1 + num2)
+    }
+}
