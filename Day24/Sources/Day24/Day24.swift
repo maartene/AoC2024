@@ -25,24 +25,18 @@ func numberValueResultingFromCircuit(_ input: String) -> Int {
     // get the state from the input
     var state = getStateFromInput(input)
     
-    // get instructions from input
-    let lines = input.split(separator: "\n").map { String($0) }
-    let instructionLines = lines.filter { $0.contains("->") }
-    let instuctions: [(key1: String, operation: String, key2: String, resultKey: String)] = instructionLines.map { line in
-        let parts = line.split(separator: " ").map { String($0) }
-        return (parts[0], parts[1], parts[2], parts[4])
-    }
+    let instructions = getInstructionsFromInput(input)
     
-    for instuction in instuctions {
-        switch instuction.operation {
+    for instruction in instructions {
+        switch instruction.operation {
         case "AND":
-            state[instuction.resultKey] = AND(instuction.key1, instuction.key2)
+            state[instruction.resultKey] = AND(instruction.key1, instruction.key2)
         case "OR":
-            state[instuction.resultKey] = OR(instuction.key1, instuction.key2)
+            state[instruction.resultKey] = OR(instruction.key1, instruction.key2)
         case "XOR":
-            state[instuction.resultKey] = XOR(instuction.key1, instuction.key2)
+            state[instruction.resultKey] = XOR(instruction.key1, instruction.key2)
         default:
-            fatalError("Unrecognized operation: \(instuction.operation)")
+            fatalError("Unrecognized operation: \(instruction.operation)")
         }
     }
     
@@ -69,4 +63,17 @@ func getStateFromInput(_ input: String) -> [String: Int] {
         }
     
     return state
+}
+
+typealias Instruction = (key1: String, operation: String, key2: String, resultKey: String)
+
+func getInstructionsFromInput(_ input: String) -> [Instruction] {
+    // get instructions from input
+    let lines = input.split(separator: "\n").map { String($0) }
+    let instructionLines = lines.filter { $0.contains("->") }
+    let instuctions: [Instruction] = instructionLines.map { line in
+        let parts = line.split(separator: " ").map { String($0) }
+        return (parts[0], parts[1], parts[2], parts[4])
+    }
+    return instuctions
 }
