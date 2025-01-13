@@ -7,6 +7,13 @@ func numberValueResultingFromCircuit(_ input: String) -> Int {
         }
         return 0
     }
+    
+    func OR(_ stateKey1: String, _ stateKey2: String) -> Int {
+        if state[stateKey1] == 1 || state[stateKey2] == 1 {
+            return 1
+        }
+        return 0
+    }
 
     
     var state = [
@@ -17,11 +24,11 @@ func numberValueResultingFromCircuit(_ input: String) -> Int {
         "y01": 1,
         "y02": 0,
         "z01": 0,
-        "z02": 1
     ]
     
     // apply instructions to determine the end state
     state["z00"] = AND("x00", "y00")
+    state["z02"] = OR("x02", "y02")
     
     // Construct the resulting number
     let zKeys = state.keys.filter( { $0.hasPrefix("z") })
