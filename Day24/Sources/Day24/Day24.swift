@@ -1,46 +1,76 @@
 // The Swift Programming Language
 // https://docs.swift.org/swift-book
 func numberValueResultingFromCircuit(_ input: String) -> Int {
-    func AND(_ stateKey1: String, _ stateKey2: String) -> Int {
-        if state[stateKey1] == 1 && state[stateKey2] == 1 {
-            return 1
-        }
-        return 0
-    }
-    
-    func XOR(_ stateKey1: String, _ stateKey2: String) -> Int {
-        if state[stateKey1] != state[stateKey2] {
-            return 1
-        }
-        return 0
-    }
-    
-    func OR(_ stateKey1: String, _ stateKey2: String) -> Int {
-        if state[stateKey1] == 1 || state[stateKey2] == 1 {
-            return 1
-        }
-        return 0
-    }
-
     // get the state from the input
     var state = getStateFromInput(input)
     
     let instructions = getInstructionsFromInput(input)
     
-    for instruction in instructions {
-        switch instruction.operation {
-        case "AND":
-            state[instruction.resultKey] = AND(instruction.key1, instruction.key2)
-        case "OR":
-            state[instruction.resultKey] = OR(instruction.key1, instruction.key2)
-        case "XOR":
-            state[instruction.resultKey] = XOR(instruction.key1, instruction.key2)
-        default:
-            fatalError("Unrecognized operation: \(instruction.operation)")
-        }
+    let outputInstructions = instructions.filter { $0.resultKey.hasPrefix("z") }
+    
+    for instruction in outputInstructions {
+        state[instruction.resultKey] = parseInstruction(instruction, in: state, instructions: instructions)
     }
     
     return getNumberFromState(state)
+}
+
+func parseInstruction(_ instruction: Instruction, in state: [String: Int], instructions: [Instruction]) -> Int {
+    switch instruction.operation {
+    case "AND":
+        return AND(instruction.key1, instruction.key2, in: state, instructions: instructions)
+    case "OR":
+        return OR(instruction.key1, instruction.key2, in: state, instructions: instructions)
+    case "XOR":
+        return XOR(instruction.key1, instruction.key2, in: state, instructions: instructions)
+    default:
+        fatalError("Unrecognized operation: \(instruction.operation)")
+    }
+}
+
+func AND(_ stateKey1: String, _ stateKey2: String, in state: [String: Int], instructions: [Instruction]) -> Int {
+    let stateValue1 = state[stateKey1] ?? parseInstruction(
+        instructions.first(where: { $0.resultKey == stateKey1 })!,
+        in: state, instructions: instructions)
+    
+    let stateValue2 = state[stateKey2] ?? parseInstruction(
+        instructions.first(where: { $0.resultKey == stateKey2 })!,
+        in: state, instructions: instructions)
+    
+    if stateValue1 == 1 && stateValue2 == 1 {
+        return 1
+    }
+    return 0
+}
+
+func XOR(_ stateKey1: String, _ stateKey2: String, in state: [String: Int], instructions: [Instruction]) -> Int {
+    let stateValue1 = state[stateKey1] ?? parseInstruction(
+        instructions.first(where: { $0.resultKey == stateKey1 })!,
+        in: state, instructions: instructions)
+    
+    let stateValue2 = state[stateKey2] ?? parseInstruction(
+        instructions.first(where: { $0.resultKey == stateKey2 })!,
+        in: state, instructions: instructions)
+    
+    if stateValue1 != stateValue2 {
+        return 1
+    }
+    return 0
+}
+
+func OR(_ stateKey1: String, _ stateKey2: String, in state: [String: Int], instructions: [Instruction]) -> Int {
+    let stateValue1 = state[stateKey1] ?? parseInstruction(
+        instructions.first(where: { $0.resultKey == stateKey1 })!,
+        in: state, instructions: instructions)
+    
+    let stateValue2 = state[stateKey2] ?? parseInstruction(
+        instructions.first(where: { $0.resultKey == stateKey2 })!,
+        in: state, instructions: instructions)
+    
+    if stateValue1 == 1 || stateValue2 == 1 {
+        return 1
+    }
+    return 0
 }
 
 func getNumberFromState(_ state: [String: Int]) -> Int {

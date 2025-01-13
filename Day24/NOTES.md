@@ -14,4 +14,5 @@
 - ✅ Parse initial state
 
 ## 🍅 Pomodoro 2 - parse the wires and apply them in the small example
-- ⚠️ Make the example input pass for the small example (without hard coded values)
+- ✅ Make the example input pass for the small example (without hard coded values)
+- ✅ The larger example
