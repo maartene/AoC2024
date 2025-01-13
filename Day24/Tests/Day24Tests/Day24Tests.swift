@@ -78,4 +78,8 @@ import Testing
         
         #expect(numberValueResultingFromCircuit(biggerExampleInput) == 2024)
     }
+    
+    @Test("The output for the actual input should be 69201640933606") func actualInput() {
+        #expect(numberValueResultingFromCircuit(input) == 69201640933606)
+    }
 }
