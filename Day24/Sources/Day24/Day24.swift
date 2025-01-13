@@ -2,75 +2,70 @@
 // https://docs.swift.org/swift-book
 func numberValueResultingFromCircuit(_ input: String) -> Int {
     // get the state from the input
-    var state = getStateFromInput(input)
-    
+    let state = getStateFromInput(input)
     let instructions = getInstructionsFromInput(input)
     
+    let circuit = Circuit(initialState: state, instructions: instructions)
+    
     let outputInstructions = instructions.filter { $0.resultKey.hasPrefix("z") }
-    
-    for instruction in outputInstructions {
-        state[instruction.resultKey] = parseInstruction(instruction, in: state, instructions: instructions)
-    }
-    
-    return getNumberFromState(state)
+    circuit.runInstructions(outputInstructions)
+
+    return getNumberFromState(circuit.state)
 }
 
-func parseInstruction(_ instruction: Instruction, in state: [String: Int], instructions: [Instruction]) -> Int {
-    switch instruction.operation {
-    case "AND":
-        return AND(instruction.key1, instruction.key2, in: state, instructions: instructions)
-    case "OR":
-        return OR(instruction.key1, instruction.key2, in: state, instructions: instructions)
-    case "XOR":
-        return XOR(instruction.key1, instruction.key2, in: state, instructions: instructions)
-    default:
-        fatalError("Unrecognized operation: \(instruction.operation)")
+class Circuit {
+    var state: [String: Int]
+    var instructions: [Instruction]
+    
+    init(initialState: [String : Int], instructions: [Instruction]) {
+        self.state = initialState
+        self.instructions = instructions
     }
-}
+    
+    func runInstructions(_ instructionsToRun: [Instruction]) {
+        for instruction in instructionsToRun {
+            state[instruction.resultKey] = evaluateInstruction(instruction)
+        }
+    }
+    
+    func evaluateInstruction(_ instruction: Instruction) -> Int {
+        switch instruction.operation {
+        case "AND":
+            return AND(instruction.key1, instruction.key2)
+        case "OR":
+            return OR(instruction.key1, instruction.key2)
+        case "XOR":
+            return XOR(instruction.key1, instruction.key2)
+        default:
+            fatalError("Unrecognized operation: \(instruction.operation)")
+        }
+    }
+    
+    func gate(key: String) -> Int {
+        state[key] ?? evaluateInstruction(
+            instructions.first(where: { $0.resultKey == key })!)
+    }
+    
+    func AND(_ stateKey1: String, _ stateKey2: String) -> Int {
+        if gate(key: stateKey1) == 1 && gate(key: stateKey2) == 1 {
+            return 1
+        }
+        return 0
+    }
 
-func AND(_ stateKey1: String, _ stateKey2: String, in state: [String: Int], instructions: [Instruction]) -> Int {
-    let stateValue1 = state[stateKey1] ?? parseInstruction(
-        instructions.first(where: { $0.resultKey == stateKey1 })!,
-        in: state, instructions: instructions)
-    
-    let stateValue2 = state[stateKey2] ?? parseInstruction(
-        instructions.first(where: { $0.resultKey == stateKey2 })!,
-        in: state, instructions: instructions)
-    
-    if stateValue1 == 1 && stateValue2 == 1 {
-        return 1
+    func XOR(_ stateKey1: String, _ stateKey2: String) -> Int {
+        if gate(key: stateKey1) != gate(key: stateKey2) {
+            return 1
+        }
+        return 0
     }
-    return 0
-}
 
-func XOR(_ stateKey1: String, _ stateKey2: String, in state: [String: Int], instructions: [Instruction]) -> Int {
-    let stateValue1 = state[stateKey1] ?? parseInstruction(
-        instructions.first(where: { $0.resultKey == stateKey1 })!,
-        in: state, instructions: instructions)
-    
-    let stateValue2 = state[stateKey2] ?? parseInstruction(
-        instructions.first(where: { $0.resultKey == stateKey2 })!,
-        in: state, instructions: instructions)
-    
-    if stateValue1 != stateValue2 {
-        return 1
+    func OR(_ stateKey1: String, _ stateKey2: String) -> Int {
+        if gate(key: stateKey1) == 1 || gate(key: stateKey2) == 1 {
+            return 1
+        }
+        return 0
     }
-    return 0
-}
-
-func OR(_ stateKey1: String, _ stateKey2: String, in state: [String: Int], instructions: [Instruction]) -> Int {
-    let stateValue1 = state[stateKey1] ?? parseInstruction(
-        instructions.first(where: { $0.resultKey == stateKey1 })!,
-        in: state, instructions: instructions)
-    
-    let stateValue2 = state[stateKey2] ?? parseInstruction(
-        instructions.first(where: { $0.resultKey == stateKey2 })!,
-        in: state, instructions: instructions)
-    
-    if stateValue1 == 1 || stateValue2 == 1 {
-        return 1
-    }
-    return 0
 }
 
 func getNumberFromState(_ state: [String: Int]) -> Int {
