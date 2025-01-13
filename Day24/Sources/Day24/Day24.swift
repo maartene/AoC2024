@@ -40,8 +40,12 @@ func numberValueResultingFromCircuit(_ input: String) -> Int {
         }
     }
     
-    // Construct the resulting number
+    return getNumberFromState(state)
+}
+
+func getNumberFromState(_ state: [String: Int]) -> Int {
     let zKeys = state.keys.filter( { $0.hasPrefix("z") })
+    
     var number = 0
     for stateKey in zKeys.sorted(by: >) {
         number = number << 1
