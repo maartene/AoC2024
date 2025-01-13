@@ -26,11 +26,25 @@ func numberValueResultingFromCircuit(_ input: String) -> Int {
     var state = getStateFromInput(input)
     
     // get instructions from input
+    let lines = input.split(separator: "\n").map { String($0) }
+    let instructionLines = lines.filter { $0.contains("->") }
+    let instuctions: [(key1: String, operation: String, key2: String, resultKey: String)] = instructionLines.map { line in
+        let parts = line.split(separator: " ").map { String($0) }
+        return (parts[0], parts[1], parts[2], parts[4])
+    }
     
-    // apply instructions to determine the end state
-    state["z00"] = AND("x00", "y00")
-    state["z01"] = XOR("x01", "y01")
-    state["z02"] = OR("x02", "y02")
+    for instuction in instuctions {
+        switch instuction.operation {
+        case "AND":
+            state[instuction.resultKey] = AND(instuction.key1, instuction.key2)
+        case "OR":
+            state[instuction.resultKey] = OR(instuction.key1, instuction.key2)
+        case "XOR":
+            state[instuction.resultKey] = XOR(instuction.key1, instuction.key2)
+        default:
+            fatalError("Unrecognized operation: \(instuction.operation)")
+        }
+    }
     
     // Construct the resulting number
     let zKeys = state.keys.filter( { $0.hasPrefix("z") })
