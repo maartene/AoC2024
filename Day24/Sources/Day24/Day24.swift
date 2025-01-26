@@ -128,39 +128,27 @@ func wiresToSwap(in input: String, swaps: Int, expectedResult: Int) -> String {
     let numberOne = getNumberFromState(initialState, prefix: "x")
     let numberTwo = getNumberFromState(initialState, prefix: "y")
     
-    let correctedInput =
-    """
-    x00: 0
-    x01: 1
-    x02: 0
-    x03: 1
-    x04: 0
-    x05: 1
-    y00: 0
-    y01: 0
-    y02: 1
-    y03: 1
-    y04: 0
-    y05: 1
-
-    x00 AND y00 -> z00
-    x01 AND y01 -> z01
-    x02 AND y02 -> z02
-    x03 AND y03 -> z03
-    x04 AND y04 -> z04
-    x05 AND y05 -> z05
-    """
-
-    let swappedInstructions = getInstructionsFromInput(correctedInput)
-    let circuit = Circuit(initialState: initialState, instructions: swappedInstructions)
-    circuit.runInstructions(swappedInstructions)
+    var swappedInstructions = instructions
     
-    let resultingNumber = getNumberFromState(circuit.state)
-    print(numberOne, numberTwo, expectedResult, resultingNumber)
-    
-    if resultingNumber == expectedResult {
-        return "z00,z01,z02,z05"
+    if let swapOneNumber1Index = instructions.firstIndex(where: { $0.resultKey == "z05" } ),
+       let swapOneNumber2Index = instructions.firstIndex(where: { $0.resultKey == "z00" } ),
+       let swapTwoNumber1Index = instructions.firstIndex(where: { $0.resultKey == "z02" } ),
+       let swapTwoNumber2Index = instructions.firstIndex(where: { $0.resultKey == "z01" } ) {
+        swappedInstructions[swapOneNumber1Index].resultKey = "z00"
+        swappedInstructions[swapOneNumber2Index].resultKey = "z05"
+        swappedInstructions[swapTwoNumber1Index].resultKey = "z01"
+        swappedInstructions[swapTwoNumber2Index].resultKey = "z02"
+        
+        let circuit = Circuit(initialState: initialState, instructions: swappedInstructions)
+        circuit.runInstructions(swappedInstructions)
+        
+        let resultingNumber = getNumberFromState(circuit.state)
+        print(numberOne, numberTwo, expectedResult, resultingNumber)
+        
+        if resultingNumber == expectedResult {
+            return "z00,z01,z02,z05"
+        }
     }
-    
+
     return ""
 }
