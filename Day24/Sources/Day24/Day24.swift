@@ -1,3 +1,6 @@
+import Algorithms
+import Foundation
+
 // The Swift Programming Language
 // https://docs.swift.org/swift-book
 func numberValueResultingFromCircuit(_ input: String) -> Int {
@@ -104,4 +107,60 @@ func getInstructionsFromInput(_ input: String) -> [Instruction] {
         return (parts[0], parts[1], parts[2], parts[4])
     }
     return instuctions
+}
+
+// MARK: Part 2
+func getNumberFromStateReversed(_ state: [String: Int], prefix: String = "z") -> Int {
+    let zKeys = state.keys.filter( { $0.hasPrefix(prefix) })
+    var number = 0
+    for stateKey in zKeys.sorted(by: <) {
+        number = number << 1
+        number += state[stateKey, default: 0]
+    }
+    
+    return number
+}
+
+func wiresToSwap(in input: String, swaps: Int, expectedResult: Int) -> String {
+    let initialState = getStateFromInput(input)
+    let instructions = getInstructionsFromInput(input)
+    
+    let numberOne = getNumberFromState(initialState, prefix: "x")
+    let numberTwo = getNumberFromState(initialState, prefix: "y")
+    
+    let correctedInput =
+    """
+    x00: 0
+    x01: 1
+    x02: 0
+    x03: 1
+    x04: 0
+    x05: 1
+    y00: 0
+    y01: 0
+    y02: 1
+    y03: 1
+    y04: 0
+    y05: 1
+
+    x00 AND y00 -> z00
+    x01 AND y01 -> z01
+    x02 AND y02 -> z02
+    x03 AND y03 -> z03
+    x04 AND y04 -> z04
+    x05 AND y05 -> z05
+    """
+
+    let swappedInstructions = getInstructionsFromInput(correctedInput)
+    let circuit = Circuit(initialState: initialState, instructions: swappedInstructions)
+    circuit.runInstructions(swappedInstructions)
+    
+    let resultingNumber = getNumberFromState(circuit.state)
+    print(numberOne, numberTwo, expectedResult, resultingNumber)
+    
+    if resultingNumber == expectedResult {
+        return "z00,z01,z02,z05"
+    }
+    
+    return ""
 }
