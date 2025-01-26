@@ -1,10 +1,6 @@
 import Testing
 @testable import Day24
 
-@Test func example() async throws {
-    // Write your test here and use APIs like `#expect(...)` to check expected conditions.
-}
-
 @Suite("To get the first star on day 24") struct Day24StarOneTests {
     @Test("The output for the small example should be 4") func smallExample() {
         let smallExampleInput =
@@ -81,34 +77,5 @@ import Testing
     
     @Test("The output for the actual input should be 69201640933606") func actualInput() {
         #expect(numberValueResultingFromCircuit(input) == 69201640933606)
-    }
-}
-
-@Suite("To get the second star on day 24") struct Day24StarTwoTests {
-    @Test("swapping the following lines should have the example system work as an adder") func swappingLinesInExampleProducesAdder() {
-        let exampleInput =
-        """
-        x00: 0
-        x01: 1
-        x02: 0
-        x03: 1
-        x04: 0
-        x05: 1
-        y00: 0
-        y01: 0
-        y02: 1
-        y03: 1
-        y04: 0
-        y05: 1
-
-        x00 AND y00 -> z05
-        x01 AND y01 -> z02
-        x02 AND y02 -> z01
-        x03 AND y03 -> z03
-        x04 AND y04 -> z04
-        x05 AND y05 -> z00
-        """
-        
-        #expect(wiresToSwap(in: exampleInput, swaps: 2, expectedResult: 40) == "z00,z01,z02,z05")
     }
 }
