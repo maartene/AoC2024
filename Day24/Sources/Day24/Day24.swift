@@ -172,19 +172,18 @@ func wiresToSwap(in input: String, swaps: Int, expectedResult: Int) -> String {
                     }
                 }
                 
-                
-                
                 let circuit = Circuit(initialState: initialState, instructions: swappedInstructions)
                 circuit.runInstructions(swappedInstructions)
                 
                 let resultingNumber = getNumberFromState(circuit.state)
                 
                 if resultingNumber == expectedResult {
-                    return "z00,z01,z02,z05"
+                    let sortedWires = [swap1.a, swap1.b, swap2.a, swap2.b].sorted()
+                    
+                    return sortedWires.joined(separator: ",")
                 }
             }
         }
-        
     }
 
     return ""
