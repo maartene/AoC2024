@@ -121,33 +121,70 @@ func getNumberFromStateReversed(_ state: [String: Int], prefix: String = "z") ->
     return number
 }
 
+struct Swap {
+    let a: String
+    let b: String
+}
+
+extension Swap: Equatable {
+    static func == (lhs: Swap, rhs: Swap) -> Bool {
+        (lhs.a == rhs.a && lhs.b == rhs.b) ||
+        (lhs.b == rhs.a && lhs.a == rhs.b)
+    }
+}
+
 func wiresToSwap(in input: String, swaps: Int, expectedResult: Int) -> String {
     let initialState = getStateFromInput(input)
     let instructions = getInstructionsFromInput(input)
-    
-    let numberOne = getNumberFromState(initialState, prefix: "x")
-    let numberTwo = getNumberFromState(initialState, prefix: "y")
-    
-    var swappedInstructions = instructions
-    
-    if let swapOneNumber1Index = instructions.firstIndex(where: { $0.resultKey == "z05" } ),
-       let swapOneNumber2Index = instructions.firstIndex(where: { $0.resultKey == "z00" } ),
-       let swapTwoNumber1Index = instructions.firstIndex(where: { $0.resultKey == "z02" } ),
-       let swapTwoNumber2Index = instructions.firstIndex(where: { $0.resultKey == "z01" } ) {
-        swappedInstructions[swapOneNumber1Index].resultKey = "z00"
-        swappedInstructions[swapOneNumber2Index].resultKey = "z05"
-        swappedInstructions[swapTwoNumber1Index].resultKey = "z01"
-        swappedInstructions[swapTwoNumber2Index].resultKey = "z02"
         
-        let circuit = Circuit(initialState: initialState, instructions: swappedInstructions)
-        circuit.runInstructions(swappedInstructions)
-        
-        let resultingNumber = getNumberFromState(circuit.state)
-        print(numberOne, numberTwo, expectedResult, resultingNumber)
-        
-        if resultingNumber == expectedResult {
-            return "z00,z01,z02,z05"
+    let swaps = instructions.map { $0.resultKey }.combinations(ofCount: 2)
+        .map { swap in
+            Swap(a: swap[0], b: swap[1])
         }
+
+    guard swaps.contains(Swap(a: "z05", b: "z00")) else {
+        return "Missing swap z05 <-> z00"
+    }
+    
+    guard swaps.contains(Swap(a: "z02", b: "z01")) else {
+        return "Missing swap z02 <-> z01"
+    }
+    
+    for swap1 in swaps {
+        for swap2 in swaps where swap1 != swap2 {
+            
+            var swappedInstructions = instructions
+            
+            if let swapOneNumber1Index = instructions.firstIndex(where: { $0.resultKey == swap1.a } ),
+               let swapOneNumber2Index = instructions.firstIndex(where: { $0.resultKey == swap1.b } ),
+               let swapTwoNumber1Index = instructions.firstIndex(where: { $0.resultKey == swap2.a } ),
+               let swapTwoNumber2Index = instructions.firstIndex(where: { $0.resultKey == swap2.b } ) {
+                swappedInstructions[swapOneNumber1Index].resultKey = swap1.b
+                swappedInstructions[swapOneNumber2Index].resultKey = swap1.a
+                swappedInstructions[swapTwoNumber1Index].resultKey = swap2.b
+                swappedInstructions[swapTwoNumber2Index].resultKey = swap2.a
+                
+                if swap1 == Swap(a: "z05", b: "z00") && swap2 == Swap(a: "z02", b: "z01") {
+                    print("Testing correct swaps")
+                    
+                    for instruction in swappedInstructions {
+                        print(instruction)
+                    }
+                }
+                
+                
+                
+                let circuit = Circuit(initialState: initialState, instructions: swappedInstructions)
+                circuit.runInstructions(swappedInstructions)
+                
+                let resultingNumber = getNumberFromState(circuit.state)
+                
+                if resultingNumber == expectedResult {
+                    return "z00,z01,z02,z05"
+                }
+            }
+        }
+        
     }
 
     return ""
