@@ -41,9 +41,15 @@ class Circuit {
     var state: [String: Int]
     var instructions: [Instruction]
     
+    var wireMap = [String: Instruction]()
+    
     init(initialState: [String : Int], instructions: [Instruction]) {
         self.state = initialState
         self.instructions = instructions
+        
+        for instruction in instructions {
+            wireMap[instruction.resultKey] = instruction
+        }
     }
     
     func runInstructions(_ instructionsToRun: [Instruction]) {

@@ -12,44 +12,87 @@
 //
 //
 
+//https://www.youtube.com/watch?v=pH5MRTC4MLY
+//https://gitlab.com/0xdf/aoc2024/-/raw/main/day24/day24.py?ref_type=heads
+
+extension Instruction: Equatable {
+    static func == (lhs: Instruction, rhs: Instruction) -> Bool {
+        guard lhs.operation == rhs.operation else {
+            return false
+        }
+        
+        guard lhs.resultKey == rhs.resultKey else {
+            return false
+        }
+        
+        guard Set(lhs.inputs) == Set(rhs.inputs) else {
+            return false
+        }
+        
+        return true
+    }
+}
+
 typealias Connection = Instruction
 
+extension Circuit {
+    func createState(_ n: Int, prefix: String, value: Int) -> [String: Int] {
+        var result = [String: Int]()
+        for i in 0 ..< n {
+            var indexString = String(i)
+            if i < 10 {
+                indexString = "0" + indexString
+            }
+            
+            result[prefix + indexString] = 0
+        }
+        
+        
+    }
     
-//
-//
-//operations = {
-//    "OR": lambda x1, x2: x1 | x2,
-//    "AND": lambda x1, x2: x1 & x2,
-//    "XOR": lambda x1, x2: x1 ^ x2,
-//}
-//
-//
-//def run_wire(w: str):
-//    if w in init:
-//        return init[w]
-//    conn = wire_map[w]
-//    return operations[conn.op](run_wire(conn.ins[0]), run_wire(conn.ins[1]))
-//
-//
-//with open(sys.argv[1], "r") as f:
-//    data = f.read()
-//init_pairs = re.findall(r"(.{3}): ([01])", data)
-//init = {k: int(v) for k, v in init_pairs}
-//map_str = data.split("\n\n")[1].splitlines()
-//
-//wire_map = {}
-//for line in map_str:
-//    in1, op, in2, _, out = line.strip().split(" ")
-//    wire_map[out] = Connection([in1, in2], op, out)
-//
-//
-//result = [
-//    run_wire(w)
-//    for w in sorted([w for w in wire_map if w.startswith("z")], reverse=True)
-//]
-//part1 = int("".join(map(str, result)), 2)
-//print(f"Part 1: {part1}")
-//
+    func validate(_ n: Int) -> Bool {
+        for x in 0 ..< 2 {
+            for y in 0 ..< 2 {
+                for c in 0 ..< 2 {
+                    // create X dictionary that contains all zero's, expect at position n
+                    
+                    
+                    //init_x = [0] * (44 - n) + [x]
+                    
+                    // create Y dictionary that contains all zero's, expect at position n
+                    // init_y = [0] * (44 - n) + [y]
+                    if n > 0 {
+                        // also take the carry bit into account
+                        // init_x += [c] + [0] * (n - 1)
+                        
+                        // recreate the Y dictionary
+                        //init_y += [c] + [0] * (n - 1)
+                    } else if c > 0 {
+                        continue
+                    }
+                    
+                    // init_x, init_y = list(reversed(init_x)), list(reversed(init_y))
+                    // z = run_wire2(make_wire("z", n), {"x": init_x, "y": init_y})
+                    // run the circuit based on this state and run it
+                    let z = 0
+                    if z != (x + y + c) % 2 {
+                        return false
+                    }
+                }
+            }
+        }
+        return true
+    }
+    
+    func validateWires() {
+        for i in 0 ..< 45 {
+            if validate(i) == false {
+                print("Failed at \(i)")
+            }
+        }
+    }
+}
+
 //
 //def run_wire2(w: str, init: dict[list[int]]) -> int:
 //    if res := re.match(r"(x|y)(\d{2})", w):
