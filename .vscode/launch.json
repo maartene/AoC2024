@@ -35,6 +35,24 @@
       "name": "Release Day22 (Day22)",
       "program": "${workspaceFolder:AoC2024}/Day22/.build/release/Day22",
       "preLaunchTask": "swift: Build Release Day22 (Day22)"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "${workspaceFolder:AoC2024}/Day24",
+      "name": "Debug Day24 (Day24)",
+      "program": "${workspaceFolder:AoC2024}/Day24/.build/debug/Day24",
+      "preLaunchTask": "swift: Build Debug Day24 (Day24)"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "${workspaceFolder:AoC2024}/Day24",
+      "name": "Release Day24 (Day24)",
+      "program": "${workspaceFolder:AoC2024}/Day24/.build/release/Day24",
+      "preLaunchTask": "swift: Build Release Day24 (Day24)"
     }
   ]
 }

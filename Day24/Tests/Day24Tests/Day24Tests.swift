@@ -79,3 +79,18 @@ import Testing
         #expect(numberValueResultingFromCircuit(input) == 69201640933606)
     }
 }
+
+@Suite("To get the second star on day 24") struct Day24StarTwoTests {
+    @Test("Convert an arbitrary number into a state") func convertNumberIntoState() {
+        let upper = 2 << 44
+        for n in 0 ..< 20 {
+            let value = (0 ..< upper).randomElement()!
+            print("Testing \(n)")
+            for prefix in ["x", "y", "z"] {
+                
+                let state = createState(prefix: prefix, value: value)
+                #expect(getNumberFromState(state, prefix: prefix) == value)
+            }
+        }
+    }
+}

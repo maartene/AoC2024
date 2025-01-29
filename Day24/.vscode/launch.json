@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Day24}",
+            "name": "Debug Day24",
+            "program": "${workspaceFolder:Day24}/.build/debug/Day24",
+            "preLaunchTask": "swift: Build Debug Day24"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Day24}",
+            "name": "Release Day24",
+            "program": "${workspaceFolder:Day24}/.build/release/Day24",
+            "preLaunchTask": "swift: Build Release Day24"
+        }
+    ]
+}

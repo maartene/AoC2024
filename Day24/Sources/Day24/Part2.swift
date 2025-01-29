@@ -36,61 +36,90 @@ extension Instruction: Equatable {
 typealias Connection = Instruction
 
 extension Circuit {
-    func createState(_ n: Int, prefix: String, value: Int) -> [String: Int] {
-        var result = [String: Int]()
-        for i in 0 ..< n {
-            var indexString = String(i)
+    func validateBit(_ n: Int) -> Bool {
+        let upper = 2 << n
+        for i in 0 ..< upper {
+            let x = (0 ..< i).randomElement() ?? 0
+            let y = i - x
+            let initialStateX = createState(prefix: "x", value: x)
+            let initialStateY = createState(prefix: "y", value: y)
+            let initialState = initialStateX.merging(initialStateY) { old, new in
+                new
+            }
+
+            let circuit = Circuit(initialState: initialState, instructions: instructions)
+
+            var indexString = String(n)
             if i < 10 {
                 indexString = "0" + indexString
             }
             
-            result[prefix + indexString] = 0
-        }
-        
-        
-    }
-    
-    func validate(_ n: Int) -> Bool {
-        for x in 0 ..< 2 {
-            for y in 0 ..< 2 {
-                for c in 0 ..< 2 {
-                    // create X dictionary that contains all zero's, expect at position n
-                    
-                    
-                    //init_x = [0] * (44 - n) + [x]
-                    
-                    // create Y dictionary that contains all zero's, expect at position n
-                    // init_y = [0] * (44 - n) + [y]
-                    if n > 0 {
-                        // also take the carry bit into account
-                        // init_x += [c] + [0] * (n - 1)
-                        
-                        // recreate the Y dictionary
-                        //init_y += [c] + [0] * (n - 1)
-                    } else if c > 0 {
-                        continue
-                    }
-                    
-                    // init_x, init_y = list(reversed(init_x)), list(reversed(init_y))
-                    // z = run_wire2(make_wire("z", n), {"x": init_x, "y": init_y})
-                    // run the circuit based on this state and run it
-                    let z = 0
-                    if z != (x + y + c) % 2 {
-                        return false
-                    }
-                }
+            let outputInstructions = instructions.filter { $0.resultKey.hasPrefix("z") }
+            circuit.runInstructions(outputInstructions)
+
+            let result = getNumberFromState(circuit.state)
+
+            if result != x + y { 
+                return false
             }
         }
+
         return true
     }
-    
-    func validateWires() {
-        for i in 0 ..< 45 {
-            if validate(i) == false {
-                print("Failed at \(i)")
-            }
+
+    func validate() {
+        var i = 0
+        while validateBit(i) && i < 45 {
+            let validationResult = validateBit(i)
+            print("Checking bit: \(i): \(validationResult ? "CORRECT" : "INCORRECT")")
+            i += 1
         }
+
+        print("First invalid at bit \(i - 1)")
+
     }
+    
+    // func validate(_ n: Int) -> Bool {
+    //     for x in 0 ..< 2 {
+    //         for y in 0 ..< 2 {
+    //             for c in 0 ..< 2 {
+    //                 // create X dictionary that contains all zero's, expect at position n
+                    
+                    
+    //                 //init_x = [0] * (44 - n) + [x]
+                    
+    //                 // create Y dictionary that contains all zero's, expect at position n
+    //                 // init_y = [0] * (44 - n) + [y]
+    //                 if n > 0 {
+    //                     // also take the carry bit into account
+    //                     // init_x += [c] + [0] * (n - 1)
+                        
+    //                     // recreate the Y dictionary
+    //                     //init_y += [c] + [0] * (n - 1)
+    //                 } else if c > 0 {
+    //                     continue
+    //                 }
+                    
+    //                 // init_x, init_y = list(reversed(init_x)), list(reversed(init_y))
+    //                 // z = run_wire2(make_wire("z", n), {"x": init_x, "y": init_y})
+    //                 // run the circuit based on this state and run it
+    //                 let z = 0
+    //                 if z != (x + y + c) % 2 {
+    //                     return false
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     return true
+    // }
+    
+    // func validateWires() {
+    //     for i in 0 ..< 45 {
+    //         if validate(i) == false {
+    //             print("Failed at \(i)")
+    //         }
+    //     }
+    // }
 }
 
 //
@@ -192,3 +221,29 @@ extension Circuit {
 //    part2.extend(fix_bit_n(i))
 //
 //print(f'Part 2: {",".join(sorted(part2))}')
+
+func createState(prefix: String, value: Int) -> [String: Int] {
+    var result = [String: Int]()
+    for i in 0 ..< 45 {
+        var indexString = String(i)
+        if i < 10 {
+            indexString = "0" + indexString
+        }
+        
+        result[prefix + indexString] = 0
+    }
+    
+    let valueString = String(value, radix: 2).reversed()
+    let valueStringArray = valueString.map { Int(String($0))! }
+
+    for i in 0 ..< valueStringArray.count {
+        var indexString = String(i)
+        if i < 10 {
+            indexString = "0" + indexString
+        }
+        
+        result[prefix + indexString] = valueStringArray[i]
+    }
+
+    return result   
+}
