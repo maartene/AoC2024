@@ -6,6 +6,7 @@
 //
 
 import Algorithms
+import Foundation
 
 //import re
 //import sys
@@ -35,6 +36,23 @@ extension Instruction: Equatable {
     }
 }
 
+extension Instruction: CustomStringConvertible {
+    var description: String {
+        "\(key1) \(operation) \(key2) -> \(resultKey)"
+    }
+}
+
+extension Int {
+    func bitToKey(prefix: String) -> String {
+        var indexString = String(self)
+        if self < 10 {
+            indexString = "0" + indexString
+        }
+
+        return prefix + indexString
+    }
+}
+
 typealias Connection = Instruction
 
 extension Circuit {
@@ -51,11 +69,6 @@ extension Circuit {
             }
 
             let circuit = Circuit(initialState: initialState, instructions: instructions)
-
-            var indexString = String(n)
-            if i < 10 {
-                indexString = "0" + indexString
-            }
             
             let outputInstructions = instructions.filter { $0.resultKey.hasPrefix("z") }
             circuit.runInstructions(outputInstructions)
@@ -83,7 +96,21 @@ extension Circuit {
     }
 
     func instructionsForBit(for bit: Int) -> Set<Instruction> {
-        []
+        guard let resultInstruction = instructions.first(where: { $0.resultKey == bit.bitToKey(prefix: "z") } ) else {
+            fatalError("Could not find an instruction for bit \(bit)")
+        }
+
+        var result = Set<Instruction>()
+        var instructionsToCheck = [resultInstruction]
+        while instructionsToCheck.count > 0 {
+            let instruction = instructionsToCheck.removeFirst()
+            result.insert(instruction)
+
+            let instructionsToAdd = instructions.filter { instruction.inputs.contains($0.resultKey) }
+            instructionsToCheck.append(contentsOf: instructionsToAdd)
+        }
+
+        return result
     }
     
     // func validate(_ n: Int) -> Bool {
@@ -231,25 +258,15 @@ extension Circuit {
 
 func createState(prefix: String, value: Int) -> [String: Int] {
     var result = [String: Int]()
-    for i in 0 ..< 45 {
-        var indexString = String(i)
-        if i < 10 {
-            indexString = "0" + indexString
-        }
-        
-        result[prefix + indexString] = 0
+    for i in 0 ..< 45 {     
+        result[i.bitToKey(prefix: prefix)] = 0
     }
     
     let valueString = String(value, radix: 2).reversed()
     let valueStringArray = valueString.map { Int(String($0))! }
 
     for i in 0 ..< valueStringArray.count {
-        var indexString = String(i)
-        if i < 10 {
-            indexString = "0" + indexString
-        }
-        
-        result[prefix + indexString] = valueStringArray[i]
+        result[i.bitToKey(prefix: prefix)] = valueStringArray[i]
     }
 
     return result   

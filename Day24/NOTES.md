@@ -29,7 +29,6 @@
     - Build up a solution for a test case with one swap, then two, ...
 - ✅ Create an arbitrary state from a number, so I can initiaze a circuit with known input and expected output
 
-
 ## 🍅 Pomodoro 4 - part two
 - 🚧The plan:
     - ✅ Find at what 'bit' the input breaks

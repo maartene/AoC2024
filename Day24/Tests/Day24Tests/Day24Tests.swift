@@ -97,10 +97,44 @@ import Testing
         let circuit = Circuit(initialState: [:], instructions: instructions)
         #expect(circuit.validate() == 9)
     }
+    
+    let knownGoodInstructions = 
+        """
+        qsp AND vgc -> wjr
+        y05 AND x05 -> pdt
+        wvk AND mct -> mtb
+        y02 XOR x02 -> wvk
+        qgt AND gwq -> cgt
+        pcq OR mtb -> vgc
+        psm AND qht -> htr
+        y01 AND x01 -> pvw
+        mqt XOR tsw -> z07
+        htr OR ggb -> mqt
+        y04 AND x04 -> wkf
+        y03 AND x03 -> sgq
+        y04 XOR x04 -> fkv
+        wjr OR sgq -> wcd
+        x02 AND y02 -> pcq
+        x06 AND y06 -> ggb
+        y06 XOR x06 -> qht
+        y01 XOR x01 -> qgt
+        pdt OR qft -> psm
+        pvw OR cgt -> mct
+        x07 XOR y07 -> tsw
+        wqb AND wrc -> qft
+        y03 XOR x03 -> qsp
+        x05 XOR y05 -> wqb
+        wcd AND fkv -> knf
+        knf OR wkf -> wrc
+        y00 AND x00 -> gwq
+        """
 
     @Test("THe instructions to create the first 7 bits should be ?") func instructionsToCreateFirst7Bits() {
         let instructions = getInstructionsFromInput(input)
         let circuit = Circuit(initialState: [:], instructions: instructions)
-        print(circuit.instructionsForBit(for: 7))
+
+        for instruction in circuit.instructionsForBit(for: 7) {
+            print(instruction)
+        }
     }   
 }
