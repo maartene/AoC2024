@@ -37,6 +37,8 @@ struct Instruction {
     }
 }
 
+extension Instruction: Hashable { }
+
 class Circuit {
     var state: [String: Int]
     var instructions: [Instruction]

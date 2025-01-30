@@ -5,6 +5,8 @@
 //  Created by Maarten Engels on 26/01/2025.
 //
 
+import Algorithms
+
 //import re
 //import sys
 //from dataclasses import dataclass
@@ -38,7 +40,8 @@ typealias Connection = Instruction
 extension Circuit {
     func validateBit(_ n: Int) -> Bool {
         let upper = 2 << n
-        for i in 0 ..< upper {
+        let sample = (0 ..< upper).randomSample(count: 100)
+        for i in sample {
             let x = (0 ..< i).randomElement() ?? 0
             let y = i - x
             let initialStateX = createState(prefix: "x", value: x)
@@ -67,7 +70,7 @@ extension Circuit {
         return true
     }
 
-    func validate() {
+    func validate() -> Int {
         var i = 0
         while validateBit(i) && i < 45 {
             let validationResult = validateBit(i)
@@ -75,8 +78,12 @@ extension Circuit {
             i += 1
         }
 
-        print("First invalid at bit \(i - 1)")
+        print("First invalid at bit \(i)")
+        return i
+    }
 
+    func instructionsForBit(for bit: Int) -> Set<Instruction> {
+        []
     }
     
     // func validate(_ n: Int) -> Bool {

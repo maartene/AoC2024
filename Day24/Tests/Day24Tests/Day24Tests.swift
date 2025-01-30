@@ -85,12 +85,22 @@ import Testing
         let upper = 2 << 44
         for n in 0 ..< 20 {
             let value = (0 ..< upper).randomElement()!
-            print("Testing \(n)")
-            for prefix in ["x", "y", "z"] {
-                
+            for prefix in ["x", "y", "z"] {                
                 let state = createState(prefix: prefix, value: value)
                 #expect(getNumberFromState(state, prefix: prefix) == value)
             }
         }
     }
+
+    @Test("The number of correct bits in the actual input should be 9") func numberOfCorrectBits_inActualInput() {
+        let instructions = getInstructionsFromInput(input)
+        let circuit = Circuit(initialState: [:], instructions: instructions)
+        #expect(circuit.validate() == 9)
+    }
+
+    @Test("THe instructions to create the first 7 bits should be ?") func instructionsToCreateFirst7Bits() {
+        let instructions = getInstructionsFromInput(input)
+        let circuit = Circuit(initialState: [:], instructions: instructions)
+        print(circuit.instructionsForBit(for: 7))
+    }   
 }
