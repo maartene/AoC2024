@@ -4,7 +4,9 @@ import Foundation
 @main
 struct Day24 {
     static func main() {
-        
+        let instructions = getInstructionsFromInput(input)
+        let circuit = Circuit(initialState: [:], instructions: instructions)
+        print(circuit.validate())
     }
 }
 

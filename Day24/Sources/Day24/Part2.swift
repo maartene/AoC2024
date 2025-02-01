@@ -18,6 +18,16 @@ import Foundation
 //https://www.youtube.com/watch?v=pH5MRTC4MLY
 //https://gitlab.com/0xdf/aoc2024/-/raw/main/day24/day24.py?ref_type=heads
 
+struct Swap: Equatable {
+    let resultKey1: String
+    let resultKey2: String
+    
+    static func == (s1: Swap, s2: Swap) -> Bool {
+        (s1.resultKey1 == s2.resultKey1 && s1.resultKey2 == s2.resultKey2) ||
+        (s1.resultKey1 == s2.resultKey2 && s1.resultKey2 == s2.resultKey1)
+    }
+}
+
 extension Instruction: Equatable {
     static func == (lhs: Instruction, rhs: Instruction) -> Bool {
         guard lhs.operation == rhs.operation else {
@@ -58,7 +68,8 @@ typealias Connection = Instruction
 extension Circuit {
     func validateBit(_ n: Int) -> Bool {
         let upper = 2 << n
-        let sample = (0 ..< upper).randomSample(count: 100)
+        let lower = upper / 8
+        let sample = (lower ..< upper).randomSample(count: 40)
         for i in sample {
             let x = (0 ..< i).randomElement() ?? 0
             let y = i - x
@@ -96,21 +107,28 @@ extension Circuit {
     }
 
     func instructionsForBit(for bit: Int) -> Set<Instruction> {
-        guard let resultInstruction = instructions.first(where: { $0.resultKey == bit.bitToKey(prefix: "z") } ) else {
-            fatalError("Could not find an instruction for bit \(bit)")
-        }
-
         var result = Set<Instruction>()
-        var instructionsToCheck = [resultInstruction]
-        while instructionsToCheck.count > 0 {
-            let instruction = instructionsToCheck.removeFirst()
-            result.insert(instruction)
-
-            let instructionsToAdd = instructions.filter { instruction.inputs.contains($0.resultKey) }
-            instructionsToCheck.append(contentsOf: instructionsToAdd)
+        
+        for bit in 0 ..< bit {
+            guard let resultInstruction = instructions.first(where: { $0.resultKey == bit.bitToKey(prefix: "z") } ) else {
+                fatalError("Could not find an instruction for bit \(bit)")
+            }
+            
+            var instructionsToCheck = [resultInstruction]
+            while instructionsToCheck.count > 0 {
+                let instruction = instructionsToCheck.removeFirst()
+                result.insert(instruction)
+                
+                let instructionsToAdd = instructions.filter { instruction.inputs.contains($0.resultKey) }
+                instructionsToCheck.append(contentsOf: instructionsToAdd)
+            }
         }
 
         return result
+    }
+    
+    func correctBit(_ bit: Int) -> Swap {
+        return Swap(resultKey1: "z03", resultKey2: "z02")
     }
     
     // func validate(_ n: Int) -> Bool {

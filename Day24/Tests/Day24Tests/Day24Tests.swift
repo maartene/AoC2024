@@ -83,7 +83,7 @@ import Testing
 @Suite("To get the second star on day 24") struct Day24StarTwoTests {
     @Test("Convert an arbitrary number into a state") func convertNumberIntoState() {
         let upper = 2 << 44
-        for n in 0 ..< 20 {
+        for _ in 0 ..< 20 {
             let value = (0 ..< upper).randomElement()!
             for prefix in ["x", "y", "z"] {                
                 let state = createState(prefix: prefix, value: value)
@@ -100,41 +100,56 @@ import Testing
     
     let knownGoodInstructions = 
         """
-        qsp AND vgc -> wjr
-        y05 AND x05 -> pdt
-        wvk AND mct -> mtb
-        y02 XOR x02 -> wvk
-        qgt AND gwq -> cgt
+        mct XOR wvk -> z02
         pcq OR mtb -> vgc
-        psm AND qht -> htr
-        y01 AND x01 -> pvw
-        mqt XOR tsw -> z07
-        htr OR ggb -> mqt
-        y04 AND x04 -> wkf
-        y03 AND x03 -> sgq
-        y04 XOR x04 -> fkv
-        wjr OR sgq -> wcd
-        x02 AND y02 -> pcq
-        x06 AND y06 -> ggb
-        y06 XOR x06 -> qht
-        y01 XOR x01 -> qgt
-        pdt OR qft -> psm
         pvw OR cgt -> mct
-        x07 XOR y07 -> tsw
-        wqb AND wrc -> qft
-        y03 XOR x03 -> qsp
-        x05 XOR y05 -> wqb
-        wcd AND fkv -> knf
-        knf OR wkf -> wrc
+        qgt AND gwq -> cgt
+        qgt XOR gwq -> z01
+        qsp XOR vgc -> z03
+        wvk AND mct -> mtb
+        x00 XOR y00 -> z00
+        x02 AND y02 -> pcq
         y00 AND x00 -> gwq
+        y01 AND x01 -> pvw
+        y01 XOR x01 -> qgt
+        y02 XOR x02 -> wvk
+        y03 XOR x03 -> qsp
         """
 
-    @Test("THe instructions to create the first 7 bits should be ?") func instructionsToCreateFirst7Bits() {
+    @Test("The instructions to create the first 7 bits should be knownGoodInstructions") func instructionsToCreateFirst7Bits() {
         let instructions = getInstructionsFromInput(input)
         let circuit = Circuit(initialState: [:], instructions: instructions)
 
-        for instruction in circuit.instructionsForBit(for: 7) {
-            print(instruction)
-        }
-    }   
+        let instructionsForFirst4Bits = circuit.instructionsForBit(for: 4)
+            .map { $0.description }
+            .sorted()
+            .joined(separator: "\n")
+                
+        #expect(instructionsForFirst4Bits == knownGoodInstructions)
+    }
+    
+    @Test("When swapping two instructions, we can recover the correct program for this example") func correctOneInstruction() {
+        let input =
+        """
+        mct XOR wvk -> z03
+        pcq OR mtb -> vgc
+        pvw OR cgt -> mct
+        qgt AND gwq -> cgt
+        qgt XOR gwq -> z01
+        qsp XOR vgc -> z02
+        wvk AND mct -> mtb
+        x00 XOR y00 -> z00
+        x02 AND y02 -> pcq
+        y00 AND x00 -> gwq
+        y01 AND x01 -> pvw
+        y01 XOR x01 -> qgt
+        y02 XOR x02 -> wvk
+        y03 XOR x03 -> qsp
+        """
+        
+        let instructions = getInstructionsFromInput(input)
+        let circuit = Circuit(initialState: [:], instructions: instructions)
+        
+        #expect(circuit.correctBit(2) == Swap(resultKey1: "z02", resultKey2: "z03"))
+    }
 }

@@ -29,9 +29,14 @@
     - Build up a solution for a test case with one swap, then two, ...
 - ✅ Create an arbitrary state from a number, so I can initiaze a circuit with known input and expected output
 
-## 🍅 Pomodoro 4 - part two
+## 🍅 Pomodoro 5 - part two continued
 - 🚧The plan:
     - ✅ Find at what 'bit' the input breaks
     - Use the bits before that to create a known good case
     - Create a simple test case out of that to test the solution
     - Build up a solution for a test case with one swap, then two, ...
+
+## 🍅 Pomodoro 6 - perform a single swap to correct input
+- ⚠️ Create failing input
+- ⚠️ Correct a single hardcoded swap
+- ⚠️ "Find" the correct swap
