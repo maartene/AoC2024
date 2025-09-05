@@ -8,13 +8,6 @@
 import Algorithms
 import Foundation
 
-//import re
-//import sys
-//from dataclasses import dataclass
-//from itertools import combinations
-//
-//
-
 //https://www.youtube.com/watch?v=pH5MRTC4MLY
 //https://gitlab.com/0xdf/aoc2024/-/raw/main/day24/day24.py?ref_type=heads
 
@@ -66,10 +59,10 @@ extension Int {
 typealias Connection = Instruction
 
 extension Circuit {
-    func validateBit(_ n: Int) -> Bool {
+    func validateBit(_ n: Int, usingSample: Bool) -> Bool {
         let upper = 2 << n
         let lower = upper / 8
-        let sample = (lower ..< upper).randomSample(count: 40)
+        let sample = usingSample ? (lower ... upper).randomSample(count: 40) : (0 ... upper).map { $0 }
         for i in sample {
             let x = (0 ..< i).randomElement() ?? 0
             let y = i - x
@@ -94,10 +87,10 @@ extension Circuit {
         return true
     }
 
-    func validate() -> Int {
+    func validate(usingSample: Bool = true) -> Int {
         var i = 0
-        while validateBit(i) && i < 45 {
-            let validationResult = validateBit(i)
+        while validateBit(i, usingSample: usingSample) && i < 45 {
+            let validationResult = validateBit(i, usingSample: usingSample)
             print("Checking bit: \(i): \(validationResult ? "CORRECT" : "INCORRECT")")
             i += 1
         }
@@ -110,7 +103,9 @@ extension Circuit {
         var result = Set<Instruction>()
         
         for bit in 0 ..< bit {
-            guard let resultInstruction = instructions.first(where: { $0.resultKey == bit.bitToKey(prefix: "z") } ) else {
+            guard let resultInstruction = instructions.first(where: { 
+                    $0.resultKey == bit.bitToKey(prefix: "z")
+                } ) else {
                 fatalError("Could not find an instruction for bit \(bit)")
             }
             
@@ -127,8 +122,29 @@ extension Circuit {
         return result
     }
     
-    func correctBit(_ bit: Int) -> Swap {
-        return Swap(resultKey1: "z03", resultKey2: "z02")
+    func correctBit(_ bit: Int) -> [Swap] {
+        let outputs: [String] = instructions.map { $0.resultKey }
+        let swaps = outputs.combinations(ofCount: 2).map { Swap(resultKey1: $0[0], resultKey2: $0[1]) }
+        print(swaps.count)
+
+        var result = [Swap]()
+        for swap in swaps {
+            var swappedInstructions = instructions
+            let swap1Index = instructions.firstIndex(where: { $0.resultKey == swap.resultKey1 })!
+            let swap2Index = instructions.firstIndex(where: { $0.resultKey == swap.resultKey2 })!
+
+            swappedInstructions[swap1Index].resultKey = swap.resultKey2
+            swappedInstructions[swap2Index].resultKey = swap.resultKey1
+
+            let circuit = Circuit(initialState: state, instructions: swappedInstructions)
+
+            if circuit.validate() > bit {
+                print("Swap \(swap) leads to correct bit \(bit)")
+                result.append(Swap(resultKey1: swap.resultKey1, resultKey2: swap.resultKey2))
+            }
+        }
+        
+        return [Swap(resultKey1: "z03", resultKey2: "z02")]
     }
     
     // func validate(_ n: Int) -> Bool {

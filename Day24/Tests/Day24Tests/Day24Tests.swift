@@ -148,8 +148,9 @@ import Testing
         """
         
         let instructions = getInstructionsFromInput(input)
-        let circuit = Circuit(initialState: [:], instructions: instructions)
+        let initialState = getStateFromInput(input)
+        let circuit = Circuit(initialState: initialState, instructions: instructions)
         
-        #expect(circuit.correctBit(2) == Swap(resultKey1: "z02", resultKey2: "z03"))
+        #expect(circuit.correctBit(2).contains(Swap(resultKey1: "z02", resultKey2: "z03")))
     }
 }
