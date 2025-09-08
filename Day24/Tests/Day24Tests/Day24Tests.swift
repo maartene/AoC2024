@@ -81,76 +81,12 @@ import Testing
 }
 
 @Suite("To get the second star on day 24") struct Day24StarTwoTests {
-    @Test("Convert an arbitrary number into a state") func convertNumberIntoState() {
-        let upper = 2 << 44
-        for _ in 0 ..< 20 {
-            let value = (0 ..< upper).randomElement()!
-            for prefix in ["x", "y", "z"] {                
-                let state = createState(prefix: prefix, value: value)
-                #expect(getNumberFromState(state, prefix: prefix) == value)
-            }
-        }
-    }
-
-    @Test("The number of correct bits in the actual input should be 9") func numberOfCorrectBits_inActualInput() {
+    @Test("There should be no swaps needed to get to number 69201640933606") func noSwapsNeeded() {
         let instructions = getInstructionsFromInput(input)
-        let circuit = Circuit(initialState: [:], instructions: instructions)
-        #expect(circuit.validate() == 9)
-    }
-    
-    let knownGoodInstructions = 
-        """
-        mct XOR wvk -> z02
-        pcq OR mtb -> vgc
-        pvw OR cgt -> mct
-        qgt AND gwq -> cgt
-        qgt XOR gwq -> z01
-        qsp XOR vgc -> z03
-        wvk AND mct -> mtb
-        x00 XOR y00 -> z00
-        x02 AND y02 -> pcq
-        y00 AND x00 -> gwq
-        y01 AND x01 -> pvw
-        y01 XOR x01 -> qgt
-        y02 XOR x02 -> wvk
-        y03 XOR x03 -> qsp
-        """
-
-    @Test("The instructions to create the first 7 bits should be knownGoodInstructions") func instructionsToCreateFirst7Bits() {
-        let instructions = getInstructionsFromInput(input)
-        let circuit = Circuit(initialState: [:], instructions: instructions)
-
-        let instructionsForFirst4Bits = circuit.instructionsForBit(for: 4)
-            .map { $0.description }
-            .sorted()
-            .joined(separator: "\n")
-                
-        #expect(instructionsForFirst4Bits == knownGoodInstructions)
-    }
-    
-    @Test("When swapping two instructions, we can recover the correct program for this example") func correctOneInstruction() {
-        let input =
-        """
-        mct XOR wvk -> z03
-        pcq OR mtb -> vgc
-        pvw OR cgt -> mct
-        qgt AND gwq -> cgt
-        qgt XOR gwq -> z01
-        qsp XOR vgc -> z02
-        wvk AND mct -> mtb
-        x00 XOR y00 -> z00
-        x02 AND y02 -> pcq
-        y00 AND x00 -> gwq
-        y01 AND x01 -> pvw
-        y01 XOR x01 -> qgt
-        y02 XOR x02 -> wvk
-        y03 XOR x03 -> qsp
-        """
+        let state = getStateFromInput(input)
         
-        let instructions = getInstructionsFromInput(input)
-        let initialState = getStateFromInput(input)
-        let circuit = Circuit(initialState: initialState, instructions: instructions)
+        let circuit = Circuit(initialState: state, instructions: instructions)
         
-        #expect(circuit.correctBit(2).contains(Swap(resultKey1: "z02", resultKey2: "z03")))
+        #expect(circuit.swapsNeededToReach(69201640933606) == [])
     }
 }

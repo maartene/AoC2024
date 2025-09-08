@@ -59,7 +59,7 @@ extension Int {
 typealias Connection = Instruction
 
 extension Circuit {
-    func validateBit(_ n: Int, usingSample: Bool) -> Bool {
+    func validateBit(_ n: Int, usingSample: Bool) throws -> Bool {
         let upper = 2 << n
         let lower = upper / 8
         let sample = usingSample ? (lower ... upper).randomSample(count: 40) : (0 ... upper).map { $0 }
@@ -75,7 +75,7 @@ extension Circuit {
             let circuit = Circuit(initialState: initialState, instructions: instructions)
             
             let outputInstructions = instructions.filter { $0.resultKey.hasPrefix("z") }
-            circuit.runInstructions(outputInstructions)
+            try circuit.runInstructions(outputInstructions)
 
             let result = getNumberFromState(circuit.state)
 
@@ -87,16 +87,19 @@ extension Circuit {
         return true
     }
 
-    func validate(usingSample: Bool = true) -> Int {
-        var i = 0
-        while validateBit(i, usingSample: usingSample) && i < 45 {
-            let validationResult = validateBit(i, usingSample: usingSample)
-            print("Checking bit: \(i): \(validationResult ? "CORRECT" : "INCORRECT")")
+    func validate(usingSample: Bool = true, lowerBit: Int = 0, upperBit: Int = 45) throws -> Int? {
+        var i = lowerBit
+        var validationResult = true
+        while validationResult && i <= upperBit {
+            validationResult = try validateBit(i, usingSample: usingSample)
+            if validationResult == false {
+                print("Bit \(i) is INCORRECT")
+                return i
+            }
+            print("Bit \(i) is OK")
             i += 1
         }
-
-        print("First invalid at bit \(i)")
-        return i
+        return nil
     }
 
     func instructionsForBit(for bit: Int) -> Set<Instruction> {
@@ -123,12 +126,16 @@ extension Circuit {
     }
     
     func correctBit(_ bit: Int) -> [Swap] {
-        let outputs: [String] = instructions.map { $0.resultKey }
+        let outputs: [String] = instructionsForBit(for: bit).map { $0.resultKey }
         let swaps = outputs.combinations(ofCount: 2).map { Swap(resultKey1: $0[0], resultKey2: $0[1]) }
         print(swaps.count)
 
         var result = [Swap]()
-        for swap in swaps {
+        for i in 0 ..< swaps.count {
+            if i % 100 == 0 {
+                print("\(Double(i) / Double(swaps.count) * 100)%")
+            }
+            let swap = swaps[i]
             var swappedInstructions = instructions
             let swap1Index = instructions.firstIndex(where: { $0.resultKey == swap.resultKey1 })!
             let swap2Index = instructions.firstIndex(where: { $0.resultKey == swap.resultKey2 })!
@@ -137,14 +144,75 @@ extension Circuit {
             swappedInstructions[swap2Index].resultKey = swap.resultKey1
 
             let circuit = Circuit(initialState: state, instructions: swappedInstructions)
-
-            if circuit.validate() > bit {
-                print("Swap \(swap) leads to correct bit \(bit)")
-                result.append(Swap(resultKey1: swap.resultKey1, resultKey2: swap.resultKey2))
+            
+            do {
+                if try circuit.validate(lowerBit: max(0, bit - 2), upperBit: bit) == nil {
+                    print("Swap \(swap) leads to correct bit \(bit)")
+                    result.append(Swap(resultKey1: swap.resultKey1, resultKey2: swap.resultKey2))
+                }
+            } catch {
+                print("Circular reference: \(swap)")
+                continue
             }
         }
         
-        return [Swap(resultKey1: "z03", resultKey2: "z02")]
+        return result
+    }
+    
+    func swapsNeededToReach(_ number: Int) -> [Swap] {
+        let circuit = Circuit(initialState: state, instructions: instructions)
+        try? circuit.runInstructions(instructions)
+        
+        guard getNumberFromState(circuit.state) != number else {
+            return []
+        }
+        
+        let outputs: [String] = instructions.map { $0.resultKey }
+        let swaps = outputs.combinations(ofCount: 8).map {
+            [
+                Swap(resultKey1: $0[0], resultKey2: $0[1]),
+                Swap(resultKey1: $0[2], resultKey2: $0[3]),
+                Swap(resultKey1: $0[4], resultKey2: $0[5]),
+                Swap(resultKey1: $0[6], resultKey2: $0[7])
+            ]
+        }
+        
+        for i in 0 ..< swaps.count {
+            if i % 100 == 0 {
+                print(Double(i) / Double(swaps.count) * 100.0)
+            }
+            
+            let swap = swaps[i]
+            let swappedInstructions = swapInstructions(source: instructions, swaps: swap)
+            let circuit = Circuit(initialState: state, instructions: swappedInstructions)
+            do {
+                try circuit.runInstructions(swappedInstructions)
+            } catch {
+                print("Swap \(swap) leads to a deadlock")
+            }
+            
+            if getNumberFromState(circuit.state) == number {
+                return swap
+            }
+        }
+        
+        fatalError("Unable to find swap that leads to number \(number)")
+    }
+    
+    private func swapInstructions(source instructions: [Instruction], swaps: [Swap]) -> [Instruction] {
+        var result = instructions
+        
+        for swap in swaps {
+            guard let index1 = instructions.firstIndex(where: { $0.resultKey == swap.resultKey1 }),
+                  let index2 = instructions.firstIndex(where: { $0.resultKey == swap.resultKey2 }) else {
+                      fatalError("Could not find swap indices")
+                  }
+            
+            result[index1].resultKey = swap.resultKey2
+            result[index2].resultKey = swap.resultKey1
+        }
+        
+        return result
     }
     
     // func validate(_ n: Int) -> Bool {

@@ -5,8 +5,19 @@ import Foundation
 struct Day24 {
     static func main() {
         let instructions = getInstructionsFromInput(input)
-        let circuit = Circuit(initialState: [:], instructions: instructions)
-        print(circuit.validate())
+        let state = getStateFromInput(input)
+        
+        let circuit = Circuit(initialState: state, instructions: instructions)
+        
+        let result = circuit.swapsNeededToReach(0)
+        print(result)
+        
+//        let circuit = Circuit(initialState: [:], instructions: instructions)
+//        do {
+//            print(try circuit.validate())
+//        } catch {
+//            print("Error finding result: \(error)")
+//        }
     }
 }
 
@@ -20,7 +31,11 @@ func numberValueResultingFromCircuit(_ input: String) -> Int {
     let circuit = Circuit(initialState: state, instructions: instructions)
     
     let outputInstructions = instructions.filter { $0.resultKey.hasPrefix("z") }
-    circuit.runInstructions(outputInstructions)
+    do {
+        try circuit.runInstructions(outputInstructions)
+    } catch {
+        print(error)
+    }
 
     return getNumberFromState(circuit.state)
 }
@@ -42,10 +57,15 @@ struct Instruction {
 extension Instruction: Hashable { }
 
 class Circuit {
+    enum CircuitError: Error {
+        case instructionCycleDetected(Instruction)
+    }
+    
     var state: [String: Int]
     var instructions: [Instruction]
     
     var wireMap = [String: Instruction]()
+    var instructionsInFlight = Set<Instruction>()
     
     init(initialState: [String : Int], instructions: [Instruction]) {
         self.state = initialState
@@ -56,46 +76,56 @@ class Circuit {
         }
     }
     
-    func runInstructions(_ instructionsToRun: [Instruction]) {
+    func runInstructions(_ instructionsToRun: [Instruction]) throws {
         for instruction in instructionsToRun {
-            state[instruction.resultKey] = evaluateInstruction(instruction)
+            state[instruction.resultKey] = try evaluateInstruction(instruction)
         }
     }
     
-    func evaluateInstruction(_ instruction: Instruction) -> Int {
+    func evaluateInstruction(_ instruction: Instruction) throws -> Int {
+        guard instructionsInFlight.contains(instruction) == false else {
+            throw CircuitError.instructionCycleDetected(instruction)
+        }
+        
+        instructionsInFlight.insert(instruction)
+        
+        var result = 0
         switch instruction.operation {
         case "AND":
-            return AND(instruction.key1, instruction.key2)
+            result = try AND(instruction.key1, instruction.key2)
         case "OR":
-            return OR(instruction.key1, instruction.key2)
+            result = try OR(instruction.key1, instruction.key2)
         case "XOR":
-            return XOR(instruction.key1, instruction.key2)
+            result = try XOR(instruction.key1, instruction.key2)
         default:
             fatalError("Unrecognized operation: \(instruction.operation)")
         }
+        
+        instructionsInFlight.remove(instruction)
+        return result
     }
     
-    func gate(key: String) -> Int {
-        state[key] ?? evaluateInstruction(
+    func gate(key: String) throws -> Int {
+        try state[key] ?? evaluateInstruction(
             instructions.first(where: { $0.resultKey == key })!)
     }
     
-    func AND(_ stateKey1: String, _ stateKey2: String) -> Int {
-        if gate(key: stateKey1) == 1 && gate(key: stateKey2) == 1 {
+    func AND(_ stateKey1: String, _ stateKey2: String) throws -> Int {
+        if try gate(key: stateKey1) == 1 && gate(key: stateKey2) == 1 {
             return 1
         }
         return 0
     }
 
-    func XOR(_ stateKey1: String, _ stateKey2: String) -> Int {
-        if gate(key: stateKey1) != gate(key: stateKey2) {
+    func XOR(_ stateKey1: String, _ stateKey2: String) throws -> Int {
+        if try gate(key: stateKey1) != gate(key: stateKey2) {
             return 1
         }
         return 0
     }
 
-    func OR(_ stateKey1: String, _ stateKey2: String) -> Int {
-        if gate(key: stateKey1) == 1 || gate(key: stateKey2) == 1 {
+    func OR(_ stateKey1: String, _ stateKey2: String) throws -> Int {
+        if try gate(key: stateKey1) == 1 || gate(key: stateKey2) == 1 {
             return 1
         }
         return 0
